@@ -2,7 +2,6 @@
   "name": "chirp",
   "version": "0.0.1",
   "homepage": "https://github.com/antdimot/chirp",
-  "directory": "lib",
   "authors": [
     "Antonio Di Motta"
   ],
@@ -20,5 +19,11 @@
     "tests"
   ],
   "dependencies": {
+    "font-awesome": "~4.2.0",
+    "jquery": "~2.1.3",
+    "bootstrap": "~3.3.1",
+    "angular-route": "~1.3.8",
+    "angular-sanitize": "~1.3.8",
+    "angular": "~1.3.8"
   }
 }
