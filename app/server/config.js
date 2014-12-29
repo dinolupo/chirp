@@ -4,6 +4,9 @@ module.exports = {
         api: '/api/v1',
         limit: '10'
     },
+    client: {
+        website: 'http://localhost:63342/chirp/app/client'
+    },
     mongodb: {
         connectionString: 'mongodb://localhost/chirp'
     }

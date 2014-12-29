@@ -32,13 +32,21 @@ module.exports = function(app,config)
     {
         dataManager.open(function() {
             model.Chirp.find()
-                .$where('this._creator == this._owner')
+                .$where('this.creator == this.owner')
                 .limit(config.server.limit)
                 .sort('-date')
                 .exec(function (err, data) {
-                    if (err) errorHandler(err,req,res);
-                    res.json(data);
                     dataManager.close();
+
+                    if (err) errorHandler(err,req,res);
+                    res.json(data.map(function(o){
+                       return {
+                           user: o.displayname,
+                           imageurl: config.client.website + '/images/users/' + o.imagefile,
+                           date: o.date,
+                           body: o.text
+                       }
+                    }));
                 });
         });
     });
@@ -47,13 +55,21 @@ module.exports = function(app,config)
     app.get( config.server.api + '/home/:username', function(req, res)
     {
         dataManager.open(function() {
-            model.Chirp.find({_owner: req.params.username})
+            model.Chirp.find({owner: req.params.username})
                 .limit(config.server.limit)
                 .sort('-date')
                 .exec(function (err, data) {
-                    if (err) errorHandler(err,req,res);
-                    res.json(data);
                     dataManager.close();
+
+                    if (err) errorHandler(err,req,res);
+                    res.json(data.map(function(o){
+                        return {
+                            user: o.displayname,
+                            imageurl: config.client.website + '/images/users/' + o.imagefile,
+                            date: o.date,
+                            body: o.text
+                        }
+                    }));
                 });
         });
     });
@@ -62,14 +78,22 @@ module.exports = function(app,config)
     app.get( config.server.api + '/chirps/:username', function(req, res)
     {
         dataManager.open(function() {
-            model.Chirp.find({_creator: req.params.username})
-                .$where('this._creator == this._owner')
+            model.Chirp.find({creator: req.params.username})
+                .$where('this.creator == this.owner')
                 .limit(config.server.limit)
                 .sort('-date')
                 .exec(function (err, data) {
-                    if (err) errorHandler(err,req,res);
-                    res.json(data);
                     dataManager.close();
+
+                    if (err) errorHandler(err,req,res);
+                    res.json(data.map(function(o){
+                        return {
+                            user: o.displayname,
+                            imageurl: config.client.website + '/images/users/' + o.imagefile,
+                            date: o.date,
+                            body: o.text
+                        }
+                    }));
                 });
         });
     });

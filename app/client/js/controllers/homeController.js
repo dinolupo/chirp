@@ -1,4 +1,4 @@
-var appControllers = angular.module('appControllers', []);
+
 
 appControllers.controller('homeCtrl', ['$scope', '$log', '$http', 'config',
     function($scope, $log, $http, config) {

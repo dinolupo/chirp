@@ -3,17 +3,20 @@ module.exports =  function (mongoose)
     var userSchema = mongoose.Schema({
         username: { type: String, lowercase: true, trim: true },
         password: String,
-        display: String,
+        displayname: String,
         email: String,
-        following: [{ name: { type: String, lowercase: true, trim: true } }],
-        followers: [{ name: { type: String, lowercase: true, trim: true } }]
+        imagefile: String,
+        following: [{ name: { type: String } }],
+        followers: [{ name: { type: String } }]
     });
 
     var chirpSchema = mongoose.Schema({
-        _creator: { type: String, ref: 'user' },
-        _owner: { type: String, ref: 'user' },
+        creator: { type: String, lowercase: true, trim: true },
+        owner: { type: String, lowercase: true, trim: true },
+        displayname: String,
+        imagefile: String,
         date: { type: Date, default: Date.now },
-        text: String
+        text: { type: String, trim: true }
     });
 
     return {
