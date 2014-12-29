@@ -1,3 +1,5 @@
-/**
- * Created by antdimot on 24/12/14.
- */
+var app = angular.module('chirp', [
+    'ngRoute',
+    'ngSanitize',
+    'appControllers'
+]);

@@ -5,8 +5,8 @@ module.exports =  function (mongoose)
         password: String,
         display: String,
         email: String,
-        following: [{ type: String, ref: 'user' }],
-        followers: [{ type: String, ref: 'user' }]
+        following: [{ name: { type: String, lowercase: true, trim: true } }],
+        followers: [{ name: { type: String, lowercase: true, trim: true } }]
     });
 
     var chirpSchema = mongoose.Schema({

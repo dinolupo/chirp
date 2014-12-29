@@ -1,0 +1,24 @@
+{
+  "name": "chirp",
+  "version": "0.0.1",
+  "homepage": "https://github.com/antdimot/chirp",
+  "directory": "lib",
+  "authors": [
+    "Antonio Di Motta"
+  ],
+  "main": "index.html",
+  "moduleType": [
+    "es6",
+    "globals"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}

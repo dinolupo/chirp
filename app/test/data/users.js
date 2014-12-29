@@ -6,18 +6,20 @@ var usersData =
         display: 'Antonio Di Motta',
         password: 'pass',
         email: 'antonio.dimotta@gmail.com',
-        following: [{
-            username: 'following1'
-        }]
+        following: [
+            { name: 'following1' }
+        ],
+        followers: []
     },
     {
         username: 'following1',
         display: 'following1',
         password: 'pass',
         email: 'following1@chirp.com',
-        followers: [{
-            username: 'antdimot'
-        }]
+        following: [],
+        followers: [
+            { name: 'antdimot' }
+        ]
     }
 ];
 db.users.insert( usersData );
