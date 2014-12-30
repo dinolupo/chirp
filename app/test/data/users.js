@@ -6,7 +6,7 @@ var usersData =
         displayname: 'Antonio Di Motta',
         password: 'pass',
         email: 'antonio.dimotta@gmail.com',
-        displayname: 'default.png',
+        imagefile: 'default.png',
         following: [
             { name: 'following1' }
         ],
@@ -17,7 +17,7 @@ var usersData =
         displayname: 'following1 test user',
         password: 'pass',
         email: 'following1@chirp.com',
-        displayname: 'default.png',
+        imagefile: 'default.png',
         following: [],
         followers: [
             { name: 'antdimot' }

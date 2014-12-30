@@ -11,18 +11,44 @@ module.exports = function(app,config)
         res.send('500 - Server Error');
     };
 
+    var forbiddenHandler = function(req,res){
+        res.type('text/plain');
+        res.status(403);
+        res.send('403 - Forbidden');
+    };
+
     // enable cross site requests
     app.use( config.server.api, require('cors')());
 
-    app.get( config.server.api + '/users', function(req, res)
+    app.post( config.server.api + '/authenticate', function(req, res)
     {
-        dataManager.open(function() {
-            model.User.find()
+        var login = req.body.username;
+        var pass = req.body.password;
+
+        if( (typeof login == 'undefined') || (typeof pass == 'undefined') )
+        {
+            forbiddenHandler(req,res);
+        }
+
+        dataManager.open(function () {
+            model.User.findOne({ username: login, password: pass })
                 .limit(config.server.limit)
                 .exec(function (err, data) {
-                    if (err) errorHandler(err,req,res);
-                    res.json(data);
                     dataManager.close();
+
+                    if(err) errorHandler(err, req, res);
+
+                    if(data===null) forbiddenHandler(req,res);
+                    else {
+                        res.json({
+                            username: data.username,
+                            displayname: data.displayname,
+                            imageurl: config.client.website + '/images/users/' + data.imagefile,
+                            email: data.email,
+                            followers: data.followers,
+                            following: data.following
+                         });
+                    }
                 });
         });
     });
