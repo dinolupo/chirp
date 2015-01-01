@@ -2,10 +2,11 @@
 appControllers.controller('publicCtrl', ['$scope', '$log', '$http', '$location', '$rootScope', 'config',
     function($scope, $log, $http, $location, $rootScope, config) {
 
-        $scope.authenticate = function() {
+        $scope.authenticate = function(user) {
+            var username = user.username;
+            var password = user.password;
+
             var url = config.api+ "/authenticate";
-            var username = $scope.loginform.username;
-            var password = $scope.loginform.password;
 
             $http.post( url, { username: username, password: password }).
                 success(function(data) {
@@ -15,7 +16,7 @@ appControllers.controller('publicCtrl', ['$scope', '$log', '$http', '$location',
                 }).
                 error(function(data){
                     $log.error('error on post request');
-                    alert('Credentials are not valid!')
+                    alert('The credentials are not valid!')
                 });
         };
 
