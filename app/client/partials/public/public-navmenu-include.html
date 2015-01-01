@@ -5,12 +5,12 @@
                 Chirp
             </a>
         </div>
-        <form class="navbar-form navbar-right" role="search">
+        <form class="navbar-form navbar-right" method="post" ng-model="loginform" ng-controller="publicCtrl">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="username" id="username">
-                <input type="password" class="form-control" placeholder="password" id="password">
+                <input type="text" class="form-control" placeholder="username" ng-model="loginform.username">
+                <input type="password" class="form-control" placeholder="password" ng-model="loginform.password">
             </div>
-            <button type="submit" class="btn btn-default">Sign in</button>
+            <button ng-click="authenticate()" class="btn btn-default">Sign in</button>
         </form>
     </div>
 </nav>
