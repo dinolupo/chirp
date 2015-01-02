@@ -1,10 +1,13 @@
 module.exports = function(app,config)
 {
+    var logger = require("./utils/logger");
     var mongoose = require('mongoose');
-    var dataManager = require('./data')(mongoose,config);
+    var dataManager = require('./utils/data')(mongoose,config);
     var model = require('./models')(mongoose);
 
     var errorHandler = function(err,req,res){
+        logger.error('Error request [%s], stack [%s]',req.url,err.stack);
+
         console.error(err.stack);
         res.type('text/plain');
         res.status(500);
@@ -12,6 +15,8 @@ module.exports = function(app,config)
     };
 
     var forbiddenHandler = function(req,res){
+        logger.debug('Forbidden request [%s]',req.url);
+
         res.type('text/plain');
         res.status(403);
         res.send('403 - Forbidden');
@@ -22,10 +27,10 @@ module.exports = function(app,config)
 
     app.post( config.server.api + '/authenticate', function(req, res)
     {
+        logger.debug('Post request [%s]',req.url);
+
         var login = req.body.username;
         var pass = req.body.password;
-
-        console.log('authenticate ['+login+','+pass+']');
 
         if( (typeof login == 'undefined') || (typeof pass == 'undefined') )
         {
@@ -58,7 +63,7 @@ module.exports = function(app,config)
     // get the items posted
     app.get( config.server.api + '/public', function(req, res)
     {
-        console.log('public');
+        logger.debug('Get request [%s]',req.url);
 
         dataManager.open(function() {
             model.Chirp.find()
@@ -84,7 +89,7 @@ module.exports = function(app,config)
     // get the items posted from an user and followings
     app.get( config.server.api + '/home/:username', function(req, res)
     {
-        console.log('public');
+        logger.debug('Get request [%s]',req.url);
 
         dataManager.open(function() {
             model.Chirp.find({owner: req.params.username})
@@ -109,6 +114,8 @@ module.exports = function(app,config)
     // get the items posted from an user
     app.get( config.server.api + '/chirps/:username', function(req, res)
     {
+        logger.debug('Get request [%s]',req.url);
+
         dataManager.open(function() {
             model.Chirp.find({creator: req.params.username})
                 .$where('this.creator == this.owner')
@@ -130,10 +137,10 @@ module.exports = function(app,config)
         });
     });
 
-    app.post( config.server.api + '/users', function(req,content,cb)
+    // todo: add save feature
+    /*app.post( config.server.api + '/users', function(req,content,cb)
     {
-        // todo: add save feature
-    });
+    });*/
 
     // custom 404 page
     app.use(function(req, res){

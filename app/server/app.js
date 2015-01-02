@@ -1,7 +1,10 @@
 
 var config = require('./config');
-
 var app = require('express')();
+var logger = require("./utils/logger");
+
+//logger.debug("Overriding 'Express' logger");
+//app.use(require('morgan')({ "stream": logger.stream }));
 
 var bodyParser = require('body-parser');
 var multer = require('multer');
@@ -13,5 +16,5 @@ var routes = require('./routes')(app,config);
 
 var server = app.listen(config.server.port, function()
 {
-    console.log('Chirp server listening on port ' + config.server.port);
+    logger.info( 'Chirp server listening on port %s', config.server.port);
 });
