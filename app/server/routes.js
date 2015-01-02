@@ -25,6 +25,8 @@ module.exports = function(app,config)
         var login = req.body.username;
         var pass = req.body.password;
 
+        console.log('authenticate ['+login+','+pass+']');
+
         if( (typeof login == 'undefined') || (typeof pass == 'undefined') )
         {
             forbiddenHandler(req,res);
@@ -56,6 +58,8 @@ module.exports = function(app,config)
     // get the items posted
     app.get( config.server.api + '/public', function(req, res)
     {
+        console.log('public');
+
         dataManager.open(function() {
             model.Chirp.find()
                 .$where('this.creator == this.owner')
@@ -80,6 +84,8 @@ module.exports = function(app,config)
     // get the items posted from an user and followings
     app.get( config.server.api + '/home/:username', function(req, res)
     {
+        console.log('public');
+
         dataManager.open(function() {
             model.Chirp.find({owner: req.params.username})
                 .limit(config.server.limit)

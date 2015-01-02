@@ -23,11 +23,11 @@ app.config(['$routeProvider',
         $routeProvider
             .when('/public', {
                 templateUrl: 'partials/public/public-view.html',
-                controller: 'publicCtrl'
+                controller: 'PublicCtrl'
             })
-            .when('/home', {
+            .when('/home/:username', {
                 templateUrl: 'partials/private/home-view.html',
-                controller: 'homeCtrl'
+                controller: 'HomeCtrl'
             })
             .otherwise({
                 redirectTo: '/public'

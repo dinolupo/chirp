@@ -1,29 +1,33 @@
 
-appControllers.controller('publicCtrl', ['$scope', '$log', '$http', '$location', '$rootScope', 'config',
-    function($scope, $log, $http, $location, $rootScope, config) {
+appControllers.controller('PublicCtrl', ['$scope', '$log', '$http', '$location', '$rootScope',
+    'AuthService', 'DataService',
+    function($scope, $log, $http, $location, $rootScope, AuthService, DataService) {
 
-        $scope.authenticate = function(user) {
-            var username = user.username;
-            var password = user.password;
-
-            var url = config.api+ "/authenticate";
-
-            $http.post( url, { username: username, password: password }).
-                success(function(data) {
-                    $log.debug('success on post request');
-                    $rootScope.connectedUser = data;
-                    $location.path('/home');
-                }).
-                error(function(data){
-                    $log.error('error on post request');
-                    alert('The credentials are not valid!')
-                });
+        $scope.credentials = {
+            username: '',
+            password: ''
         };
 
-        $http.get( config.api+ "/public").success( function(data) {
-            $log.debug(data);
+        $scope.login = function(credentials) {
+            AuthService.
+                login(credentials,
+                    function(data){
+                        $rootScope.connectedUser = data;
+                        $location.path('/home/' + credentials.username );
+                        $location.replace();
+                    },
+                    function(data){
+                        alert('The credentials are wrong!');
+                    });
+        };
 
-            $scope.chirps = data;
-        });
+        DataService.
+            getPublicChirps(
+                function(data){
+                    $scope.chirps = data;
+                },
+                function(){
+                    alert('Error on retrieving chirps data.');
+                });
     }
 ]);

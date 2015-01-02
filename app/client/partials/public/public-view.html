@@ -6,11 +6,11 @@
 <div class="row">
     <div class="col-lg-offset-3 col-lg-6">
 
-        <div class="list-group" ng-controller="publicCtrl">
-            <a href="#" class="list-group-item" ng-repeat="item in chirps">
+        <div class="list-group">
+            <a ng-href="#" class="list-group-item" ng-repeat="item in chirps">
                 <div class="row">
                     <div class="col-lg-2">
-                        <img src="{{item.imageurl}}" width="50px" height="50px">
+                        <img ng-src="{{item.imageurl}}" width="50px" height="50px">
                     </div>
                     <div class="col-lg-10">
                         <b>{{item.user}}</b>&nbsp;&nbsp;<i>{{item.date | date:'MM/dd/yyyy @ h:mma' }}</i>
