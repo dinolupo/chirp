@@ -1,9 +1,9 @@
 # Chirp
 
-This project implements the basic features of a Twitter clone.
+It's a clone of Twitter.
 
-I'm using it as use case of classic MEAN stack solution.
+It's an use case for MEAN stack.
 
-*Antonio*
+
 
 
