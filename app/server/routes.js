@@ -144,6 +144,8 @@ module.exports = function(app,config)
 
     // custom 404 page
     app.use(function(req, res){
+        logger.debug('Not found request [%s]',req.url);
+
         res.type('text/plain');
         res.status(404);
         res.send('404 - Not Found');
