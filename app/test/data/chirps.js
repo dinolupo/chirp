@@ -1,3 +1,4 @@
+use chirp;
 db.chirps.drop();
 var chirpsData =
     [
