@@ -13,7 +13,7 @@ appControllers.controller('HomeCtrl', ['$scope', '$log', '$http', '$rootScope', 
             function(data){
                 $scope.chirps = data;
             },
-            function(data){
+            function(){
                 alert('Error on retrieving chirps data.');
             });
     }

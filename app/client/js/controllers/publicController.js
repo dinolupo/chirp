@@ -16,7 +16,7 @@ appControllers.controller('PublicCtrl', ['$scope', '$log', '$http', '$location',
                         $location.path('/home/' + credentials.username );
                         $location.replace();
                     },
-                    function(data){
+                    function(){
                         alert('The credentials are wrong!');
                     });
         };

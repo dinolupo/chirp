@@ -14,7 +14,7 @@ app.factory("AuthService", [ '$http', '$log', 'config',
                     }).
                     error(function(data, status, headers, config){
                         $log.error('error on post request');
-                        cbNOK(data);
+                        cbNOK();
                     });
             },
             logout: function() {
