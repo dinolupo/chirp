@@ -7,7 +7,7 @@
     var multer = require('multer');
     var mongoClient = require('mongodb').MongoClient;
 
-    /*app.use(bodyParser.json());
+    app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
     app.use(multer()); // for parsing multipart/form-data
     app.use(config.server.api,require('cors')());
@@ -17,11 +17,11 @@
         if (err) throw err;
 
         app.use(function(req,res,next){
-            logger.debug("Arrive a [%s] request at [%s].",req.method,req.url);
+            logger.debug("Arrived a [%s] request at [%s].",req.method,req.url);
             next();
         });
 
-        //require('./routes')(app,db,logger,config);
+        require('./routes')(app,db,logger,config);
 
         // custom 404 page
         app.use(function(req, res) {
@@ -41,5 +41,5 @@
         app.listen(port, function () {
             logger.info('Server listening on port %s', port);
         });
-    });*/
+    });
 })();

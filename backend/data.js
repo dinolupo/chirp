@@ -8,25 +8,37 @@ user3Id = ObjectId();
 
 post1Id = ObjectId();
 post2Id = ObjectId();
+post3Id = ObjectId();
 
-date1 = ISODate("2015-03-18T20:30:00Z");
-date2 = ISODate("2015-03-18T20:35:00Z");
+date1 = ISODate("2015-03-19T20:30:00Z").toISOString();
+date2 = ISODate("2015-03-18T20:35:00Z").toISOString();
+date3 = ISODate("2015-03-18T15:35:00Z").toISOString();
 
 db.posts.insert(
 [
     {
         "_id": post1Id,
-        "users": [user2Id,user3Id],
-        "fromuser": "The user1",
+        "sourceuser": user1Id,
+        "targetusers": [user1Id,user2Id,user3Id],
+        "displayname": "The user1",
         "timestamp": date1,
         "text": "Hello world"
     },
     {
         "_id": post2Id,
-        "users": [user2Id,user3Id],
-        "fromuser": "The user1",
+        "sourceuser": user1Id,
+        "targetusers": [user1Id,user2Id,user3Id],
+        "displayname": "The user1",
         "timestamp": date2,
         "text": "How dow you do?"
+    },
+    {
+        "_id": post3Id,
+        "sourceuser": user2Id,
+        "targetusers": [user1Id,user2Id],
+        "displayname": "The user2",
+        "timestamp": date3,
+        "text": "The life is beautiful?"
     }
 ]);
 
@@ -39,17 +51,7 @@ db.users.insert(
         "password": "pass",
         "email": "user1@email.com",
         "image": "",
-        "following": [user2Id],
-        "posts": [
-            {
-                "timestamp": date1,
-                "text": "Hello world!"
-            },
-            {
-                "timestamp": date2,
-                "text": "How dow you do?"
-            }
-        ]
+        "following": [user2Id]
     },
     {
         "_id": user2Id,

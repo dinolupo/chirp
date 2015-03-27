@@ -35,9 +35,9 @@ module.exports = function(app,db,logger,config)
     });*/
 
     // get items posted
-    app.get( config.server.api + '/public', function(req, res)
+    app.get( config.server.api + '/public', function(req,res)
     {
-        posts.find({},{'fields':{'_id':0,'users':0}})
+        posts.find({},{'limit':config.limit,'fields': {'displayname': 1, 'timestamp': 1, 'text': 1},'sort': {'timestamp':-1}})
             .toArray(function(err,data) {
                 if(err) throw err;
 
@@ -46,14 +46,14 @@ module.exports = function(app,db,logger,config)
     });
 
     // get items posted from an user and followings
-    app.get( config.server.api + '/home/:username', function(req, res)
+    app.get( config.server.api + '/home/:username', function(req,res)
     {
         var username = req.params.username;
 
-        users.findOne({'uname': username}, {'fields': {'_id': 1}},
+        users.findOne({'username': username}, {'limit':config.limit,'fields': {'_id': 1}},
             function(err, data) {
                 if (data) {
-                    posts.find({'users': data._id},{'fields': {'fromuser': 1, 'timestamp': 1, 'text': 1}})
+                    posts.find({'targetusers': data._id},{'fields': {'displayname': 1, 'timestamp': 1, 'text': 1},'sort': {'timestamp':-1}})
                         .toArray(function (err, items) {
                             if (err) throw err;
 
@@ -67,12 +67,54 @@ module.exports = function(app,db,logger,config)
     });
 
     // get the items posted from an user
-    /*app.get( config.server.api + '/chirps/:username', function(req, res)
+    app.get( config.server.api + '/chirp/:username', function(req,res)
     {
-    });*/
+        var username = req.params.username;
 
-    // todo: add save feature
-    /*app.post( config.server.api + '/users', function(req,content,cb)
+        users.findOne({'username': username}, {'limit':config.limit,'fields': {'_id': 1}},
+            function(err, data) {
+                if (data) {
+                    posts.find({'sourceuser': data._id},{'fields': {'displayname': 1, 'timestamp': 1, 'text': 1},'sort': {'timestamp':-1}})
+                        .toArray(function (err, items) {
+                            if (err) throw err;
+
+                            jsonResponse(req, res, items);
+                        });
+                }
+                else {
+                    jsonResponse(req, res);
+                }
+            });
+    });
+
+    // post a new post
+    app.post( config.server.api + '/chirp', function(req,res)
     {
-    });*/
+        var username = req.body.username;
+        var text = req.body.text;
+
+        users.findOne(  {'username':username},{'fields':{'_id':1,'following':1,'displayname':1}},
+            function(err,data) {
+                if (data) {
+                    var newPost = {
+                        "sourceuser": data._id,
+                        "targetusers": data.following,
+                        "displayname": data.displayname,
+                        "timestamp": new Date().toISOString(),
+                        "text": text
+                    };
+
+                    newPost.targetusers.push(data._id);
+
+                    posts.save(newPost,function(err,result){
+                        if(err) throw err;
+
+                        jsonResponse(req,res,{'result':1});
+                    });
+                }
+                else {
+                    jsonResponse(req,res,{'result':0});
+                }
+            });
+    });
 }
