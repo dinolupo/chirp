@@ -1,3 +1,3 @@
 # Chirp
 
-A Twitter clone created with the MEAN stack.
+A Twitter clone built on MEAN stack.
