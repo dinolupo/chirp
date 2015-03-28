@@ -31,6 +31,10 @@ angular.module('chirp')
                 templateUrl: 'partials/post-list-view.html',
                 controller: 'HomeCtrl'
             })
+            .when('/login', {
+                templateUrl: 'partials/login-form-view.html',
+                controller: 'LoginCtrl'
+            })
             .otherwise({
                 redirectTo: '/public'
             });

@@ -3,7 +3,9 @@ module.exports = function(app,db,logger,config)
     var users = db.collection('users');
     var posts = db.collection('posts');
 
-    var postFields = {'displayname':1,'timestamp':1,'text':1,'image':1};
+    var postListFields = {'displayname':1,'timestamp':1,'text':1,'image':1};
+    var userListFields = {'username':1,'displayname':1,'image':1,'email':1};
+    var userSearchFields = {'_id':1,'following':1,'displayname':1,'image':1};
 
     var forbiddenResponse = function(req,res)
     {
@@ -39,7 +41,7 @@ module.exports = function(app,db,logger,config)
     // get items posted
     app.get( config.server.api + '/public', function(req,res)
     {
-        posts.find({},{'limit':config.limit,'fields': postFields,'sort': {'timestamp':-1}})
+        posts.find({},{'limit':config.limit,'fields': postListFields,'sort': {'timestamp':-1}})
             .toArray(function(err,data) {
                 if(err) throw err;
 
@@ -55,7 +57,7 @@ module.exports = function(app,db,logger,config)
         users.findOne({'username': username}, {'limit':config.limit,'fields': {'_id': 1}},
             function(err, data) {
                 if (data) {
-                    posts.find({'targetusers': data._id},{'fields': postFields,'sort': {'timestamp':-1}})
+                    posts.find({'targetusers': data._id},{'fields': postListFields,'sort': {'timestamp':-1}})
                         .toArray(function (err, items) {
                             if (err) throw err;
 
@@ -69,14 +71,14 @@ module.exports = function(app,db,logger,config)
     });
 
     // get the items posted from an user
-    app.get( config.server.api + '/chirp/:username', function(req,res)
+    app.get( config.server.api + '/post/:username', function(req,res)
     {
         var username = req.params.username;
 
         users.findOne({'username': username}, {'limit':config.limit,'fields': {'_id': 1}},
             function(err, data) {
                 if (data) {
-                    posts.find({'sourceuser': data._id},{'fields': postFields,'sort': {'timestamp':-1}})
+                    posts.find({'sourceuser': data._id},{'fields': postListFields,'sort': {'timestamp':-1}})
                         .toArray(function (err, items) {
                             if (err) throw err;
 
@@ -90,12 +92,12 @@ module.exports = function(app,db,logger,config)
     });
 
     // post a new post
-    app.post( config.server.api + '/chirp', function(req,res)
+    app.post( config.server.api + '/post', function(req,res)
     {
         var username = req.body.username;
         var text = req.body.text;
 
-        users.findOne(  {'username':username},{'fields':{'_id':1,'following':1,'displayname':1,'image':1}},
+        users.findOne(  {'username':username},{'fields':userSearchFields},
             function(err,data) {
                 if (data) {
                     var newPost = {

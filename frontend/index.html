@@ -6,8 +6,8 @@
     <title>Chirp</title>
 
     <meta name="author" content="Antonio Di Motta">
-    <meta name="description" content="The Twitter clone">
-    <meta name="keywords" content="chirp, twitter, antdimot, antonio di motta">
+    <meta name="description" content="A Twitter clone">
+    <meta name="keywords" content="chirp, twitter, antdimot, Antonio Di Motta">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" href="css/app.css" />
@@ -23,11 +23,23 @@
     <script src="js/controllers/ApplicationController.js" language="JavaScript"></script>
     <script src="js/controllers/PublicController.js" language="JavaScript"></script>
     <script src="js/controllers/HomeController.js" language="JavaScript"></script>
+    <script src="js/controllers/LoginController.js" language="JavaScript"></script>
 </head>
 <body>
 
 <div class="container" ng-controller="ApplicationCtrl">
-    <div ng-view></div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div ng-include="'partials/nav-toolbar-include.html'"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-offset-2 col-lg-10">
+
+            <div ng-view></div>
+
+        </div>
+    </div>
 </div>
 
 </body>
