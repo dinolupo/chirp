@@ -1,33 +1,36 @@
+(function() {
+    'use strict';
 
-appControllers.controller('PublicCtrl', ['$scope', '$log', '$http', '$location', '$rootScope',
-    'AuthService', 'DataService',
-    function($scope, $log, $http, $location, $rootScope, AuthService, DataService) {
+    angular.module('chirp')
+        .controller('PublicCtrl', ['$scope', '$log', '$http', '$location', '$rootScope', 'AuthService', 'DataService',
+        function ($scope, $log, $http, $location, $rootScope, AuthService, DataService)
+        {
+            $scope.credentials = {
+                username: '',
+                password: ''
+            };
 
-        $scope.credentials = {
-            username: '',
-            password: ''
-        };
-
-        $scope.login = function(credentials) {
-            AuthService.
-                login(credentials,
-                    function(data){
+            $scope.login = function (credentials) {
+                AuthService.
+                    login(credentials,
+                    function (data) {
                         $rootScope.connectedUser = data;
-                        $location.path('/home/' + credentials.username );
+                        $location.path('/home/' + credentials.username);
                         $location.replace();
                     },
-                    function(){
+                    function () {
                         alert('The credentials are wrong!');
                     });
-        };
+            };
 
-        DataService.
-            getPublicChirps(
-                function(data){
-                    $scope.chirps = data;
+            DataService.getPublicPostList(
+                function (data) {
+                    $scope.posts = data;
                 },
-                function(){
+                function () {
                     alert('Error on retrieving chirps data.');
                 });
-    }
-]);
+        }
+    ]);
+
+})();

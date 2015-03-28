@@ -1,24 +1,28 @@
+(function() {
+    'use strict';
 
-appControllers.controller('ApplicationCtrl', ['$scope', '$log',
-    function($scope, $log ) {
+    angular.module('chirp')
+        .controller('ApplicationCtrl', ['$scope', '$log', function ($scope, $log)
+        {
+            var currentUser = null;
 
-        var currentUser = null;
+            $scope.setCurrentUser = function (user) {
+                currentUser = user;
+            };
 
-        $scope.setCurrentUser = function (user) {
-            currentUser = user;
-        };
-
-        $scope.isLogged = function() {
-            return (currentUser != null);
-        }
-
-        $scope.getUserDisplayName = function(){
-            if(currentUser != null) {
-                return currentUser.displayName;
+            $scope.isLogged = function () {
+                return (currentUser != null);
             }
-            else {
-                return "";
+
+            $scope.getUserDisplayName = function () {
+                if (currentUser != null) {
+                    return currentUser.displayName;
+                }
+                else {
+                    return "";
+                }
             }
         }
-    }
-]);
+    ]);
+
+})();

@@ -21,6 +21,7 @@ db.posts.insert(
         "sourceuser": user1Id,
         "targetusers": [user1Id,user2Id,user3Id],
         "displayname": "The user1",
+        "image":"defaultUser.png",
         "timestamp": date1,
         "text": "Hello world"
     },
@@ -29,6 +30,7 @@ db.posts.insert(
         "sourceuser": user1Id,
         "targetusers": [user1Id,user2Id,user3Id],
         "displayname": "The user1",
+        "image":"defaultUser.png",
         "timestamp": date2,
         "text": "How dow you do?"
     },
@@ -37,6 +39,7 @@ db.posts.insert(
         "sourceuser": user2Id,
         "targetusers": [user1Id,user2Id],
         "displayname": "The user2",
+        "image":"defaultUser.png",
         "timestamp": date3,
         "text": "The life is beautiful?"
     }
@@ -50,7 +53,7 @@ db.users.insert(
         "displayname": "The user1",
         "password": "pass",
         "email": "user1@email.com",
-        "image": "",
+        "image":"defaultUser.png",
         "following": [user2Id]
     },
     {
@@ -59,7 +62,7 @@ db.users.insert(
         "displayname": "The user2",
         "password": "pass",
         "email": "user2@email.com",
-        "image": "",
+        "image":"defaultUser.png",
         "following": [user1Id]
     },
     {
@@ -68,7 +71,7 @@ db.users.insert(
         "displayname": "The user3",
         "password": "pass",
         "email": "user3@email.com",
-        "image": "",
+        "image":"defaultUser.png",
         "following": [user1Id]
     }
 ]);
