@@ -12,10 +12,12 @@
 
                 $scope.login = function (credentials) {
                     AuthService.login(credentials,
-                        function (result) {
-                            if(result) {
-                                //$location.path('/home/' + credentials.username);
-                                //$location.replace();
+                        function (username) {
+                            if(username) {
+                                $location.path('/home/' + username);
+                                $location.replace();
+
+                                $scope.$emit('logged');
                             }
                             else {
                                 alert('Wrong credentials!');

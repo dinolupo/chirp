@@ -7,7 +7,6 @@
         {
             var _authUser = null;
 
-
             return {
                 login: function (credentials,callBack)
                 {
@@ -18,28 +17,27 @@
                         function(data) {
                             if(data)
                             {
+                                $log.debug(data);
                                 if(data.result==1)
                                 {
                                     _authUser = data.user;
-                                    $log(data);
-                                    callBack(true);
+                                    callBack(_authUser.username);
                                 }
-                                else callBack(false);
+                                else callBack();
                             }
-                            else callBack(false);
+                            else callBack();
                         }
                     )
-
                 },
                 logout: function() {
                     _authUser = null;
                 },
                 isLogged: function() {
-                    if(_authUser == null)
+                    if(_authUser)
                     {
-                        return false;
+                        return true;
                     }
-                    return true;
+                    return false;
                 },
                 getUser: function()
                 {

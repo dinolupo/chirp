@@ -2,27 +2,14 @@
     'use strict';
 
     angular.module('chirp')
-        .controller('AppCtrl',['$scope','$log','DataService',
-            function ($scope,$log,DataService)
+        .controller('AppCtrl',['$scope','$log','DataService','AuthService',
+            function ($scope,$log,DataService,AuthService)
         {
-            var currentUser = null;
+            $scope.username = (AuthService.isLogged() ? AuthService.getUser().displayname : '' );
 
-            $scope.setCurrentUser = function (user) {
-                currentUser = user;
-            };
-
-            $scope.isLogged = function () {
-                return (currentUser != null);
-            }
-
-            $scope.getUserDisplayName = function () {
-                if (currentUser != null) {
-                    return currentUser.displayName;
-                }
-                else {
-                    return "";
-                }
-            }
+            $scope.$on('logged', function() {
+                $scope.username = AuthService.getUser().displayname;
+            });
         }
     ]);
 
