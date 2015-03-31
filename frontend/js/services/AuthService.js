@@ -2,30 +2,48 @@
     'use strict';
 
     angular.module('chirp')
-        .factory("AuthService", ['$http', '$log', 'config',
-        function ($http, $log, config)
+        .factory("AuthService", ['$http', '$log', 'config', 'DataService',
+        function ($http, $log, config, DataService)
         {
+            var _authUser = null;
+
+
             return {
-                login: function (credentials, cbOk, cbNOK) {
+                login: function (credentials,callBack)
+                {
                     var username = credentials.username;
                     var password = credentials.password;
 
-                    var url = config.api + "/authenticate";
+                    DataService.getUserByCredentials(username,password,
+                        function(data) {
+                            if(data)
+                            {
+                                if(data.result==1)
+                                {
+                                    _authUser = data.user;
+                                    $log(data);
+                                    callBack(true);
+                                }
+                                else callBack(false);
+                            }
+                            else callBack(false);
+                        }
+                    )
 
-                    $http.post(url, {username: username, password: password}).
-                        success(function (data, status, headers, config) {
-                            cbOk(data);
-                        }).
-                        error(function (data, status, headers, config) {
-                            $log.error('error on post request');
-                            cbNOK();
-                        });
                 },
-                logout: function () {
-                    // todo: implement logout
-                    /*$rootScope.connectedUser = null;
-                     $location.path('/public');
-                     $location.replace();*/
+                logout: function() {
+                    _authUser = null;
+                },
+                isLogged: function() {
+                    if(_authUser == null)
+                    {
+                        return false;
+                    }
+                    return true;
+                },
+                getUser: function()
+                {
+                    return _authUser;
                 }
             }
         }]);

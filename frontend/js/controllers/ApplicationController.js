@@ -2,7 +2,8 @@
     'use strict';
 
     angular.module('chirp')
-        .controller('ApplicationCtrl', ['$scope', '$log', function ($scope, $log)
+        .controller('AppCtrl',['$scope','$log','DataService',
+            function ($scope,$log,DataService)
         {
             var currentUser = null;
 

@@ -1,6 +1,6 @@
 {
-  "name": "chirp",
-  "version": "0.0.1",
+  "name": "chirp-frontend",
+  "version": "0.0.2",
   "homepage": "https://github.com/antdimot/chirp",
   "authors": [
     "Antonio Di Motta"
@@ -10,7 +10,7 @@
     "es6",
     "globals"
   ],
-  "license": "MIT",
+  "license": "",
   "ignore": [
     "**/.*",
     "node_modules",

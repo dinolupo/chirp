@@ -5,24 +5,32 @@
         .factory("DataService", ['$http', '$log', 'config',
         function ($http, $log, config)
         {
+            var dataServiceErrorHandler = function()
+            {
+                $log.error("Backend connection problems.");
+            };
+
             return {
-                getPublicPostList: function (cbOK, cbNOK) {
+                getPublicPostList: function (callBack) {
                     $http.get(config.api + "/public").
-                        success(function (data, status, headers, config) {
-                            cbOK(data);
+                        success(function (data) {
+                            callBack(data);
                         }).
-                        error(function (data, status, headers, config) {
-                            cbNOK();
-                        })
+                        error(dataServiceErrorHandler);
                 },
-                getHomePostList: function (username, cbOK, cbNOK) {
+                getHomePostList: function (username,callBack) {
                     $http.get(config.api + "/home/" + username).
-                        success(function (data, status, headers, config) {
-                            cbOK(data);
+                        success(function (data) {
+                            callBack(data);
                         }).
-                        error(function (data, status, headers, config) {
-                            cbNOK();
-                        });
+                        error(dataServiceErrorHandler);
+                },
+                getUserByCredentials: function (username,password,callBack) {
+                    $http.post(config.api + "/authenticate",{username: username,password: password}).
+                        success(function (data) {
+                            callBack(data);
+                        }).
+                        error(dataServiceErrorHandler);
                 }
             }
         }]);

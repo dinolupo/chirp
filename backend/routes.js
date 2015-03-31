@@ -4,7 +4,7 @@ module.exports = function(app,db,logger,config)
     var posts = db.collection('posts');
 
     var postListFields = {'displayname':1,'timestamp':1,'text':1,'image':1};
-    var userListFields = {'username':1,'displayname':1,'image':1,'email':1};
+    var userFields = {'username':1,'displayname':1,'image':1,'email':1};
     var userSearchFields = {'_id':1,'following':1,'displayname':1,'image':1};
 
     var forbiddenResponse = function(req,res)
@@ -18,12 +18,12 @@ module.exports = function(app,db,logger,config)
 
     var jsonResponse = function(req,res,data)
     {
-        logger.debug('Json response [%s]',req.url);
-
         if(data) {
+            logger.debug('Response at [%s] with %s',req.url, JSON.stringify(data));
             res.jsonp(data);
         }
         else {
+            logger.debug('Response at [%s] with {}',req.url);
             res.jsonp({});
         }
     }
@@ -116,6 +116,25 @@ module.exports = function(app,db,logger,config)
 
                         jsonResponse(req,res,{'result':1});
                     });
+                }
+                else {
+                    jsonResponse(req,res,{'result':0});
+                }
+            });
+    });
+
+    // post a new post
+    app.post( config.server.api + '/authenticate', function(req,res)
+    {
+        var username = req.body.username;
+        var password = req.body.password;
+
+        users.findOne(  {'username':username,'password':password},{'fields':userFields},
+            function(err,data) {
+                if (data) {
+                    if(err) throw err;
+
+                    jsonResponse(req,res,{'result':1,'user':data});
                 }
                 else {
                     jsonResponse(req,res,{'result':0});

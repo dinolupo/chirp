@@ -9,9 +9,6 @@
             DataService.getPublicPostList(
                 function (data) {
                     $scope.posts = data;
-                },
-                function () {
-                    alert('Error on retrieving chirps data.');
                 });
         }
     ]);
