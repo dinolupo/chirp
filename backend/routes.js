@@ -141,4 +141,22 @@ module.exports = function(app,db,logger,config)
                 }
             });
     });
+
+    // get the items posted from an user
+    app.post( config.server.api + '/user', function(req,res)
+    {
+        var token = req.body.token;
+
+        users.findOne({'username':token},{'fields':userFields},
+            function(err, data) {
+                if (data) {
+                    if (err) throw err;
+
+                    jsonResponse(req,res,data);
+                }
+                else {
+                    jsonResponse(req,res);
+                }
+            });
+    });
 }

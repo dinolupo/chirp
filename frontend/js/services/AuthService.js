@@ -42,6 +42,24 @@
                 getUser: function()
                 {
                     return _authUser;
+                },
+                reloadUser: function(token,callBack)
+                {
+                    DataService.getUserByToken(token,
+                        function(data) {
+                            if(data)
+                            {
+                                $log.debug(data);
+                                if(data.result==1)
+                                {
+                                    _authUser = data.user;
+                                    callBack(_authUser.username);
+                                }
+                                else callBack();
+                            }
+                            else callBack();
+                        }
+                    )
                 }
             }
         }]);

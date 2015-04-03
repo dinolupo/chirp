@@ -31,6 +31,13 @@
                             callBack(data);
                         })
                         .error(dataServiceErrorHandler);
+                },
+                getUserByToken: function (token,callBack) {
+                    $http.post(config.api + "/user",{token: token})
+                        .success(function (data) {
+                            callBack(data);
+                        })
+                        .error(dataServiceErrorHandler);
                 }
             }
         }]);

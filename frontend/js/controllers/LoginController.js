@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('chirp')
-        .controller('LoginCtrl', ['$scope', '$log', '$location', 'AuthService',
-            function ($scope, $log, $location, AuthService)
+        .controller('LoginCtrl', ['$scope', '$log', '$location', '$cookies', 'AuthService',
+            function ($scope, $log, $location, $cookies, AuthService)
             {
                 $scope.credentials = {
                     username: '',
@@ -13,7 +13,10 @@
                 $scope.login = function (credentials) {
                     AuthService.login(credentials,
                         function (username) {
-                            if(username) {
+                            if(username)
+                            {
+                                $cookies.chirp = username;
+
                                 $location.path('/home/' + username);
                                 $location.replace();
 

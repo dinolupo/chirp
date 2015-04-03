@@ -1,7 +1,7 @@
 (function(){
     'use strict';
 
-angular.module('chirp', ['ngRoute','ngSanitize'])
+angular.module('chirp', ['ngRoute','ngSanitize','ngCookies'])
     .constant("config",
     {
         "api": "http://localhost:3000/api/v1",
