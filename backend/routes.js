@@ -152,10 +152,10 @@ module.exports = function(app,db,logger,config)
                 if (data) {
                     if (err) throw err;
 
-                    jsonResponse(req,res,data);
+                    jsonResponse(req,res,{'result':1,'user':data});
                 }
                 else {
-                    jsonResponse(req,res);
+                    jsonResponse(req,res,{'result':0});
                 }
             });
     });

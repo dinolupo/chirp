@@ -16,10 +16,8 @@
                             if(username)
                             {
                                 $cookies.chirp = username;
-
                                 $location.path('/home/' + username);
                                 $location.replace();
-
                                 $scope.$emit('logged');
                             }
                             else {

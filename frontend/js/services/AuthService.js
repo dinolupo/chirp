@@ -49,7 +49,6 @@
                         function(data) {
                             if(data)
                             {
-                                $log.debug(data);
                                 if(data.result==1)
                                 {
                                     _authUser = data.user;
