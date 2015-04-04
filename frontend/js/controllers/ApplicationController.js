@@ -6,15 +6,18 @@
             function ($scope,$log,$location,$cookies,AuthService)
         {
             $scope.$on('logged', function() {
-                $scope.username = (AuthService.isLogged() ? AuthService.getUser().displayname : '' );
-                $scope.islogged = true;
+                if(AuthService.isLogged())
+                {
+                    $scope.displayname = AuthService.getUser().displayname;
+                    $scope.username = AuthService.getUser().username;
+                    $scope.islogged = true;
+                }
             });
 
             $scope.$on('logout', function() {
                 AuthService.logout();
                 delete $cookies.chirp;
 
-                $scope.username = '';
                 $scope.islogged = false;
 
                 $location.path('/public');

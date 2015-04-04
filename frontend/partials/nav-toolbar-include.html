@@ -6,7 +6,9 @@
             </a>
         </div>
         <p class="navbar-text navbar-right">
-            <span>{{username}}</span>
+            <span ng-show="islogged">
+                <a href="#/home/{{username}}">{{displayname}}</a>
+            </span>
             <a class="btn btn-default" href="#/login" role="button" ng-show="!islogged">Sign in</a>
             <a class="btn btn-default" ng-click="logout()" role="button" ng-show="islogged">Sign out</a>
         </p>
