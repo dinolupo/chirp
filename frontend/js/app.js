@@ -18,7 +18,7 @@ angular.module('chirp', ['ngRoute','ngSanitize','ngCookies'])
                 controller: 'PublicCtrl'
             })
             .when('/home/:username', {
-                templateUrl: 'partials/post-list-view.html',
+                templateUrl: 'partials/auth-post-list-view.html',
                 controller: 'HomeCtrl'
             })
             .when('/login', {

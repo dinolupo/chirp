@@ -26,17 +26,7 @@ module.exports = function(app,db,logger,config)
             logger.debug('Response at [%s] with {}',req.url);
             res.jsonp({});
         }
-    }
-
-    /*app.post( config.server.api + '/authenticate', function(req, res)
-    {
-        var login = req.body.username;
-        var pass = req.body.password;
-        if( (typeof login == 'undefined') || (typeof pass == 'undefined') )
-        {
-            forbiddenHandler(req,res);
-        }
-    });*/
+    };
 
     // get items posted
     app.get( config.server.api + '/public', function(req,res)
@@ -111,7 +101,8 @@ module.exports = function(app,db,logger,config)
 
                     newPost.targetusers.push(data._id);
 
-                    posts.save(newPost,function(err,result){
+                    posts.save(newPost,function(err)
+                    {
                         if(err) throw err;
 
                         jsonResponse(req,res,{'result':1});
@@ -123,7 +114,7 @@ module.exports = function(app,db,logger,config)
             });
     });
 
-    // post a new post
+    // get authentication
     app.post( config.server.api + '/authenticate', function(req,res)
     {
         var username = req.body.username;

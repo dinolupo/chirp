@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-lg-4 col-md-4">
+
+        <form method="post" name="messageForm" ng-submit="send(message)">
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea type="text" id="message" class="form-control" ng-model="message" ng-required="true" rows="8"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Post a message</button>
+        </form>
+
+    </div>
+    <div class="col-lg-8 col-md-8">
+
+        <div class="list-group">
+            <a class="list-group-item" ng-repeat="item in posts">
+                <div class="row">
+                    <div class="col-lg-2 col-md-2">
+                        <img ng-src="images/{{item.image}}" width="50px" height="50px">
+                    </div>
+                    <div class="col-lg-10 col-md-10">
+                        <b>{{item.displayname}}</b>&nbsp;&nbsp;<i>{{item.timestamp | date:'MM/dd/yyyy @ h:mma' }}</i>
+                        <p class="list-group-item-text">{{item.text}}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+</div>

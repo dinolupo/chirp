@@ -38,6 +38,13 @@
                             callBack(data);
                         })
                         .error(dataServiceErrorHandler);
+                },
+                sendMessage: function(username,text,callBack){
+                    $http.post(config.api + "/post",{"username":username,"text":text})
+                        .success(function (data) {
+                            callBack(data);
+                        })
+                        .error(dataServiceErrorHandler);
                 }
             }
         }]);
