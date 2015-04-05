@@ -20,16 +20,16 @@ db.posts.insert(
         "_id": post1Id,
         "sourceuser": user1Id,
         "targetusers": [user1Id,user2Id,user3Id],
-        "displayname": "The user1",
+        "displayname": "Antonio Di Motta",
         "image":"defaultUser.png",
         "timestamp": date1,
-        "text": "Hello world"
+        "text": "Hello world!"
     },
     {
         "_id": post2Id,
         "sourceuser": user1Id,
         "targetusers": [user1Id,user2Id,user3Id],
-        "displayname": "The user1",
+        "displayname": "Antonio Di Motta",
         "image":"defaultUser.png",
         "timestamp": date2,
         "text": "How dow you do?"
@@ -49,10 +49,10 @@ db.users.insert(
 [
     {
         "_id": user1Id,
-        "username": "user1",
-        "displayname": "The user1",
+        "username": "antdimot",
+        "displayname": "Antonio Di Motta",
         "password": "pass",
-        "email": "user1@email.com",
+        "email": "antonio.dimotta@gmail.com",
         "image":"defaultUser.png",
         "following": [user2Id]
     },

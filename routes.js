@@ -4,7 +4,7 @@ module.exports = function(app,db,logger,config)
     var posts = db.collection('posts');
 
     var postListFields = {'displayname':1,'timestamp':1,'text':1,'image':1};
-    var userFields = {'username':1,'displayname':1,'image':1,'email':1};
+    var userFields = {'username':1,'displayname':1,'image':1,'email':1,'following':1};
     var userSearchFields = {'_id':1,'following':1,'displayname':1,'image':1};
 
     var forbiddenResponse = function(req,res)
@@ -125,7 +125,14 @@ module.exports = function(app,db,logger,config)
                 if (data) {
                     if(err) throw err;
 
-                    jsonResponse(req,res,{'result':1,'user':data});
+                    jsonResponse(req,res,{'result':1,'user':{
+                        "username": data.username,
+                        "displayname": data.displayname,
+                        "password": data.password,
+                        "email": data.email,
+                        "image": data.image ,
+                        "followingcount": data.following.length
+                    }});
                 }
                 else {
                     jsonResponse(req,res,{'result':0});

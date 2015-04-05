@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-lg-3 col-md-3">
+
+        <form method="post" name="messageForm" ng-submit="send(message)">
+            <div class="form-group">
+                <h3>{{displayname}}</h3>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <span class="badge">{{followingcount}}</span>
+                        Following
+                    </li>
+                </ul>
+                <hr>
+                <textarea type="text" id="message" class="form-control" ng-model="message" ng-required="true" rows="4"/>
+            </div>
+            <p class="text-right">
+                <button type="submit" class="btn btn-success btn-xs">&nbsp;&nbsp;post&nbsp;&nbsp;</button>
+            </p>
+        </form>
+
+    </div>
+    <div class="col-lg-9 col-md-9">
+
+        <div class="list-group">
+            <a class="list-group-item" ng-repeat="item in posts">
+                <div class="row">
+                    <div class="col-lg-1 col-md-1">
+                        <img ng-src="images/{{item.image}}" width="50px" height="50px">
+                    </div>
+                    <div class="col-lg-11 col-md-11">
+                        <b>{{item.displayname}}</b>&nbsp;&nbsp;<i>{{item.timestamp | date:'MM/dd/yyyy @ h:mma' }}</i>
+                        <p class="list-group-item-text">{{item.text}}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+</div>

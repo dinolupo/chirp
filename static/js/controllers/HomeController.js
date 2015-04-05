@@ -5,6 +5,8 @@
         .controller('HomeCtrl', ['$scope','$log','$http','$location','$route','$routeParams','DataService',
         function ($scope,$log,$http,$location,$route,$routeParams,DataService)
         {
+            $scope.followingcount = $scope.$parent.followingcount;
+
             DataService.getHomePostList($routeParams.username,
                 function (data) {
                     $scope.posts = data;

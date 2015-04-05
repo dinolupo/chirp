@@ -10,6 +10,7 @@
                 {
                     $scope.displayname = AuthService.getUser().displayname;
                     $scope.username = AuthService.getUser().username;
+                    $scope.followingcount = AuthService.getUser().followingcount;
                     $scope.islogged = true;
                 }
             });
@@ -27,7 +28,7 @@
             $scope.islogged = false;
             $scope.logout = function() {
                 $scope.$emit('logout');
-            }
+            };
 
             var token = $cookies.chirp;
 

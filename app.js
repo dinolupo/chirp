@@ -1,6 +1,7 @@
 (function() {
     var config = require('./config');
-    var app = require('express')();
+    var express = require('express');
+    var app = express();
     var logger = require("./logger");
 
     var bodyParser = require('body-parser');
@@ -22,6 +23,11 @@
         });
 
         require('./routes')(app,db,logger,config);
+
+        app.use('/', express.static(__dirname + '/static', {
+            "dotfiles":"ignore"
+
+        }));
 
         // custom 404 page
         app.use(function(req, res) {

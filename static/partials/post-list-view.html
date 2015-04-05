@@ -2,10 +2,10 @@
 <div class="list-group">
     <a class="list-group-item" ng-repeat="item in posts">
         <div class="row">
-            <div class="col-lg-2 col-md-2">
+            <div class="col-lg-1 col-md-1">
                 <img ng-src="images/{{item.image}}" width="50px" height="50px">
             </div>
-            <div class="col-lg-10 col-md-10">
+            <div class="col-lg-11 col-md-11">
                 <b>{{item.displayname}}</b>&nbsp;&nbsp;<i>{{item.timestamp | date:'MM/dd/yyyy @ h:mma' }}</i>
                 <p class="list-group-item-text">{{item.text}}</p>
             </div>
