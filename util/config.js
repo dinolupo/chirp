@@ -4,6 +4,7 @@ module.exports = {
         limit: '10'
     },
     mongodb: {
-        connectionString: 'mongodb://localhost/chirp'
+        connectionString: process.env.MDB
+        //connectionString: 'mongodb://localhost/chirp'
     }
 }

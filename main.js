@@ -1,8 +1,8 @@
 (function() {
-    var config = require('./config');
+    var config = require('./util/config');
     var express = require('express');
     var app = express();
-    var logger = require("./logger");
+    var logger = require("./util/logger");
 
     var bodyParser = require('body-parser');
     var multer = require('multer');
@@ -17,17 +17,21 @@
     {
         if (err) throw err;
 
+        // configure static pages
+        app.use('/', express.static(__dirname + '/static', {
+            "dotfiles":"ignore"
+        }));
+
         app.use(function(req,res,next){
             logger.debug("Arrived a [%s] request at [%s].",req.method,req.url);
             next();
         });
 
-        require('./routes')(app,db,logger,config);
-
-        app.use('/', express.static(__dirname + '/static', {
-            "dotfiles":"ignore"
-
-        }));
+        // configure the routes
+        var routes = ['post','user'];
+        routes.forEach(function(route){
+            require('./routes/'+route)(app,db,logger,config);
+        });
 
         // custom 404 page
         app.use(function(req, res) {

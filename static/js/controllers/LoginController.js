@@ -11,19 +11,21 @@
                 };
 
                 $scope.login = function (credentials) {
-                    AuthService.login(credentials,
-                        function (username) {
-                            if(username)
-                            {
-                                $cookies.chirp = username;
-                                $location.path('/home/' + username);
-                                $location.replace();
-                                $scope.$emit('logged');
-                            }
-                            else {
-                                alert('Wrong credentials!');
-                            }
-                        });
+                    AuthService.login(credentials,function (username)
+                    {
+                        if(username)
+                        {
+                            $cookies.chirp = username;
+
+                            $location.path('/home');
+                            $location.replace();
+
+                            $scope.$emit('logged');
+                        }
+                        else {
+                            alert('Wrong credentials!');
+                        }
+                    });
                 };
             }
         ]);

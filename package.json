@@ -1,9 +1,13 @@
 {
-  "name": "chirp-backend",
-  "version": "0.0.1",
-  "description": "Chirp server",
+  "name": "chirp",
+  "version": "0.1.0",
+  "description": "A Twitter clone.",
   "main": "app.js",
+  "scripts": {
+    "start": "node main.js"
+  },
   "author": "Antonio Di Motta",
+  "license": "",
   "dependencies": {
     "body-parser": "^1.12.2",
     "cors": "^2.5.3",
@@ -19,6 +23,7 @@
     "url": "https://github.com/antdimot/chirp.git"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=0.10.0",
+    "npm": "2.1.x"
   }
 }

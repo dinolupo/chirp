@@ -2,34 +2,37 @@
     'use strict';
 
     angular.module('chirp')
-        .controller('HomeCtrl', ['$scope','$log','$http','$location','$route','$routeParams','DataService',
-        function ($scope,$log,$http,$location,$route,$routeParams,DataService)
+        .controller('HomeCtrl', ['$scope','$log','$http','$location','$route','DataService','AuthService',
+        function ($scope,$log,$http,$location,$route,DataService,AuthService)
         {
-            $scope.followingcount = $scope.$parent.followingcount;
-
-            DataService.getHomePostList($routeParams.username,
-                function (data) {
-                    $scope.posts = data;
-                });
-
-            $scope.send = function(message)
+            if(AuthService.isLogged())
             {
-                var username = $scope.$parent.username;
+                var currentuser = AuthService.getUser();
 
-                DataService.sendMessage(username,message,function(data){
-                    if(data.result==1)
-                    {
-                        alert('Message sended!');
+                $scope.followingcount = currentuser.followingcount;
+                $scope.followercount = currentuser.followercount;
 
-                        $route.reload();
-                    }
-                    else
+                DataService.getHomePostList(currentuser.username,
+                    function (data) {
+                        $scope.posts = data;
+                    });
+
+                $scope.send = function(message)
+                {
+                    DataService.sendMessage(currentuser.username,message,function(data)
                     {
-                        alert('Message is not send!');
-                    }
-                });
+                        if(data.result==1)
+                        {
+                            alert('Message sent!');
+
+                            $route.reload();
+                        }
+                        else
+                        {
+                            alert('Message is not send!');
+                        }
+                    });
+                }
             }
-        }
-        ]);
-
+        }]);
 })();

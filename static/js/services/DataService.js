@@ -12,28 +12,29 @@
 
             return {
                 getPublicPostList: function (callBack) {
-                    $http.get(config.api + "/public")
+                    $http.get(config.api + "/post/public")
                         .success(function (data) {
                             callBack(data);
                         })
                         .error(dataServiceErrorHandler);
                 },
                 getHomePostList: function (username,callBack) {
-                    $http.get(config.api + "/home/" + username)
+                    $http.get(config.api + "/post/home/" + username)
                         .success(function (data) {
                             callBack(data);
                         })
                         .error(dataServiceErrorHandler);
                 },
-                getUserByCredentials: function (username,password,callBack) {
-                    $http.post(config.api + "/authenticate",{username: username,password: password})
+                getUserByCredentials: function (username,password,callBack)
+                {
+                    $http.get(config.api + "/user/authenticate/" + username + "/" + password )
                         .success(function (data) {
                             callBack(data);
                         })
                         .error(dataServiceErrorHandler);
                 },
                 getUserByToken: function (token,callBack) {
-                    $http.post(config.api + "/user",{token: token})
+                    $http.get(config.api + "/user/access/" + token)
                         .success(function (data) {
                             callBack(data);
                         })

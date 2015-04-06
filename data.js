@@ -41,7 +41,7 @@ db.posts.insert(
         "displayname": "The user2",
         "image":"defaultUser.png",
         "timestamp": date3,
-        "text": "The life is beautiful?"
+        "text": "The life is beautiful."
     }
 ]);
 
