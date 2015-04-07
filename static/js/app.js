@@ -33,6 +33,10 @@ angular.module('chirp', ['ngRoute','ngSanitize','ngCookies'])
                 templateUrl: 'partials/followers-list-view.html',
                 controller: 'FollowersCtrl'
             })
+            .when('/signin',{
+                templateUrl: 'partials/register-form-view.html',
+                controller: 'RegisterCtrl'
+            })
             .otherwise({
                 redirectTo: '/public'
             });

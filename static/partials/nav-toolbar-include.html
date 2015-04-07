@@ -9,7 +9,8 @@
             <span ng-show="islogged">
                 <a href="#/home">{{displayname}}</a>
             </span>&nbsp;&nbsp;
-            <a class="btn btn-default" href="#/login" role="button" ng-show="!islogged">sign in</a>
+            <a class="btn btn-default" href="#/signin" role="button" ng-show="!islogged">sign in</a>
+            <a class="btn btn-default" href="#/login" role="button" ng-show="!islogged">log in</a>
             <a class="btn btn-default" ng-click="logout()" role="button" ng-show="islogged">sign out</a>
         </p>
     </div>

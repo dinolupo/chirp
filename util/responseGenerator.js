@@ -30,6 +30,12 @@ module.exports = function(ctx)
         ctx.logger.debug('Response not found at [%s]',req.url);
         res.status(500).jsonp({ error: err });
     };
+
+    ctx.sendOK = function(req,res)
+    {
+        ctx.logger.debug('Response OK at [%s]',req.url);
+        res.status(200).jsonp({});
+    };
 }
 
 

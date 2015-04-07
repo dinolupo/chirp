@@ -107,4 +107,30 @@ module.exports = function(ctx)
         });
     });
 
+    // post a new message
+    ctx.app.post( baseurl + '/user', function(req,res)
+    {
+        var username = req.body.username;
+        var password = req.body.password;
+        var displayname = req.body.displayname;
+        var email = req.body.email;
+
+        var user = {
+            "username": username,
+            "displayname": displayname,
+            "password": password,
+            "email": email,
+            "image": ctx.config.image,
+            "following": [],
+            "followers": []
+        };
+
+        users.save(user,function(err)
+        {
+            if(err) throw err;
+
+            ctx.sendOK(req,res);
+        });
+
+    });
 }

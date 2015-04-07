@@ -69,6 +69,22 @@
                         .error(function(){
                             callBack();
                         })
+                },
+                register: function(username,displayname,email,password,callBack) {
+                    var user = {
+                        "username": username,
+                        "password": password,
+                        "displayname": displayname,
+                        "email": email
+                    };
+
+                    $http.post(config.api + "/user",user)
+                        .success(function (data, status, headers, config)  {
+                            callBack(data);
+                        })
+                        .error(function(){
+                            callBack();
+                        })
                 }
             }
         }]);

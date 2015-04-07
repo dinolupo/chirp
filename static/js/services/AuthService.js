@@ -55,6 +55,20 @@
                             else callBack();
                         }
                     )
+                },
+                signin: function (profile,callBack)
+                {
+                    var username = profile.username;
+                    var displayname = profile.displayname;
+                    var email = profile.email;
+                    var password = profile.password;
+                    var confirmpassword = profile.confirmpassword;
+
+                    DataService.register(username,displayname,email,password,
+                        function() {
+                            callBack();
+                        }
+                    );
                 }
             }
         }]);
