@@ -51,6 +51,24 @@
                         .error(function(){
                             callBack();
                         })
+                },
+                getFollowingList: function (username,callBack) {
+                    $http.get(config.api + "/user/following/" + username)
+                        .success(function (data, status, headers, config) {
+                            callBack(data);
+                        })
+                        .error(function(){
+                            callBack();
+                        })
+                },
+                getFollowersList: function (username,callBack) {
+                    $http.get(config.api + "/user/followers/" + username)
+                        .success(function (data, status, headers, config) {
+                            callBack(data);
+                        })
+                        .error(function(){
+                            callBack();
+                        })
                 }
             }
         }]);

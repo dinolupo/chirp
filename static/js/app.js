@@ -25,6 +25,14 @@ angular.module('chirp', ['ngRoute','ngSanitize','ngCookies'])
                 templateUrl: 'partials/login-form-view.html',
                 controller: 'LoginCtrl'
             })
+            .when('/following',{
+                templateUrl: 'partials/following-list-view.html',
+                controller: 'FollowingCtrl'
+            })
+            .when('/followers',{
+                templateUrl: 'partials/followers-list-view.html',
+                controller: 'FollowersCtrl'
+            })
             .otherwise({
                 redirectTo: '/public'
             });

@@ -63,7 +63,7 @@ module.exports = function(ctx)
         });
     });
 
-    // get the friends of a user using a token
+    // get the following of a user
     ctx.app.get( baseurl + '/user/following/:token', function(req,res)
     {
         var token = req.params.token;
@@ -85,5 +85,26 @@ module.exports = function(ctx)
         });
     });
 
+    // get the followers of a user
+    ctx.app.get( baseurl + '/user/followers/:token', function(req,res)
+    {
+        var token = req.params.token;
+
+        users.findOne({'username':token},function(err, data)
+        {
+            if (err) throw err;
+
+            if (data) {
+                users.find({'following':data._id}).toArray(function (err, items) {
+                    if (err) throw err;
+
+                    ctx.sendJson(req, res, items);
+                });
+            }
+            else {
+                ctx.sendForbidden(req,res);
+            }
+        });
+    });
 
 }
