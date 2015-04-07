@@ -1,4 +1,4 @@
-module.exports = (function()
+module.exports = function(ctx)
 {
     var winston = require('winston');
     winston.emitErrs = true;
@@ -32,7 +32,7 @@ module.exports = (function()
         }
     };
 
-    return logger;
-})();
+    ctx.logger = logger;
+}
 
 

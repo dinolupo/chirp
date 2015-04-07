@@ -1,3 +1,7 @@
+# 07/04/2015
+## API
+* Added **appContext** logic for encapsulation of utilities
+
 # 06/04/2015
 ## API
 * Updated security api **authenticate** and **access**
