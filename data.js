@@ -54,7 +54,8 @@ db.users.insert(
         "password": "pass",
         "email": "antonio.dimotta@gmail.com",
         "image":"defaultUser.png",
-        "following": [user2Id]
+        "following": [user2Id],
+        "followers": [user2Id,user3Id]
     },
     {
         "_id": user2Id,
@@ -63,7 +64,8 @@ db.users.insert(
         "password": "pass",
         "email": "user2@email.com",
         "image":"defaultUser.png",
-        "following": [user1Id]
+        "following": [user1Id],
+        "followers": [user1Id]
     },
     {
         "_id": user3Id,
@@ -72,6 +74,7 @@ db.users.insert(
         "password": "pass",
         "email": "user3@email.com",
         "image":"defaultUser.png",
-        "following": [user1Id]
+        "following": [user1Id],
+        "followers": []
     }
 ]);

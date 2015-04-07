@@ -18,12 +18,8 @@
                             if(data)
                             {
                                 $log.debug(data);
-                                if(data.result==1)
-                                {
-                                    _authUser = data.user;
-                                    callBack(_authUser.username);
-                                }
-                                else callBack();
+                                _authUser = data;
+                                callBack(_authUser.username);
                             }
                             else callBack();
                         }

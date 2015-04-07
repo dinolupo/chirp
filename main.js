@@ -40,16 +40,12 @@
 
         // custom 404 page
         app.use(function(req, res) {
-            appContext.logger.debug('Not found request [%s]',req.url);
-            res.status(404).jsonp({ error: '404 - Not Found' });
+            appContext.sendNotFound(req,res);
         });
 
         // custom 500 page
         app.use(function(err,req,res,next) {
-            appContext.logger.error('Error on request [%s], stack [%s]',req.url,err.stack);
-            next(err);
-        },function(err,req,res) {
-            res.status(500).jsonp({ error: err });
+            appContext.sendError(err,req,res);
         });
 
         var port = process.env.PORT || 3000;

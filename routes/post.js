@@ -16,7 +16,7 @@ module.exports = function(ctx)
             .toArray(function(err,data) {
                 if(err) throw err;
 
-                ctx.jsonResponse(req,res,data);
+                ctx.sendJson(req,res,data);
             });
     });
 
@@ -32,11 +32,11 @@ module.exports = function(ctx)
                     .toArray(function (err, items) {
                         if (err) throw err;
 
-                        ctx.jsonResponse(req,res,items);
+                        ctx.sendJson(req,res,items);
                     });
             }
             else {
-                ctx.jsonResponse(req, res);
+                ctx.sendJson(req, res);
             }
         });
     });
@@ -46,18 +46,18 @@ module.exports = function(ctx)
     {
         var username = req.params.username;
 
-        users.findOne({'username': username}, {'limit':limit,'fields': {'_id': 1}},
+        users.findOne({'username': username},{'limit':limit,'fields': {'_id': 1}},
             function(err, data) {
                 if (data) {
                     posts.find({'sourceuser': data._id},{'fields': postListFields,'sort': {'timestamp':-1}})
                         .toArray(function (err, items) {
                             if (err) throw err;
 
-                            ctx.jsonResponse(req, res, items);
+                            ctx.sendJson(req, res, items);
                         });
                 }
                 else {
-                    ctx.jsonResponse(req, res);
+                    ctx.sendJson(req, res);
                 }
             });
     });
@@ -86,11 +86,11 @@ module.exports = function(ctx)
                     {
                         if(err) throw err;
 
-                        ctx.jsonResponse(req,res,{'result':1});
+                        ctx.sendJson(req,res,{'result':1});
                     });
                 }
                 else {
-                    ctx.jsonResponse(req,res,{'result':0});
+                    ctx.sendJson(req,res,{'result':0});
                 }
             });
     });
