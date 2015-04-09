@@ -6,12 +6,26 @@
             function ($scope,$log,$location,$cookies,AuthService)
         {
             $scope.$on('logged', function() {
-                if(AuthService.isLogged())
-                {
-                    $scope.displayname = AuthService.getUser().displayname;
-                    $scope.islogged = true;
-                }
+                $scope.displayname = AuthService.getUser().displayname;
+                $scope.islogged = true;
             });
+
+            var token = $cookies.chirp;
+            if( token )
+            {
+                AuthService.reloadUser(token, function(data)
+                {
+                    if(data)
+                    {
+                        $scope.islogged = true;
+                        $scope.$broadcast('logged');
+                        //$scope.$emit('logged');
+                    }
+                });
+            }
+            else {
+                $scope.islogged = false;
+            }
 
             $scope.$on('logout', function() {
                 AuthService.logout();
@@ -23,23 +37,9 @@
                 $location.replace();
             });
 
-            $scope.islogged = false;
-
             $scope.logout = function() {
                 $scope.$emit('logout');
             };
-
-            var token = $cookies.chirp;
-            if( token )
-            {
-                AuthService.reloadUser(token, function(data)
-                {
-                    if(data)
-                    {
-                        $scope.$emit('logged');
-                    }
-                });
-            }
         }
     ]);
 

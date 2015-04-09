@@ -6,7 +6,8 @@ angular.module('chirp', ['ngRoute','ngSanitize','ngCookies'])
     {
         "api": "http://localhost:3000/api/v1",
         "websiteurl": "http://localhost:63342/chirp/frontend",
-        "defaultimage": "default.png"
+        "defaultimage": "default.png",
+        "elapsedtime": 5000
     })
     .config(['$logProvider','$routeProvider', function($logProvider,$routeProvider)
     {

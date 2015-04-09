@@ -2,33 +2,17 @@
     'use strict';
 
     angular.module('chirp')
-        .controller('HomeCtrl', ['$scope','$log','$http','$location','$timeout','$route','DataService','AuthService',
-        function ($scope,$log,$http,$location,$timeout,$route,DataService,AuthService)
+        .controller('HomeCtrl', ['$scope','$log','$http','$location','$timeout','$route','DataService','AuthService','config',
+        function ($scope,$log,$http,$location,$timeout,$route,DataService,AuthService,config)
         {
-            if(AuthService.isLogged())
+            $scope.$on('$routeChangeSuccess', function ()
             {
                 var currentuser = AuthService.getUser();
 
-                $scope.followingcount = currentuser.followingcount;
-                $scope.followercount = currentuser.followercount;
-
-                $scope.getData = function(){
-                    DataService.getHomePostList(currentuser.username,
-                        function (data) {
-                            $scope.posts = data;
-                        });
-                };
-
-                $scope.intervalFunction = function(){
-                    $timeout(function() {
-                        $scope.getData();
-                        $scope.intervalFunction();
-                    }, 5000)
-                };
-
-                $scope.getData();
-
-                $scope.intervalFunction();
+                DataService.getHomePostList(currentuser.username,
+                    function (data) {
+                        $scope.posts = data;
+                    });
 
                 $scope.send = function(message)
                 {
@@ -45,6 +29,19 @@
                         }
                     });
                 }
-            }
+
+                $scope.followingcount = currentuser.followingcount;
+                $scope.followercount = currentuser.followercount;
+
+                $scope.intervalFunction = function(){
+                    $scope.getData();
+                    $timeout(function() {
+                        $scope.intervalFunction();
+                    }, config.elapsedtime)
+                };
+
+                $scope.intervalFunction();
+            });
+
         }]);
 })();

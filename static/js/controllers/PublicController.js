@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('chirp')
-        .controller('PublicCtrl', ['$scope', '$log', '$http', '$timeout', '$location','DataService',
-        function ($scope, $log, $http, $timeout, $location, DataService)
+        .controller('PublicCtrl', ['$scope', '$log', '$http', '$timeout', 'DataService', 'config',
+        function ($scope, $log, $http, $timeout, DataService, config)
         {
             $scope.getData = function(){
                 DataService.getPublicPostList(
@@ -13,10 +13,10 @@
             };
 
             $scope.intervalFunction = function(){
+                $scope.getData();
                 $timeout(function() {
-                    $scope.getData();
                     $scope.intervalFunction();
-                }, 5000)
+                }, config.elapsedtime)
             };
 
             $scope.getData();
