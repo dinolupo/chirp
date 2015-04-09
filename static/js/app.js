@@ -33,7 +33,7 @@ angular.module('chirp', ['ngRoute','ngSanitize','ngCookies'])
                 templateUrl: 'partials/followers-list-view.html',
                 controller: 'FollowersCtrl'
             })
-            .when('/signin',{
+            .when('/signup',{
                 templateUrl: 'partials/register-form-view.html',
                 controller: 'RegisterCtrl'
             })
