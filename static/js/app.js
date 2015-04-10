@@ -4,8 +4,9 @@
 angular.module('chirp', ['ngRoute','ngSanitize','ngCookies'])
     .constant("config",
     {
-        "api": "http://localhost:3000/api/v1",
-        "websiteurl": "http://localhost:63342/chirp/frontend",
+        //"api": "http://localhost:3000/api/v1",
+        "api": "http://chirp.dimotta.net/api/v1",
+        "websiteurl": "http://chirp.dimotta.net",
         "defaultimage": "default.png",
         "elapsedtime": 5000
     })
