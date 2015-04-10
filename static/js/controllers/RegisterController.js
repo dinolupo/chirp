@@ -6,13 +6,20 @@
             function ($scope, $log, $location, $cookies, AuthService)
             {
                 $scope.signin = function (profile) {
-                    AuthService.signin(profile,function()
+                    if(profile.password != profile.confirmpassword)
                     {
-                        alert('User signed!');
+                        alert('Password are different!')
+                    }
+                    else
+                    {
+                        AuthService.signin(profile,function()
+                        {
+                            alert('User signed!');
 
-                        $location.path('/public');
-                        $location.replace();
-                    });
+                            $location.path('/public');
+                            $location.replace();
+                        });
+                    }
                 };
             }
         ]);

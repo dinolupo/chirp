@@ -5,43 +5,43 @@
         .controller('HomeCtrl', ['$scope','$log','$http','$location','$timeout','$route','DataService','AuthService','config',
         function ($scope,$log,$http,$location,$timeout,$route,DataService,AuthService,config)
         {
-            $scope.$on('$routeChangeSuccess', function ()
+            $scope.$on('logged', function()
             {
-                var currentuser = AuthService.getUser();
+                var currentuser = $scope.$parent.user;
+                $log.debug(currentuser);
 
-                DataService.getHomePostList(currentuser.username,
-                    function (data) {
-                        $scope.posts = data;
-                    });
+                if (currentuser != null) {
+                    $scope.followingcount = currentuser.followingcount;
+                    $scope.followercount = currentuser.followercount;
 
-                $scope.send = function(message)
-                {
-                    DataService.sendMessage(currentuser.username,message,function(data)
-                    {
-                        if(data.result==1)
-                        {
-                            alert('Message sent!');
-                            $route.reload();
-                        }
-                        else
-                        {
-                            alert('Message is not send!');
-                        }
-                    });
-                }
+                    $scope.getData = function () {
+                        DataService.getHomePostList(currentuser.username,
+                            function (data) {
+                                $scope.posts = data;
+                            });
+                    }
 
-                $scope.followingcount = currentuser.followingcount;
-                $scope.followercount = currentuser.followercount;
+                    $scope.send = function (message) {
+                        DataService.sendMessage(currentuser.username, message, function (data) {
+                            if (data.result == 1) {
+                                alert('Message sent!');
+                                $route.reload();
+                            }
+                            else {
+                                alert('The message has not been sent!');
+                            }
+                        });
+                    }
 
-                $scope.intervalFunction = function(){
-                    $scope.getData();
-                    $timeout(function() {
-                        $scope.intervalFunction();
-                    }, config.elapsedtime)
+                    $scope.intervalFunction = function () {
+                        $scope.getData();
+                        $timeout(function () {
+                            $scope.intervalFunction();
+                        }, config.elapsedtime)
+                    };
+
+                    $scope.intervalFunction();
                 };
-
-                $scope.intervalFunction();
             });
-
         }]);
 })();

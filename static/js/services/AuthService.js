@@ -45,7 +45,7 @@
                         function(data) {
                             if(data)
                             {
-                                $log.debug(data);
+                                //$log.debug(data);
                                 _authUser = data;
                                 callBack(_authUser.username);
                             }
