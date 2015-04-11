@@ -21,7 +21,7 @@
 
             $scope.getData();
 
-            $scope.intervalFunction();
+            //$scope.intervalFunction();
         }
     ]);
 

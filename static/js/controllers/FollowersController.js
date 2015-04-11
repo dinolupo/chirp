@@ -2,18 +2,17 @@
     'use strict';
 
     angular.module('chirp')
-        .controller('FollowersCtrl', ['$scope', '$log', '$http', '$location','DataService','AuthService',
-            function ($scope, $log, $http, $location, DataService, AuthService)
+        .controller('FollowersCtrl', ['$scope', '$log', '$http', '$location','DataService',
+            function ($scope, $log, $http, $location, DataService)
             {
-                if(AuthService.isLogged()) {
-                    var currentuser = AuthService.getUser();
-
+                var currentuser = $scope.$parent.user;
+                if (currentuser)
+                {
                     DataService.getFollowersList(currentuser.username,
                         function (data) {
                             $scope.users = data;
                         });
                 }
-
             }
         ]);
 

@@ -4,8 +4,8 @@
 angular.module('chirp', ['ngRoute','ngSanitize','ngCookies'])
     .constant("config",
     {
-        "api": "http://localhost:3000/api/v1",
-        //"api": "http://chirp.dimotta.net/api/v1",
+        //"api": "http://localhost:3000/api/v1",
+        "api": "http://chirp.dimotta.net/api/v1",
         "elapsedtime": 5000
     })
     .config(['$logProvider','$routeProvider', function($logProvider,$routeProvider)

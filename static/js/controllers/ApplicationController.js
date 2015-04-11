@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('chirp')
-        .controller('AppCtrl',['$scope','$log','$location','$cookies','AuthService',
-            function ($scope,$log,$location,$cookies,AuthService)
+        .controller('AppCtrl',['$scope','$log','$location','$cookies','$rootScope','AuthService',
+            function ($scope,$log,$location,$cookies,$rootScope,AuthService)
         {
             $scope.islogged = false;
             $scope.user = null;
@@ -26,7 +26,8 @@
 
                         $scope.displayname = $scope.user.displayname;
                         $scope.islogged = true;
-                        $scope.$emit('logged');
+
+                        $rootScope.$broadcast('logged');
                     }
                 });
             }
@@ -40,7 +41,7 @@
                 $location.path('/public');
                 $location.replace();
 
-                $scope.$emit('logout');
+                $rootScope.$broadcast('logout');
             };
         }
     ]);
