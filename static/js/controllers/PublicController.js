@@ -12,14 +12,14 @@
                     });
             };
 
-            $scope.intervalFunction = function(){
+            $scope.getData();
+
+            /*$scope.intervalFunction = function(){
                 $scope.getData();
                 $timeout(function() {
                     $scope.intervalFunction();
                 }, config.elapsedtime)
-            };
-
-            $scope.getData();
+            };*/
 
             //$scope.intervalFunction();
         }

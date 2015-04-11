@@ -2,47 +2,50 @@
     'use strict';
 
     angular.module('chirp')
-        .controller('AppCtrl',['$scope','$log','$location','$cookies','$rootScope','AuthService',
-            function ($scope,$log,$location,$cookies,$rootScope,AuthService)
+        .controller('AppCtrl',['$scope','$log','$location','$cookies','AuthService',
+            function ($scope,$log,$location,$cookies,AuthService)
         {
-            $scope.islogged = false;
-            $scope.user = null;
+            $scope.initViewAsLogged = function ()
+            {
+                $scope.user = AuthService.getUser();
+                $scope.islogged = true;
+
+                $scope.logout = function() {
+                    AuthService.logout();
+                    $scope.user = null;
+                    delete $cookies.chirp;
+                    $scope.islogged = false;
+
+                    $location.path('/public');
+                    $location.replace();
+
+                    $scope.$emit('logout');
+                };
+            };
 
             $scope.$on('logged', function() {
-                $scope.user = AuthService.getUser();
-
-                $scope.displayname = $scope.user.displayname;
-                $scope.islogged = true;
+                $scope.initViewAsLogged();
             });
 
-            var token = $cookies.chirp;
-            if( token )
+            if(AuthService.isLogged())
             {
-                AuthService.reloadUser(token, function(data)
-                {
-                    if(data)
-                    {
-                        $scope.user = AuthService.getUser();
-
-                        $scope.displayname = $scope.user.displayname;
-                        $scope.islogged = true;
-
-                        $rootScope.$broadcast('logged');
-                    }
-                });
+                $scope.initViewAsLogged();
             }
-
-            $scope.logout = function() {
-                AuthService.logout();
-                $scope.user = null;
-                delete $cookies.chirp;
+            else
+            {
                 $scope.islogged = false;
 
-                $location.path('/public');
-                $location.replace();
-
-                $rootScope.$broadcast('logout');
-            };
+                if( $cookies.chirp )
+                {
+                    AuthService.reloadUser($cookies.chirp, function(data)
+                    {
+                        if(data)
+                        {
+                            $scope.initViewAsLogged();
+                        }
+                    });
+                }
+            }
         }
     ]);
 

@@ -33,13 +33,16 @@
                 {
                     return _authUser;
                 },
+                isLogged: function(){
+                    return (_authUser!=null);
+                },
                 reloadUser: function(token,callBack)
                 {
                     DataService.getUserByToken(token,
                         function(data) {
                             if(data)
                             {
-                                $log.debug("[%s] DataService.signin > %s",new Date().toISOString(),data.username);
+                                $log.debug("[%s] DataService.reloadUser > %s",new Date().toISOString(),data.username);
                                 _authUser = data;
                                 callBack(_authUser.username);
                             }

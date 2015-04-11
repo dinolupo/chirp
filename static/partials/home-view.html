@@ -3,15 +3,15 @@
 
         <form method="post" name="messageForm" ng-submit="send(message)">
             <div class="form-group">
-                <h3>{{displayname}}</h3>
+                <h3>{{user.displayname}}</h3>
                 <ul class="list-group">
                     <li class="list-group-item">
                         <a href="#/following">FOLLOWING</a>
-                        <span class="badge">{{followingcount}}</span>
+                        <span class="badge">{{user.followingcount}}</span>
                     </li>
                     <li class="list-group-item">
                         <a href="#/followers">FOLLOWERS</a>
-                        <span class="badge">{{followercount}}</span>
+                        <span class="badge">{{user.followercount}}</span>
                     </li>
                 </ul>
                 <hr>

@@ -15,8 +15,8 @@
 
     <script src="lib/jquery.js" lang="javascript"></script>
     <script src="lib/angular.js" lang="javascript"></script>
-    <!--script src="lib/angular-ui-router.js.js" lang="javascript"></script-->
-    <script src="lib/angular-route.js" lang="javascript"></script>
+    <script src="lib/angular-ui-router.js" lang="javascript"></script>
+    <!--script src="lib/angular-route.js" lang="javascript"></script-->
     <script src="lib/angular-sanitize.js" lang="javascript"></script>
     <script src="lib/angular-cookies.js" lang="javascript"></script>
 
@@ -36,13 +36,31 @@
 <div class="container" ng-controller="AppCtrl">
     <div class="row">
         <div class="col-lg-12 col-md-12">
-            <div ng-include="'partials/nav-toolbar-include.html'"></div>
+
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#/public">
+                            <p class="lead"><b>Chirp</b></p>
+                        </a>
+                    </div>
+                    <p class="navbar-text navbar-right">
+                        <span ng-show="islogged">
+                            <a href="#/home">{{user.displayname}}</a>
+                        </span>&nbsp;&nbsp;
+                        <a class="btn btn-default" href="#/signup" role="button" ng-show="!islogged">sign up</a>
+                        <a class="btn btn-default" href="#/login" role="button" ng-show="!islogged">login</a>
+                        <a class="btn btn-default" ng-click="logout()" role="button" ng-show="islogged">logout</a>
+                    </p>
+                </div>
+            </nav>
+
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12 col-md-12">
 
-            <div ng-view style="padding-top: 1em"></div>
+            <div ui-view style="padding-top: 1em"></div>
 
         </div>
     </div>

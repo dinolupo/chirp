@@ -2,30 +2,18 @@
     'use strict';
 
     angular.module('chirp')
-        .controller('HomeCtrl', ['$scope','$rootScope','$log','$http','$location','$timeout','$route','DataService',
-        function ($scope,$rootScope,$log,$http,$location,$timeout,$route,DataService)
+        .controller('HomeCtrl', ['$scope','$log','$http','$location','$timeout','$cookies','DataService','AuthService',
+        function ($scope,$log,$http,$location,$timeout,$cookies,DataService,AuthService)
         {
-            var currentuser = $scope.$parent.user;
-            if (currentuser)
-            {
-                $scope.followingcount = currentuser.followingcount;
-                $scope.followercount = currentuser.followercount;
-
-                $scope.getData = function getData() {
-                    DataService.getHomePostList(currentuser.username,
-                        function (data) {
-                            $scope.posts = data;
-                        });
-                }
-
+            $scope.initView = function (){
+                $scope.user = AuthService.getUser();
                 $scope.send = function (message)
                 {
-                    DataService.sendMessage(currentuser.username, message, function (data)
+                    DataService.sendMessage($scope.user.username, message, function (data)
                     {
-                        if (data.result == 1)
+                        if (data.result)
                         {
                             alert('Message sent!');
-                            $route.reload();
                         }
                         else {
                             alert('The message has not been sent!');
@@ -33,17 +21,35 @@
                     });
                 }
 
-                $scope.getData();
+                $scope.loadPosts = function getData() {
+                    DataService.getHomePostList($scope.user.username,
+                        function (data) {
+                            $scope.posts = data;
+                        });
+                }
+
+                $scope.loadPosts();
             }
 
-            /*$scope.intervalFunction = function () {
-                $scope.getData();
-                $timeout(function () {
-                    $scope.intervalFunction();
-                }, config.elapsedtime)
-            };
-            $scope.intervalFunction();*/
+            $scope.$on('logged', function() {
+                $scope.initView();
+            });
 
-
+            if(AuthService.isLogged())
+            {
+                $scope.initView();
+            }
+            else
+            {
+                if( $cookies.chirp )
+                {
+                    AuthService.reloadUser($cookies.chirp, function(data)
+                    {
+                        if(data) {
+                            $scope.initView();
+                        }
+                    });
+                }
+            }
         }]);
 })();

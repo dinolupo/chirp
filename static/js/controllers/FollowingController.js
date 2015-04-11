@@ -2,16 +2,32 @@
     'use strict';
 
     angular.module('chirp')
-        .controller('FollowingCtrl', ['$scope', '$log', '$http', '$location','DataService',
-            function ($scope, $log, $http, $location, DataService)
+        .controller('FollowingCtrl', ['$scope', '$log', '$http', '$location','DataService','AuthService',
+            function ($scope, $log, $http, $location, DataService, AuthService)
             {
-                var currentuser = $scope.$parent.user;
-                if (currentuser)
+                $scope.initView = function ()
                 {
-                    DataService.getFollowingList(currentuser.username,
+                    DataService.getFollowingList(AuthService.getUser().username,
                         function (data) {
                             $scope.users = data;
                         });
+                }
+
+                if(AuthService.isLogged())
+                {
+                    $scope.initView();
+                }
+                else
+                {
+                    if( $cookies.chirp )
+                    {
+                        AuthService.reloadUser($cookies.chirp, function(data)
+                        {
+                            if(data) {
+                                $scope.initView();
+                            }
+                        });
+                    }
                 }
             }
         ]);

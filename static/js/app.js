@@ -1,45 +1,50 @@
 (function(){
     'use strict';
 
-angular.module('chirp', ['ngRoute','ngSanitize','ngCookies'])
+angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
     .constant("config",
     {
         "api": "http://localhost:3000/api/v1",
         //"api": "http://chirp.dimotta.net/api/v1",
         "elapsedtime": 5000
     })
-    .config(['$logProvider','$routeProvider', function($logProvider,$routeProvider)
+    .config(['$logProvider','$stateProvider','$urlRouterProvider', function($logProvider,$stateProvider,$urlRouterProvider)
     {
         $logProvider.debugEnabled(true);
 
-        $routeProvider
-            .when('/public', {
-                templateUrl: 'partials/post-list-view.html',
+        $urlRouterProvider.otherwise("/public");
+
+        $stateProvider
+            .state('public', {
+                url: "/public",
+                templateUrl: 'partials/public-view.html',
                 controller: 'PublicCtrl'
             })
-            .when('/home', {
-                templateUrl: 'partials/auth-post-list-view.html',
+            .state('home', {
+                url: "/home",
+                templateUrl: 'partials/home-view.html',
                 controller: 'HomeCtrl'
             })
-            .when('/login', {
+            .state('login', {
+                url: "/login",
                 templateUrl: 'partials/login-form-view.html',
                 controller: 'LoginCtrl'
             })
-            .when('/following',{
+            .state('following', {
+                url: "/following",
                 templateUrl: 'partials/following-list-view.html',
                 controller: 'FollowingCtrl'
             })
-            .when('/followers',{
+            .state('followers', {
+                url: "/followers",
                 templateUrl: 'partials/followers-list-view.html',
                 controller: 'FollowersCtrl'
             })
-            .when('/signup',{
+            .state('signup', {
+                url: "/signup",
                 templateUrl: 'partials/register-form-view.html',
                 controller: 'RegisterCtrl'
             })
-            .otherwise({
-                redirectTo: '/public'
-            });
     }
 ]);
 

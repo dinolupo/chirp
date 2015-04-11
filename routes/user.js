@@ -19,7 +19,6 @@ module.exports = function(ctx)
             if(err) throw err;
 
             if (data) {
-                //ctx.sendJson(req,res,{'result':1,'user':{
                 ctx.sendJson(req,res,{
                     "username": data.username,
                     "displayname": data.displayname,
@@ -46,7 +45,6 @@ module.exports = function(ctx)
             if (err) throw err;
 
             if (data) {
-                //ctx.sendJson(req,res,{'result':1,'user':{
                 ctx.sendJson(req,res,{
                     "username": data.username,
                     "displayname": data.displayname,
