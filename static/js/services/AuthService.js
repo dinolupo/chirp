@@ -17,7 +17,7 @@
                         function(data) {
                             if(data)
                             {
-                                $log.debug("DataService.getUserByCredential > " + data.username);
+                                $log.debug("[%s] DataService.getUserByCredential > %s",new Date().toISOString(),data.username);
                                 _authUser = data;
                                 callBack(_authUser.username);
                             }
@@ -26,7 +26,7 @@
                     )
                 },
                 logout: function() {
-                    $log.debug("DataService.logout > " + _authUser.username);
+                    $log.debug("[%s] DataService.logout > %s",new Date().toISOString(),_authUser.username);
                     _authUser = null;
                 },
                 getUser: function()
@@ -39,7 +39,7 @@
                         function(data) {
                             if(data)
                             {
-                                $log.debug("DataService.reloadUser > " + data.username);
+                                $log.debug("[%s] DataService.signin > %s",new Date().toISOString(),data.username);
                                 _authUser = data;
                                 callBack(_authUser.username);
                             }
@@ -56,7 +56,7 @@
 
                     DataService.register(username,displayname,email,password,
                         function() {
-                            $log.debug("DataService.signin > " + data.username);
+                            $log.debug("[%s] DataService.signin > %s",new Date().toISOString(),data.username);
                             callBack();
                         }
                     );
