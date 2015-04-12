@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('chirp')
-        .controller('FollowersCtrl', ['$scope', '$log', '$http', '$location','DataService','AuthService',
-            function ($scope, $log, $http, $location, DataService, AuthService)
+        .controller('FollowersCtrl', ['$scope', '$log', '$location','DataService','AuthService',
+            function ($scope, $log, $location, DataService, AuthService)
             {
                 $scope.initView = function ()
                 {

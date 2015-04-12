@@ -4,8 +4,8 @@
 angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
     .constant("config",
     {
-        //"api": "http://localhost:3000/api/v1",
-        "api": "http://chirp.dimotta.net/api/v1",
+        "api": "http://localhost:3000/api/v1",
+        //"api": "http://chirp.dimotta.net/api/v1",
         "elapsedtime": 6000
     })
     .config(['$logProvider','$stateProvider','$urlRouterProvider', function($logProvider,$stateProvider,$urlRouterProvider)
@@ -47,6 +47,12 @@ angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
                 url: "/signup",
                 templateUrl: 'partials/register-form-view.html',
                 controller: 'RegisterCtrl'
+            })
+            .state('info', {
+                url: "/info/:username",
+                templateUrl: 'partials/info-view.html',
+                controller: 'InfoCtrl',
+                controllerAs: 'vm'
             })
     }
 ]);

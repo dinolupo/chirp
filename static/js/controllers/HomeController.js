@@ -2,14 +2,16 @@
     'use strict';
 
     angular.module('chirp')
-        .controller('HomeCtrl', ['$scope','$log','$http','$location','$timeout','$cookies','DataService','AuthService','config',
-        function ($scope,$log,$http,$location,$timeout,$cookies,DataService,AuthService,config)
+        .controller('HomeCtrl', ['$scope','$log','$location','$timeout','$cookies','DataService','AuthService','config',
+        function ($scope,$log,$location,$timeout,$cookies,DataService,AuthService,config)
         {
             var ctrl = this;
 
             ctrl.initView = function ()
             {
                 ctrl.user = AuthService.getUser();
+                ctrl.message = '';
+
                 ctrl.send = function (message)
                 {
                     DataService.sendMessage(ctrl.user.username, message, function (data)
@@ -17,6 +19,7 @@
                         if (data.result)
                         {
                             alert('Message sent!');
+                            ctrl.message = '';
                         }
                         else {
                             alert('The message has not been sent!');

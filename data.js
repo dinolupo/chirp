@@ -18,7 +18,7 @@ db.posts.insert(
 [
     {
         "_id": post1Id,
-        "sourceuser": user1Id,
+        "username": 'antdimot',
         "targetusers": [user1Id,user2Id,user3Id],
         "displayname": "Antonio Di Motta",
         "image":"defaultUser.png",
@@ -27,7 +27,7 @@ db.posts.insert(
     },
     {
         "_id": post2Id,
-        "sourceuser": user1Id,
+        "username": 'antdimot',
         "targetusers": [user1Id,user2Id,user3Id],
         "displayname": "Antonio Di Motta",
         "image":"defaultUser.png",
@@ -36,7 +36,7 @@ db.posts.insert(
     },
     {
         "_id": post3Id,
-        "sourceuser": user2Id,
+        "username": 'user2',
         "targetusers": [user1Id,user2Id],
         "displayname": "The user2",
         "image":"defaultUser.png",

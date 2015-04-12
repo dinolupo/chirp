@@ -6,7 +6,7 @@ module.exports = function(ctx)
     var posts = ctx.db.collection('posts');
     var users = ctx.db.collection('users');
 
-    var postListFields = {'displayname':1,'timestamp':1,'text':1,'image':1};
+    var postListFields = {'username':1,'displayname':1,'timestamp':1,'text':1,'image':1};
     var userSearchFields = {'_id':1,'following':1,'displayname':1,'image':1};
 
     // get items posted on public timeline
@@ -46,19 +46,11 @@ module.exports = function(ctx)
     {
         var username = req.params.username;
 
-        users.findOne({'username': username},{'limit':limit,'fields': {'_id': 1}},
-            function(err, data) {
-                if (data) {
-                    posts.find({'sourceuser': data._id},{'fields': postListFields,'sort': {'timestamp':-1}})
-                        .toArray(function (err, items) {
-                            if (err) throw err;
+        posts.find({'username': username},{'fields': postListFields,'sort': {'timestamp':-1}})
+            .toArray(function (err, items) {
+                if (err) throw err;
 
-                            ctx.sendJson(req, res, items);
-                        });
-                }
-                else {
-                    ctx.sendJson(req, res);
-                }
+                ctx.sendJson(req, res, items);
             });
     });
 
@@ -72,7 +64,7 @@ module.exports = function(ctx)
         {
                 if (data) {
                     var newPost = {
-                        "sourceuser": data._id,
+                        "username": username,
                         "targetusers": data.following,
                         "displayname": data.displayname,
                         "timestamp": new Date().toISOString(),

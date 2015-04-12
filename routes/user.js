@@ -131,4 +131,31 @@ module.exports = function(ctx)
         });
 
     });
+
+    // get the user info
+    ctx.app.get( baseurl + '/user/info/:username', function(req,res)
+    {
+        var username = req.params.username;
+
+        users.findOne({'username':username},function(err,data)
+        {
+            if(err) throw err;
+
+            if (data) {
+                ctx.sendJson(req,res,{
+                    "username": data.username,
+                    "displayname": data.displayname,
+                    "password": data.password,
+                    "email": data.email,
+                    "image": data.image,
+                    "followingcount": data.following.length,
+                    "followercount": data.followers.length
+                });
+            }
+            else {
+                ctx.sendForbidden(req,res);
+            }
+        });
+    });
+
 }

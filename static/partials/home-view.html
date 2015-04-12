@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-lg-3 col-md-3">
 
-        <form method="post" name="messageForm" ng-submit="vm.send(message)">
+        <form method="post" name="messageForm" ng-submit="vm.send(vm.message)">
             <div class="form-group">
                 <h3>{{vm.user.displayname}}</h3>
                 <ul class="list-group">
@@ -15,7 +15,7 @@
                     </li>
                 </ul>
                 <hr>
-                <textarea type="text" id="message" class="form-control" ng-model="message" ng-required="true" rows="4"/>
+                <textarea type="text" id="message" class="form-control" ng-model="vm.message" ng-required="true" rows="4"/>
             </div>
             <p class="text-right">
                 <button type="submit" class="btn btn-success btn-xs">&nbsp;&nbsp;post&nbsp;&nbsp;</button>
@@ -26,7 +26,7 @@
     <div class="col-lg-9 col-md-9">
 
         <div class="list-group">
-            <a class="list-group-item" ng-repeat="item in vm.posts">
+            <a href="#/info/{{item.username}}" class="list-group-item" ng-repeat="item in vm.posts">
                 <div class="row">
                     <div class="col-lg-1 col-md-1">
                         <img ng-src="images/{{item.image}}" width="50px" height="50px">

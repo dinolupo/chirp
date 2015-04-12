@@ -77,9 +77,17 @@
                         "displayname": displayname,
                         "email": email
                     };
-
                     $http.post(config.api + "/user",user)
                         .success(function (data, status, headers, config)  {
+                            callBack(data);
+                        })
+                        .error(function(){
+                            callBack();
+                        })
+                },
+                getUserInfo: function(username,callBack) {
+                    $http.get(config.api + "/user/info/" + username)
+                        .success(function (data, status, headers, config) {
                             callBack(data);
                         })
                         .error(function(){

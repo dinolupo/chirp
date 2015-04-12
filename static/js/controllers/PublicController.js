@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('chirp')
-        .controller('PublicCtrl', ['$scope','$log','$http','$timeout','DataService','config',
-        function ($scope, $log, $http, $timeout, DataService, config)
+        .controller('PublicCtrl', ['$scope','$log','$timeout','DataService','config',
+        function ($scope, $log, $timeout, DataService, config)
         {
             var ctrl = this;
 

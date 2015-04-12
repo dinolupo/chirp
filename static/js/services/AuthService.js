@@ -34,7 +34,11 @@
                     return _authUser;
                 },
                 isLogged: function(){
-                    return (_authUser!=null);
+                    if(_authUser!=null)
+                    {
+                        return true;
+                    }
+                    return false;
                 },
                 reloadUser: function(token,callBack)
                 {
