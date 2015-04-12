@@ -2,15 +2,18 @@
     'use strict';
 
     angular.module('chirp')
-        .controller('LoginCtrl', ['$scope', '$log', '$location', '$cookies', '$rootScope', 'AuthService',
-            function ($scope, $log, $location, $cookies, $rootScope, AuthService)
+        .controller('LoginCtrl', ['$log', '$location', '$cookies', '$rootScope', 'AuthService',
+            function ($log, $location, $cookies, $rootScope, AuthService)
             {
-                $scope.credentials = {
+                var vm = this;
+
+                vm.credentials = {
                     username: '',
                     password: ''
                 };
 
-                $scope.login = function (credentials) {
+                vm.login = function (credentials)
+                {
                     AuthService.login(credentials,function (username)
                     {
                         if(username)

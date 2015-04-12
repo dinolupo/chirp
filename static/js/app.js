@@ -18,17 +18,20 @@ angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
             .state('public', {
                 url: "/public",
                 templateUrl: 'partials/public-view.html',
-                controller: 'PublicCtrl'
+                controller: 'PublicCtrl',
+                controllerAs: 'vm'
             })
             .state('home', {
                 url: "/home",
                 templateUrl: 'partials/home-view.html',
-                controller: 'HomeCtrl'
+                controller: 'HomeCtrl',
+                controllerAs: 'vm'
             })
             .state('login', {
                 url: "/login",
                 templateUrl: 'partials/login-form-view.html',
-                controller: 'LoginCtrl'
+                controller: 'LoginCtrl',
+                controllerAs: 'vm'
             })
             .state('following', {
                 url: "/following",

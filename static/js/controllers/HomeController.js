@@ -5,11 +5,14 @@
         .controller('HomeCtrl', ['$scope','$log','$http','$location','$timeout','$cookies','DataService','AuthService',
         function ($scope,$log,$http,$location,$timeout,$cookies,DataService,AuthService)
         {
-            $scope.initView = function (){
-                $scope.user = AuthService.getUser();
-                $scope.send = function (message)
+            var ctrl = this;
+
+            ctrl.initView = function ()
+            {
+                ctrl.user = AuthService.getUser();
+                ctrl.send = function (message)
                 {
-                    DataService.sendMessage($scope.user.username, message, function (data)
+                    DataService.sendMessage(ctrl.user.username, message, function (data)
                     {
                         if (data.result)
                         {
@@ -21,23 +24,22 @@
                     });
                 }
 
-                $scope.loadPosts = function getData() {
-                    DataService.getHomePostList($scope.user.username,
+                ctrl.loadPosts = function getData() {
+                    DataService.getHomePostList(ctrl.user.username,
                         function (data) {
-                            $scope.posts = data;
+                            ctrl.posts = data;
                         });
                 }
-
-                $scope.loadPosts();
+                ctrl.loadPosts();
             }
 
             $scope.$on('logged', function() {
-                $scope.initView();
+                ctrl.initView();
             });
 
             if(AuthService.isLogged())
             {
-                $scope.initView();
+                ctrl.initView();
             }
             else
             {
@@ -46,7 +48,7 @@
                     AuthService.reloadUser($cookies.chirp, function(data)
                     {
                         if(data) {
-                            $scope.initView();
+                            ctrl.initView();
                         }
                     });
                 }

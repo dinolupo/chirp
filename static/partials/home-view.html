@@ -1,17 +1,17 @@
 <div class="row">
     <div class="col-lg-3 col-md-3">
 
-        <form method="post" name="messageForm" ng-submit="send(message)">
+        <form method="post" name="messageForm" ng-submit="vm.send(message)">
             <div class="form-group">
-                <h3>{{user.displayname}}</h3>
+                <h3>{{vm.user.displayname}}</h3>
                 <ul class="list-group">
                     <li class="list-group-item">
                         <a href="#/following">FOLLOWING</a>
-                        <span class="badge">{{user.followingcount}}</span>
+                        <span class="badge">{{vm.user.followingcount}}</span>
                     </li>
                     <li class="list-group-item">
                         <a href="#/followers">FOLLOWERS</a>
-                        <span class="badge">{{user.followercount}}</span>
+                        <span class="badge">{{vm.user.followercount}}</span>
                     </li>
                 </ul>
                 <hr>
@@ -26,7 +26,7 @@
     <div class="col-lg-9 col-md-9">
 
         <div class="list-group">
-            <a class="list-group-item" ng-repeat="item in posts">
+            <a class="list-group-item" ng-repeat="item in vm.posts">
                 <div class="row">
                     <div class="col-lg-1 col-md-1">
                         <img ng-src="images/{{item.image}}" width="50px" height="50px">

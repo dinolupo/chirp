@@ -5,18 +5,20 @@
         .controller('AppCtrl',['$scope','$log','$location','$cookies','AuthService',
             function ($scope,$log,$location,$cookies,AuthService)
         {
-            $scope.initViewAsLogged = function ()
+            var ctrl = this;
+
+            ctrl.initViewAsLogged = function()
             {
-                $scope.user = AuthService.getUser();
-                $scope.islogged = true;
+                ctrl.user = AuthService.getUser();
+                ctrl.islogged = true;
 
-                $scope.logout = function() {
+                ctrl.logout = function() {
                     AuthService.logout();
-                    $scope.user = null;
+                    ctrl.user = null;
                     delete $cookies.chirp;
-                    $scope.islogged = false;
+                    ctrl.islogged = false;
 
-                    $location.path('/public');
+                    $location.path('/pubic');
                     $location.replace();
 
                     $scope.$emit('logout');
@@ -24,16 +26,16 @@
             };
 
             $scope.$on('logged', function() {
-                $scope.initViewAsLogged();
+                ctrl.initViewAsLogged();
             });
 
             if(AuthService.isLogged())
             {
-                $scope.initViewAsLogged();
+                ctrl.initViewAsLogged();
             }
             else
             {
-                $scope.islogged = false;
+                ctrl.islogged = false;
 
                 if( $cookies.chirp )
                 {
@@ -41,7 +43,7 @@
                     {
                         if(data)
                         {
-                            $scope.initViewAsLogged();
+                            ctrl.initViewAsLogged();
                         }
                     });
                 }
