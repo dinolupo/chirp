@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('chirp')
-        .controller('PublicCtrl', [ '$log', '$http', '$timeout', 'DataService', 'config',
-        function ( $log, $http, $timeout, DataService, config)
+        .controller('PublicCtrl', ['$scope','$log','$http','$timeout','DataService','config',
+        function ($scope, $log, $http, $timeout, DataService, config)
         {
             var ctrl = this;
 
@@ -14,16 +14,21 @@
                     });
             };
 
-            ctrl.getData();
+            ctrl.intervalFunction = function()
+            {
+                ctrl.getData();
 
-            /*$scope.intervalFunction = function(){
-                $scope.getData();
-                $timeout(function() {
-                    $scope.intervalFunction();
+                var promise = $timeout(function(){
+                    ctrl.getData();
+                    ctrl.intervalFunction();
                 }, config.elapsedtime)
-            };*/
 
-            //$scope.intervalFunction();
+                $scope.$on('$destroy', function(){
+                    $timeout.cancel(promise);
+                });
+            };
+
+            ctrl.intervalFunction();
         }
     ]);
 

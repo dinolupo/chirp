@@ -6,7 +6,7 @@ angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
     {
         //"api": "http://localhost:3000/api/v1",
         "api": "http://chirp.dimotta.net/api/v1",
-        "elapsedtime": 5000
+        "elapsedtime": 6000
     })
     .config(['$logProvider','$stateProvider','$urlRouterProvider', function($logProvider,$stateProvider,$urlRouterProvider)
     {

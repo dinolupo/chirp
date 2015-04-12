@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('chirp')
-        .controller('HomeCtrl', ['$scope','$log','$http','$location','$timeout','$cookies','DataService','AuthService',
-        function ($scope,$log,$http,$location,$timeout,$cookies,DataService,AuthService)
+        .controller('HomeCtrl', ['$scope','$log','$http','$location','$timeout','$cookies','DataService','AuthService','config',
+        function ($scope,$log,$http,$location,$timeout,$cookies,DataService,AuthService,config)
         {
             var ctrl = this;
 
@@ -30,7 +30,6 @@
                             ctrl.posts = data;
                         });
                 }
-                ctrl.loadPosts();
             }
 
             $scope.$on('logged', function() {
@@ -53,5 +52,21 @@
                     });
                 }
             }
+
+            ctrl.intervalFunction = function()
+            {
+                ctrl.loadPosts();
+
+                var promise = $timeout(function(){
+                    ctrl.loadPosts();
+                    ctrl.intervalFunction();
+                }, config.elapsedtime)
+
+                $scope.$on('$destroy', function(){
+                    $timeout.cancel(promise);
+                });
+            };
+
+            ctrl.intervalFunction();
         }]);
 })();
