@@ -8,8 +8,8 @@ module.exports = function (ctx)
         },
         image: 'defaultUser.png',
         mongodb: {
-            connectionString: process.env.MDB
-            //connectionString: 'mongodb://localhost/chirp'
+            //connectionString: process.env.MDB
+            connectionString: 'mongodb://localhost/chirp'
         }
     }
 }

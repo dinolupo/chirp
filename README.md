@@ -1,3 +1,3 @@
 # Chirp
 
-A Twitter clone built using [MEAN stack](http://meanjs.org).
+The goal of this project is implement the mimic of Twitter using [MEAN stack](http://meanjs.org).
