@@ -1,3 +1,8 @@
+## 05/07/2015
+* Added **grunt** supports
+* Updated solution
+* Added MIT license
+
 ## 07/04/2015
 * Added **appContext** logic for encapsulation of utilities
 * Added **following** and **followers** api
