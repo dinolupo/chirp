@@ -157,5 +157,4 @@ module.exports = function(ctx)
             }
         });
     });
-
-}
+};

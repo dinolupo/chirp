@@ -11,5 +11,5 @@ module.exports = function (ctx)
             //connectionString: process.env.MDB
             connectionString: 'mongodb://localhost/chirp'
         }
-    }
-}
+    };
+};

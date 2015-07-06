@@ -36,6 +36,4 @@ module.exports = function(ctx)
         ctx.logger.debug('Response OK at [%s]',req.url);
         res.status(200).jsonp({});
     };
-}
-
-
+};

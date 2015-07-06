@@ -33,4 +33,4 @@ module.exports = function(ctx)
     };
 
     ctx.logger = logger;
-}
+};
