@@ -3,8 +3,7 @@
 
     angular.module('chirp')
         .controller('LoginCtrl', ['$log', '$location', '$cookies', '$rootScope', 'AuthService',
-            function ($log, $location, $cookies, $rootScope, AuthService)
-            {
+            function ($log, $location, $cookies, $rootScope, AuthService) {
                 var vm = this;
 
                 vm.credentials = {
@@ -12,11 +11,11 @@
                     password: ''
                 };
 
-                vm.login = function (credentials)
-                {
-                    AuthService.login(credentials,function (username)
-                    {
-                        if(username)
+                vm.login = function (credentials) {
+                    AuthService.login(credentials, function (username) {
+                        $log.debug(username);
+
+                        if(username!==undefined)
                         {
                             $cookies.chirp = username;
 

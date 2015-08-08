@@ -25,15 +25,15 @@
                             alert('The message has not been sent!');
                         }
                     });
-                }
+                };
 
                 ctrl.loadPosts = function getData() {
                     DataService.getHomePostList(ctrl.user.username,
                         function (data) {
                             ctrl.posts = data;
                         });
-                }
-            }
+                };
+            };
 
             $scope.$on('logged', function() {
                 ctrl.initView();
@@ -63,7 +63,7 @@
                 var promise = $timeout(function(){
                     ctrl.loadPosts();
                     ctrl.intervalFunction();
-                }, config.elapsedtime)
+                }, config.elapsedtime);
 
                 $scope.$on('$destroy', function(){
                     $timeout.cancel(promise);

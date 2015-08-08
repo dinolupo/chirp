@@ -11,7 +11,7 @@
                         function (data) {
                             $scope.users = data;
                         });
-                }
+                };
 
                 if(AuthService.isLogged())
                 {

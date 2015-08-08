@@ -53,7 +53,7 @@ angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
                 templateUrl: 'partials/info-view.html',
                 controller: 'InfoCtrl',
                 controllerAs: 'vm'
-            })
+            });
     }
 ]);
 

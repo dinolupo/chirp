@@ -19,8 +19,7 @@
     app.use(multer()); // for parsing multipart/form-data
     app.use(appContext.config.server.api,require('cors')());
 
-    mongoClient.connect(appContext.config.mongodb.connectionString, function (err, db)
-    {
+    mongoClient.connect(appContext.config.mongodb.connectionString, function (err, db) {
         if (err) throw err;
         appContext.db = db;
 

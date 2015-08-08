@@ -21,7 +21,7 @@
                 var promise = $timeout(function(){
                     ctrl.getData();
                     ctrl.intervalFunction();
-                }, config.elapsedtime)
+                }, config.elapsedtime);
 
                 $scope.$on('$destroy', function(){
                     $timeout.cancel(promise);

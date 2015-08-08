@@ -8,7 +8,7 @@
                 $scope.signin = function (profile) {
                     if(profile.password != profile.confirmpassword)
                     {
-                        alert('Password are different!')
+                        alert('Password are different!');
                     }
                     else
                     {

@@ -7,15 +7,14 @@
             {
                 var ctrl = this;
 
-                ctrl.getData = function(){
+                ctrl.getData = function() {
                     DataService.getUserInfo($stateParams.username,
                         function (data) {
                             ctrl.user = data;
                         });
                 };
 
-                ctrl.checkCanFollow = function()
-                {
+                ctrl.checkCanFollow = function() {
                     ctrl.canFollow = true;
                     ctrl.username = AuthService.getUser().username;
 
@@ -30,14 +29,13 @@
                                 }
                             });
                         }
-                    })
+                    });
                 };
 
                 ctrl.getData();
                 ctrl.showButton = false;
 
-                if(AuthService.isLogged())
-                {
+                if( AuthService.isLogged() ) {
                     if(AuthService.getUser().username != $stateParams.username) {
                         ctrl.showButton = true;
                         ctrl.checkCanFollow();
@@ -58,8 +56,6 @@
                         }
                     }
                 }
-
-
             }
         ]);
 

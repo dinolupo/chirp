@@ -2,9 +2,8 @@
     'use strict';
 
     angular.module('chirp')
-        .factory("AuthService", ['$http', '$log', 'config', 'DataService',
-        function ($http, $log, config, DataService)
-        {
+           .factory("AuthService", ['$http', '$log', 'config', 'DataService',
+           function ($http, $log, config, DataService) {
             var _authUser = null;
 
             return {
@@ -17,31 +16,33 @@
                         function(data) {
                             if(data)
                             {
-                                $log.debug("[%s] DataService.getUserByCredential > %s",new Date().toISOString(),data.username);
+                                $log.debug("[%s] Logged in user: %s",
+                                            new Date().toISOString(),
+                                            data.username);
+
                                 _authUser = data;
+
                                 callBack(_authUser.username);
                             }
                             else callBack();
                         }
-                    )
+                    );
                 },
-                logout: function() {
-                    $log.debug("[%s] DataService.logout > %s",new Date().toISOString(),_authUser.username);
+                logout: function () {
+                    $log.debug("[%s] Logged out user: %s",new Date().toISOString(),_authUser.username);
                     _authUser = null;
                 },
-                getUser: function()
-                {
+                getUser: function () {
                     return _authUser;
                 },
-                isLogged: function(){
-                    if(_authUser!=null)
+                isLogged: function () {
+                    if(_authUser!==null)
                     {
                         return true;
                     }
                     return false;
                 },
-                reloadUser: function(token,callBack)
-                {
+                reloadUser: function(token,callBack) {
                     DataService.getUserByToken(token,
                         function(data) {
                             if(data)
@@ -52,10 +53,9 @@
                             }
                             else callBack();
                         }
-                    )
+                    );
                 },
-                signin: function (profile,callBack)
-                {
+                signin: function (profile,callBack) {
                     var username = profile.username;
                     var displayname = profile.displayname;
                     var email = profile.email;
@@ -68,7 +68,7 @@
                         }
                     );
                 }
-            }
+            };
         }]);
 
 })();

@@ -13,7 +13,7 @@
                         })
                         .error(function(){
                             callBack();
-                        })
+                        });
                 },
                 getHomePostList: function (username,callBack) {
                     $http.get(config.api + "/post/home/" + username)
@@ -22,7 +22,7 @@
                         })
                         .error(function(){
                             callBack();
-                        })
+                        });
                 },
                 getUserByCredentials: function (username,password,callBack)
                 {
@@ -32,7 +32,7 @@
                         })
                         .error(function(){
                             callBack();
-                        })
+                        });
                 },
                 getUserByToken: function (token,callBack) {
                     $http.get(config.api + "/user/access/" + token)
@@ -41,7 +41,7 @@
                         })
                         .error(function(){
                             callBack();
-                        })
+                        });
                 },
                 sendMessage: function(username,text,callBack){
                     $http.post(config.api + "/post",{"username":username,"text":text})
@@ -50,7 +50,7 @@
                         })
                         .error(function(){
                             callBack();
-                        })
+                        });
                 },
                 getFollowingList: function (username,callBack) {
                     $http.get(config.api + "/user/following/" + username)
@@ -59,7 +59,7 @@
                         })
                         .error(function(){
                             callBack();
-                        })
+                        });
                 },
                 getFollowersList: function (username,callBack) {
                     $http.get(config.api + "/user/followers/" + username)
@@ -68,7 +68,7 @@
                         })
                         .error(function(){
                             callBack();
-                        })
+                        });
                 },
                 register: function(username,displayname,email,password,callBack) {
                     var user = {
@@ -83,7 +83,7 @@
                         })
                         .error(function(){
                             callBack();
-                        })
+                        });
                 },
                 getUserInfo: function(username,callBack) {
                     $http.get(config.api + "/user/info/" + username)
@@ -92,9 +92,9 @@
                         })
                         .error(function(){
                             callBack();
-                        })
+                        });
                 }
-            }
+            };
         }]);
 
 })();
