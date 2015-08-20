@@ -22,11 +22,11 @@
     mongoClient.connect(appContext.config.mongodb.connectionString, function (err, db) {
         if (err) throw err;
         appContext.db = db;
-
+        
         // configure static pages
         app.use('/', express.static(__dirname + '/static', {"dotfiles":"ignore"}));
 
-        app.use(function(req,res,next){
+        app.use(function(req,res,next) {
             appContext.logger.debug("Arrived a [%s] request at [%s].",req.method,req.url);
             next();
         });

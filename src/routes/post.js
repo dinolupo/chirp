@@ -10,8 +10,7 @@ module.exports = function(ctx)
     var userSearchFields = {'_id':1,'following':1,'displayname':1,'image':1};
 
     // get items posted on public timeline
-    ctx.app.get( baseurl + '/post/public', function(req,res)
-    {
+    ctx.app.get( baseurl + '/post/public', function(req,res) {
         posts.find({},{'limit':limit,'fields': postListFields,'sort': {'timestamp':-1}})
             .toArray(function(err,data) {
                 if(err) throw err;
@@ -21,12 +20,10 @@ module.exports = function(ctx)
     });
 
     // get items posted on user timeline
-    ctx.app.get( baseurl + '/post/home/:token', function(req,res)
-    {
+    ctx.app.get( baseurl + '/post/home/:token', function(req,res) {
         var token = req.params.token;
 
-        users.findOne({'username':token},{'limit':limit,'fields':{'_id': 1}},function(err, data)
-        {
+        users.findOne({'username':token},{'limit':limit,'fields':{'_id': 1}}, function(err, data) {
             if (data) {
                 posts.find({'targetusers': data._id},{'fields': postListFields,'sort':{'timestamp':-1}})
                     .toArray(function (err, items) {
@@ -42,8 +39,7 @@ module.exports = function(ctx)
     });
 
     // get the items posted from an user
-    ctx.app.get( baseurl + '/post/:username', function(req,res)
-    {
+    ctx.app.get( baseurl + '/post/:username', function(req,res) {
         var username = req.params.username;
 
         posts.find({'username': username},{'fields': postListFields,'sort': {'timestamp':-1}})
@@ -55,13 +51,11 @@ module.exports = function(ctx)
     });
 
     // post a new message
-    ctx.app.post( baseurl + '/post', function(req,res)
-    {
+    ctx.app.post( baseurl + '/post', function(req,res) {
         var username = req.body.username;
         var text = req.body.text;
 
-        users.findOne({'username':username},{'fields':userSearchFields},function(err,data)
-        {
+        users.findOne({'username':username},{'fields':userSearchFields},function(err,data) {
                 if (data) {
                     var newPost = {
                         "username": username,
