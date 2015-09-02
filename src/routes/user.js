@@ -1,10 +1,6 @@
 module.exports = function(ctx)
 {
-    var limit = ctx.config.limit;
     var baseurl = ctx.config.server.api;
-
-    var posts = ctx.db.collection('posts');
-    var users = ctx.db.collection('users');
 
     //var userFields = {'_id':1,'username':1,'displayname':1,'image':1,'email':1,'following':1};
 
@@ -13,11 +9,11 @@ module.exports = function(ctx)
         var username = req.params.username;
         var password = req.params.password;
 
-        users.findOne({'username':username,'password':password},function(err,data) {
+        ctx.db.collection('users').findOne({'username':username,'password':password},function(err,data) {
             if(err) throw err;
 
             if (data) {
-                ctx.sendJson(req,res,{
+                ctx.helper.sendJson(req,res,{
                     "username": data.username,
                     "displayname": data.displayname,
                     "password": data.password,
@@ -28,7 +24,7 @@ module.exports = function(ctx)
                 });
             }
             else {
-                ctx.sendForbidden(req,res);
+                ctx.helper.sendForbidden(req,res);
             }
         });
     });
@@ -37,12 +33,12 @@ module.exports = function(ctx)
     ctx.app.get( baseurl + '/user/access/:token', function(req,res) {
         var token = req.params.token;
 
-        users.findOne({'username':token},function(err, data)
+        ctx.db.collection('users').findOne({'username':token},function(err, data)
         {
             if (err) throw err;
 
             if (data) {
-                ctx.sendJson(req,res,{
+                ctx.helper.sendJson(req,res,{
                     "username": data.username,
                     "displayname": data.displayname,
                     "password": data.password,
@@ -53,7 +49,7 @@ module.exports = function(ctx)
                 });
             }
             else {
-                ctx.sendForbidden(req,res);
+                ctx.helper.sendForbidden(req,res);
             }
         });
     });
@@ -62,19 +58,19 @@ module.exports = function(ctx)
     ctx.app.get( baseurl + '/user/following/:token', function(req,res) {
         var token = req.params.token;
 
-        users.findOne({'username':token},function(err, data)
+        ctx.db.collection('users').findOne({'username':token},function(err, data)
         {
             if (err) throw err;
 
             if (data) {
-                users.find({'followers':data._id}).toArray(function (err, items) {
+                ctx.db.collection('users').find({'followers':data._id}).toArray(function (err, items) {
                     if (err) throw err;
 
-                    ctx.sendJson(req, res, items);
+                    ctx.helper.sendJson(req, res, items);
                 });
             }
             else {
-                ctx.sendForbidden(req,res);
+                ctx.helper.sendForbidden(req,res);
             }
         });
     });
@@ -83,18 +79,18 @@ module.exports = function(ctx)
     ctx.app.get( baseurl + '/user/followers/:token', function(req,res) {
         var token = req.params.token;
 
-        users.findOne({'username':token},function(err, data) {
+        ctx.db.collection('users').findOne({'username':token},function(err, data) {
             if (err) throw err;
 
             if (data) {
                 users.find({'following':data._id}).toArray(function (err, items) {
                     if (err) throw err;
 
-                    ctx.sendJson(req, res, items);
+                    ctx.helper.sendJson(req, res, items);
                 });
             }
             else {
-                ctx.sendForbidden(req,res);
+                ctx.helper.sendForbidden(req,res);
             }
         });
     });
@@ -111,29 +107,28 @@ module.exports = function(ctx)
             "displayname": displayname,
             "password": password,
             "email": email,
-            "image": ctx.config.image,
+            "image": helper.config.image,
             "following": [],
             "followers": []
         };
 
-        users.save(user,function(err)
+        ctx.db.collection('users').save(user,function(err)
         {
             if(err) throw err;
 
-            ctx.sendOK(req,res);
+            ctx.helper.sendOK(req,res);
         });
-
     });
 
     // get the user info
     ctx.app.get( baseurl + '/user/info/:username', function(req,res) {
         var username = req.params.username;
 
-        users.findOne({'username':username},function(err,data) {
+        ctx.db.collection('users').findOne({'username':username},function(err,data) {
             if(err) throw err;
 
             if (data) {
-                ctx.sendJson(req,res,{
+                ctx.helper.sendJson(req,res,{
                     "username": data.username,
                     "displayname": data.displayname,
                     "password": data.password,
@@ -144,7 +139,7 @@ module.exports = function(ctx)
                 });
             }
             else {
-                ctx.sendForbidden(req,res);
+                ctx.helper.sendForbidden(req,res);
             }
         });
     });
