@@ -4,6 +4,7 @@
     var logger = require("./util/logger")();
     var helper = require("./util/helper")(logger);
 
+    var fs = require('fs');
     var express = require('express');
 
     // create the context
@@ -37,19 +38,20 @@
         });
 
         // configure the routes
-        var routes = ['post','user'];
-        routes.forEach(function(route) {
-            require('./routes/'+route)(context);
+        fs.readdirSync('./routes/').forEach(function(name) {
+            require('./routes/'+name)(context);
         });
 
         // custom 404 page
         context.app.use(function(req, res) {
-            helper.sendNotFound(req,res);
+            logger.debug('Response not found at [%s]', req.url);
+            res.status(404).jsonp({error: '404 - Not Found'});
         });
 
         // custom 500 page
         context.app.use(function(err,req,res) {
-            helper.sendError(err,req,res);
+            logger.debug('Response error at [%s]', req.url);
+            res.status(500).jsonp(err);
         });
 
         var port = process.env.PORT || 3000;

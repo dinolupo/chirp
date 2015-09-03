@@ -83,7 +83,7 @@ module.exports = function(ctx)
             if (err) throw err;
 
             if (data) {
-                users.find({'following':data._id}).toArray(function (err, items) {
+                ctx.db.collection('users').find({'following':data._id}).toArray(function (err, items) {
                     if (err) throw err;
 
                     ctx.helper.sendJson(req, res, items);
@@ -112,10 +112,8 @@ module.exports = function(ctx)
             "followers": []
         };
 
-        ctx.db.collection('users').save(user,function(err)
-        {
+        ctx.db.collection('users').save(user,function(err) {
             if(err) throw err;
-
             ctx.helper.sendOK(req,res);
         });
     });
