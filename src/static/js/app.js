@@ -17,40 +17,40 @@ angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
         $stateProvider
             .state('public', {
                 url: "/public",
-                templateUrl: 'partials/public-view.html',
+                templateUrl: 'partials/views/public-view.html',
                 controller: 'PublicCtrl',
                 controllerAs: 'vm'
             })
             .state('home', {
                 url: "/home",
-                templateUrl: 'partials/home-view.html',
+                templateUrl: 'partials/views/home-view.html',
                 controller: 'HomeCtrl',
                 controllerAs: 'vm'
             })
             .state('login', {
                 url: "/login",
-                templateUrl: 'partials/login-form-view.html',
+                templateUrl: 'partials/views/login-form-view.html',
                 controller: 'LoginCtrl',
                 controllerAs: 'vm'
             })
             .state('following', {
                 url: "/following",
-                templateUrl: 'partials/following-list-view.html',
+                templateUrl: 'partials/views/following-list-view.html',
                 controller: 'FollowingCtrl'
             })
             .state('followers', {
                 url: "/followers",
-                templateUrl: 'partials/followers-list-view.html',
+                templateUrl: 'partials/views/followers-list-view.html',
                 controller: 'FollowersCtrl'
             })
             .state('signup', {
                 url: "/signup",
-                templateUrl: 'partials/register-form-view.html',
+                templateUrl: 'partials/views/register-form-view.html',
                 controller: 'RegisterCtrl'
             })
             .state('info', {
                 url: "/info/:username",
-                templateUrl: 'partials/info-view.html',
+                templateUrl: 'partials/views/info-view.html',
                 controller: 'InfoCtrl',
                 controllerAs: 'vm'
             });
