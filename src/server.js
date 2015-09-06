@@ -30,7 +30,7 @@
         context.db = db;    // set the current db connection
 
         // configure static pages
-        context.app.use('/', express.static(__dirname + '/static', {"dotfiles":"ignore"}));
+        context.app.use('/', express.static(__dirname + '/www', {"dotfiles":"ignore"}));
 
         context.app.use(function(req,res,next) {
             logger.debug("Arrived a [%s] request at [%s].",req.method,req.url);
