@@ -15,10 +15,9 @@ module.exports = function(grunt) {
     copy: {
       main: {
         files: [
-          {expand: true, src: ['app.js','package.json'], dest: '../build/'},
-          {expand: true, src: ['routes/*'], dest: '../build/'},
-          {expand: true, src: ['static/**/*'], dest: '../build/'},
-          {expand: true, src: ['util/*'], dest: '../build/'}
+          {expand: true, src: ['main.js','package.json'], dest: '../../build/'},
+          {expand: true, src: ['routes/**/*.js'], dest: '../../build/'},
+          {expand: true, src: ['util/**/*.js'], dest: '../../build/'}
         ]
       }
     },
