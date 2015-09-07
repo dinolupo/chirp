@@ -1,0 +1,12 @@
+{
+  "name": "chirp",
+  "version": "0.1.1",
+  "homepage": "https://chirp.dimotta.net",
+  "authors": [
+    "Antonio Di Motta"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^2.1.4"
+  }
+}
