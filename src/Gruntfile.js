@@ -17,11 +17,11 @@ module.exports = function(grunt) {
         files: [
           {expand: true, src: ['node_modules/**/*'], dest: '../build/'},
           {expand: true, src: ['server/**/*.js'], dest: '../build/'},
-          {expand: true, src: ['www/bower_components/**/*'], dest: '../build/www/'},
+          {expand: true, src: ['www/bower_components/**/*'], dest: '../build/'},
           {expand: true, src: ['www/css/**/*'], dest: '../build/'},
           {expand: true, src: ['www/images/**/*'], dest: '../build/'},
           {expand: true, src: ['www/partials/**/*'], dest: '../build/'},
-          {expand: true, src: ['www/js/chirp.js'], dest: '../build/www/js/chirp.js'},
+          {expand: true, src: ['www/js/chirp.js'], dest: '../build/'},
           {expand: true, src: ['www/*.html'], dest: '../build/'}
         ]
       }
@@ -54,6 +54,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Tasks
-  grunt.registerTask('build',['jshint','clean','concat']);
+  grunt.registerTask('build',['jshint','clean','concat','copy']);
   grunt.registerTask('default',['concat','watch']);
 };

@@ -65,7 +65,7 @@ module.exports = function(ctx)
 
                     newPost.targetusers.push(data._id);
 
-                    posts.save(newPost,function(err)
+                    ctx.db.collection('posts').save(newPost,function(err)
                     {
                         if(err) throw err;
 
