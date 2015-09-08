@@ -10,17 +10,18 @@ module.exports = function(grunt) {
       build: ['../build/**/*']
     },
     jshint: {
-      files: ['package.js','server/util/**/*.js','server/routes/**/*.js']
+      files: ['package.js','server/util/**/*.js','server/routes/**/*.js','www/js/angular_dev/**/*.js']
     },
     copy: {
       main: {
         files: [
           {expand: true, src: ['node_modules/**/*'], dest: '../build/'},
           {expand: true, src: ['server/**/*.js'], dest: '../build/'},
-          {expand: true, src: ['www/bower_components/**/*'], dest: '../build/'},
+          {expand: true, src: ['www/bower_components/**/*'], dest: '../build/www/'},
           {expand: true, src: ['www/css/**/*'], dest: '../build/'},
           {expand: true, src: ['www/images/**/*'], dest: '../build/'},
           {expand: true, src: ['www/partials/**/*'], dest: '../build/'},
+          {expand: true, src: ['www/js/chirp.js'], dest: '../build/www/js/chirp.js'},
           {expand: true, src: ['www/*.html'], dest: '../build/'}
         ]
       }
@@ -31,12 +32,17 @@ module.exports = function(grunt) {
         },
         dist: {
           src: ['www/js/**/*.js'],
-          dest: '../build/www/js/chirp.js',
+          dest: 'www/js/chirp.js',
         },
     },
     watch: {
-      files: ['<%= jshint.files %>'],
-      tasks: ['jshint']
+      scripts: {
+        files: ['<%= jshint.files %>'],
+        tasks: ['jshint','concat'],
+        options: {
+          spawn: false,
+        }
+      }
     }
   });
 
@@ -44,11 +50,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Tasks
-  grunt.registerTask('build',['jshint','clean','copy','concat']);
-  grunt.registerTask('default',['watch']);
+  grunt.registerTask('build',['jshint','clean','concat']);
+  grunt.registerTask('default',['concat','watch']);
 };
