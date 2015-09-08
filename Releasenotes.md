@@ -1,3 +1,7 @@
+## 08/09/2015
+* Updated solution
+* Added **bower** supports
+
 ## 05/07/2015
 * Added **grunt** supports
 * Updated solution

@@ -1,3 +1,3 @@
 # Chirp
 
-The goal of this project is implement the mimic of Twitter using [MEAN stack](http://meanjs.org).
+A very simply Twitter clone built using the full javascript stack [MEAN](http://meanjs.org).
