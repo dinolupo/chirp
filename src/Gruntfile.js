@@ -32,7 +32,7 @@ module.exports = function(grunt) {
         },
         dist: {
           src: ['www/js/**/*.js'],
-          dest: 'www/js/chirp.js',
+          dest: 'www/js/app.js',
         },
     },
     watch: {

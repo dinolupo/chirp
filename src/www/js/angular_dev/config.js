@@ -1,6 +1,7 @@
 (function(){
     'use strict';
 
+//angular.module('chirp', ['ui.router','ngSanitize','ngCookies','ngMaterial'])
 angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
     .constant("config",
     {
