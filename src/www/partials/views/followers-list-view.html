@@ -2,12 +2,14 @@
 <div class="list-group">
     <a class="list-group-item" ng-repeat="item in users">
         <div class="row">
-            <div class="col-lg-1 col-md-1">
+
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
                 <img ng-src="images/{{item.image}}" width="50px" height="50px">
             </div>
-            <div class="col-lg-11 col-md-11">
+            <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
                 <b>{{item.displayname}}</b>
             </div>
+            
         </div>
     </a>
 </div>
