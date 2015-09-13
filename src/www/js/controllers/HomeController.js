@@ -1,38 +1,37 @@
 (function() {
     'use strict';
 
-    angular.module('chirp')
-        .controller('HomeCtrl', ['$scope','$log','$location','$timeout','$cookies','DataService','AuthService','config',
-        function ($scope,$log,$location,$timeout,$cookies,DataService,AuthService,config)
-        {
+    angular.module('appChirp')
+        .controller('HomeController', ['$scope','$log','$location','$timeout','$cookies','DataService','AuthService','config',
+        function ($scope,$log,$location,$timeout,$cookies,DataService,AuthService,config) {
             var ctrl = this;
 
             ctrl.initView = function ()
             {
                 ctrl.user = AuthService.getUser();
                 ctrl.message = '';
+            };
 
-                ctrl.send = function (message)
+            ctrl.send = function (message)
+            {
+                DataService.sendMessage(ctrl.user.username, message, function (data)
                 {
-                    DataService.sendMessage(ctrl.user.username, message, function (data)
+                    if (data.result)
                     {
-                        if (data.result)
-                        {
-                            alert('Message sent!');
-                            ctrl.message = '';
-                        }
-                        else {
-                            alert('The message has not been sent!');
-                        }
-                    });
-                };
+                        alert('Message sent!');
+                        ctrl.message = '';
+                    }
+                    else {
+                        alert('The message has not been sent!');
+                    }
+                });
+            };
 
-                ctrl.loadPosts = function getData() {
-                    DataService.getHomePostList(ctrl.user.username,
-                        function (data) {
-                            ctrl.posts = data;
-                        });
-                };
+            ctrl.loadPosts = function getData() {
+                DataService.getHomePostList(ctrl.user.username,
+                    function (data) {
+                        ctrl.posts = data;
+                    });
             };
 
             $scope.$on('logged', function() {

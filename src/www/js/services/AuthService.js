@@ -1,10 +1,10 @@
 (function() {
     'use strict';
 
-    angular.module('chirp')
+    angular.module('appChirp')
            .factory("AuthService", ['$http', '$log', 'config', 'DataService',
            function ($http, $log, config, DataService) {
-            var _authUser = null;
+             var _authUser = null;
 
             return {
                 login: function (credentials,callBack)

@@ -1,8 +1,7 @@
 (function(){
     'use strict';
 
-//angular.module('chirp', ['ui.router','ngSanitize','ngCookies','ngMaterial'])
-angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
+angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
     .constant("config",
     {
         "api": "http://localhost:3000/api/v1",
@@ -19,40 +18,43 @@ angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
             .state('public', {
                 url: "/public",
                 templateUrl: 'partials/views/public-view.html',
-                controller: 'PublicCtrl',
+                controller: 'PublicController',
                 controllerAs: 'vm'
             })
             .state('home', {
                 url: "/home",
                 templateUrl: 'partials/views/home-view.html',
-                controller: 'HomeCtrl',
+                controller: 'HomeController',
                 controllerAs: 'vm'
             })
             .state('login', {
                 url: "/login",
                 templateUrl: 'partials/views/login-form-view.html',
-                controller: 'LoginCtrl',
+                controller: 'LoginController',
                 controllerAs: 'vm'
             })
             .state('following', {
                 url: "/following",
                 templateUrl: 'partials/views/following-list-view.html',
-                controller: 'FollowingCtrl'
+                controller: 'FollowingController',
+                controllerAs: 'vm'
             })
             .state('followers', {
                 url: "/followers",
                 templateUrl: 'partials/views/followers-list-view.html',
-                controller: 'FollowersCtrl'
+                controller: 'FollowersController',
+                controllerAs: 'vm'
             })
             .state('signup', {
                 url: "/signup",
                 templateUrl: 'partials/views/register-form-view.html',
-                controller: 'RegisterCtrl'
+                controller: 'RegisterController',
+                controllerAs: 'vm'
             })
             .state('info', {
                 url: "/info/:username",
                 templateUrl: 'partials/views/info-view.html',
-                controller: 'InfoCtrl',
+                controller: 'InfoController',
                 controllerAs: 'vm'
             });
     }
@@ -62,46 +64,44 @@ angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
 ;(function() {
     'use strict';
 
-    angular.module('chirp')
-        .controller('AppCtrl',['$scope','$log','$location','$cookies','AuthService',
+    angular.module('appChirp')
+        .controller('AppController',['$scope','$log','$location','$cookies','AuthService',
             function ($scope,$log,$location,$cookies,AuthService) {
               var ctrl = this;
 
               ctrl.initViewAsLogged = function () {
                   ctrl.user = AuthService.getUser();
                   ctrl.islogged = true;
+              };
 
-                  ctrl.logout = function () {
-                      AuthService.logout();
+              ctrl.logout = function () {
+                  AuthService.logout();
 
-                      ctrl.user = null;
-                      delete $cookies.chirp;
-                      ctrl.islogged = false;
+                  ctrl.user = null;
+                  $cookies.remove("chirp");
+                  ctrl.islogged = false;
 
-                      $location.path('/pubic');
-                      $location.replace();
+                  $location.path('/pubic');
+                  $location.replace();
 
-                      $scope.$emit('logout');
-                  };
+                  $scope.$emit('logout');
               };
 
               $scope.$on('logged', function () {
                   ctrl.initViewAsLogged();
               });
 
-              if(AuthService.isLogged())
-              {
+              if(AuthService.isLogged()) {
                   ctrl.initViewAsLogged();
               }
-              else
-              {
+              else {
                   ctrl.islogged = false;
 
-                  if( $cookies.chirp )
-                  {
-                      AuthService.reloadUser($cookies.chirp, function (data) {
-                          if(data)
-                          {
+                  var username = $cookies.get("chirp");
+
+                  if( username !== undefined ) {
+                      AuthService.reloadUser(username, function (data) {
+                          if(data) {
                               ctrl.initViewAsLogged();
                           }
                       });
@@ -114,33 +114,32 @@ angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
 ;(function() {
     'use strict';
 
-    angular.module('chirp')
-        .controller('FollowersCtrl', ['$scope', '$log', '$location','DataService','AuthService',
-            function ($scope, $log, $location, DataService, AuthService)
-            {
-                $scope.initView = function ()
-                {
+    angular.module('appChirp')
+        .controller('FollowersController', ['$scope', '$log', '$location','DataService','AuthService',
+            function ($scope, $log, $location, DataService, AuthService) {
+                var ctrl = this;
+
+                ctrl.initView = function () {
                     DataService.getFollowersList(AuthService.getUser().username,
                         function (data) {
-                            $scope.users = data;
+                            ctrl.users = data;
                         });
                 };
 
-                if(AuthService.isLogged())
-                {
-                    $scope.initView();
+                if(AuthService.isLogged()) {
+                    ctrl.initView();
                 }
-                else
-                {
-                    if( $cookies.chirp )
-                    {
-                        AuthService.reloadUser($cookies.chirp, function(data)
-                        {
-                            if(data) {
-                                $scope.initView();
-                            }
-                        });
-                    }
+                else {
+                  var username = $cookies.get("chirp");
+
+                  if( username !== undefined ) {
+                      AuthService.reloadUser(username, function(data)
+                      {
+                          if(data) {
+                              ctrl.initView();
+                          }
+                      });
+                  }
                 }
             }
         ]);
@@ -149,33 +148,33 @@ angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
 ;(function() {
     'use strict';
 
-    angular.module('chirp')
-        .controller('FollowingCtrl', ['$scope', '$log', '$location','DataService','AuthService',
-            function ($scope, $log, $location, DataService, AuthService)
-            {
-                $scope.initView = function ()
-                {
+    angular.module('appChirp')
+        .controller('FollowingController', ['$scope', '$log', '$location','DataService','AuthService',
+            function ($scope, $log, $location, DataService, AuthService) {
+                var ctrl = this;
+
+                ctrl.initView = function () {
                     DataService.getFollowingList(AuthService.getUser().username,
                         function (data) {
-                            $scope.users = data;
+                            ctrl.users = data;
                         });
                 };
 
-                if(AuthService.isLogged())
-                {
-                    $scope.initView();
+                if(AuthService.isLogged()) {
+                    ctrl.initView();
                 }
                 else
                 {
-                    if( $cookies.chirp )
-                    {
-                        AuthService.reloadUser($cookies.chirp, function(data)
-                        {
-                            if(data) {
-                                $scope.initView();
-                            }
-                        });
-                    }
+                  var username = $cookies.get("chirp");
+
+                  if( username !== undefined ) {
+                      AuthService.reloadUser(username, function(data)
+                      {
+                          if(data) {
+                              ctrl.initView();
+                          }
+                      });
+                  }
                 }
             }
         ]);
@@ -184,38 +183,37 @@ angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
 ;(function() {
     'use strict';
 
-    angular.module('chirp')
-        .controller('HomeCtrl', ['$scope','$log','$location','$timeout','$cookies','DataService','AuthService','config',
-        function ($scope,$log,$location,$timeout,$cookies,DataService,AuthService,config)
-        {
+    angular.module('appChirp')
+        .controller('HomeController', ['$scope','$log','$location','$timeout','$cookies','DataService','AuthService','config',
+        function ($scope,$log,$location,$timeout,$cookies,DataService,AuthService,config) {
             var ctrl = this;
 
             ctrl.initView = function ()
             {
                 ctrl.user = AuthService.getUser();
                 ctrl.message = '';
+            };
 
-                ctrl.send = function (message)
+            ctrl.send = function (message)
+            {
+                DataService.sendMessage(ctrl.user.username, message, function (data)
                 {
-                    DataService.sendMessage(ctrl.user.username, message, function (data)
+                    if (data.result)
                     {
-                        if (data.result)
-                        {
-                            alert('Message sent!');
-                            ctrl.message = '';
-                        }
-                        else {
-                            alert('The message has not been sent!');
-                        }
-                    });
-                };
+                        alert('Message sent!');
+                        ctrl.message = '';
+                    }
+                    else {
+                        alert('The message has not been sent!');
+                    }
+                });
+            };
 
-                ctrl.loadPosts = function getData() {
-                    DataService.getHomePostList(ctrl.user.username,
-                        function (data) {
-                            ctrl.posts = data;
-                        });
-                };
+            ctrl.loadPosts = function getData() {
+                DataService.getHomePostList(ctrl.user.username,
+                    function (data) {
+                        ctrl.posts = data;
+                    });
             };
 
             $scope.$on('logged', function() {
@@ -259,10 +257,9 @@ angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
 ;(function() {
     'use strict';
 
-    angular.module('chirp')
-        .controller('InfoCtrl', ['$scope','$log','$stateParams','$cookies','AuthService','DataService',
-            function ($scope,$log,$stateParams,$cookies,AuthService,DataService)
-            {
+    angular.module('appChirp')
+        .controller('InfoController', ['$scope','$log','$stateParams','$cookies','AuthService','DataService',
+            function ($scope,$log,$stateParams,$cookies,AuthService,DataService) {
                 var ctrl = this;
 
                 ctrl.getData = function() {
@@ -301,9 +298,10 @@ angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
                 }
                 else
                 {
-                    if( $cookies.chirp )
-                    {
-                        if($cookies.chirp != $stateParams.username) {
+                  var username = $cookies.get("chirp");
+
+                  if( username !== undefined ) {
+                        if(username != $stateParams.username) {
                             AuthService.reloadUser($cookies.chirp, function(data)
                             {
                                 if(data) {
@@ -321,23 +319,23 @@ angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
 ;(function() {
     'use strict';
 
-    angular.module('chirp')
-        .controller('LoginCtrl', ['$log', '$location', '$cookies', '$rootScope', 'AuthService',
+    angular.module('appChirp')
+        .controller('LoginController', ['$log', '$location', '$cookies', '$rootScope', 'AuthService',
             function ($log, $location, $cookies, $rootScope, AuthService) {
-                var vm = this;
+                var ctrl = this;
 
-                vm.credentials = {
+                ctrl.credentials = {
                     username: '',
                     password: ''
                 };
 
-                vm.login = function (credentials) {
+                ctrl.login = function (credentials) {
                     AuthService.login(credentials, function (username) {
                         $log.debug(username);
 
                         if(username!==undefined)
                         {
-                            $cookies.chirp = username;
+                            $cookies.put("chirp",username);
 
                             $location.path('/home');
                             $location.replace();
@@ -356,10 +354,9 @@ angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
 ;(function() {
     'use strict';
 
-    angular.module('chirp')
-        .controller('PublicCtrl', ['$scope','$log','$timeout','DataService','config',
-        function ($scope, $log, $timeout, DataService, config)
-        {
+    angular.module('appChirp')
+        .controller('PublicController', ['$scope','$log','$timeout','DataService','config',
+        function ($scope, $log, $timeout, DataService, config) {
             var ctrl = this;
 
             ctrl.getData = function(){
@@ -391,11 +388,12 @@ angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
 ;(function() {
     'use strict';
 
-    angular.module('chirp')
-        .controller('RegisterCtrl', ['$scope', '$log', '$location', '$cookies', 'AuthService',
-            function ($scope, $log, $location, $cookies, AuthService)
-            {
-                $scope.signin = function (profile) {
+    angular.module('appChirp')
+        .controller('RegisterController', ['$scope', '$log', '$location', '$cookies', 'AuthService',
+            function ($scope, $log, $location, $cookies, AuthService) {
+                var ctrl = this;
+
+                ctrl.signin = function (profile) {
                     if(profile.password != profile.confirmpassword)
                     {
                         alert('Password are different!');
@@ -418,7 +416,7 @@ angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
 ;(function() {
     'use strict';
 
-    angular.module('chirp')
+    angular.module('appChirp')
            .directive("postpanel", function () {
             return {
                 restrict: 'E',
@@ -434,10 +432,10 @@ angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
 ;(function() {
     'use strict';
 
-    angular.module('chirp')
+    angular.module('appChirp')
            .factory("AuthService", ['$http', '$log', 'config', 'DataService',
            function ($http, $log, config, DataService) {
-            var _authUser = null;
+             var _authUser = null;
 
             return {
                 login: function (credentials,callBack)
@@ -508,7 +506,7 @@ angular.module('chirp', ['ui.router','ngSanitize','ngCookies'])
 ;(function() {
     'use strict';
 
-    angular.module('chirp')
+    angular.module('appChirp')
         .factory("DataService", ['$http', '$log', 'config',
         function ($http, $log, config)
         {

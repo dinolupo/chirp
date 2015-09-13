@@ -1,23 +1,23 @@
 (function() {
     'use strict';
 
-    angular.module('chirp')
-        .controller('LoginCtrl', ['$log', '$location', '$cookies', '$rootScope', 'AuthService',
+    angular.module('appChirp')
+        .controller('LoginController', ['$log', '$location', '$cookies', '$rootScope', 'AuthService',
             function ($log, $location, $cookies, $rootScope, AuthService) {
-                var vm = this;
+                var ctrl = this;
 
-                vm.credentials = {
+                ctrl.credentials = {
                     username: '',
                     password: ''
                 };
 
-                vm.login = function (credentials) {
+                ctrl.login = function (credentials) {
                     AuthService.login(credentials, function (username) {
                         $log.debug(username);
 
                         if(username!==undefined)
                         {
-                            $cookies.chirp = username;
+                            $cookies.put("chirp",username);
 
                             $location.path('/home');
                             $location.replace();

@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('chirp')
+    angular.module('appChirp')
         .factory("DataService", ['$http', '$log', 'config',
         function ($http, $log, config)
         {

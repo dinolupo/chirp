@@ -1,10 +1,9 @@
 (function() {
     'use strict';
 
-    angular.module('chirp')
-        .controller('PublicCtrl', ['$scope','$log','$timeout','DataService','config',
-        function ($scope, $log, $timeout, DataService, config)
-        {
+    angular.module('appChirp')
+        .controller('PublicController', ['$scope','$log','$timeout','DataService','config',
+        function ($scope, $log, $timeout, DataService, config) {
             var ctrl = this;
 
             ctrl.getData = function(){

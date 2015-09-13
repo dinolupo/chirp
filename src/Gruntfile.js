@@ -10,7 +10,7 @@ module.exports = function(grunt) {
       build: ['../build/**/*']
     },
     jshint: {
-      files: ['package.js','server/util/**/*.js','server/routes/**/*.js','www/js/angular_dev/**/*.js']
+      files: ['package.js','server/util/**/*.js','server/routes/**/*.js','www/js/**/*.js']
     },
     copy: {
       main: {
@@ -21,7 +21,7 @@ module.exports = function(grunt) {
           {expand: true, src: ['www/css/**/*'], dest: '../build/'},
           {expand: true, src: ['www/images/**/*'], dest: '../build/'},
           {expand: true, src: ['www/partials/**/*'], dest: '../build/'},
-          {expand: true, src: ['www/js/chirp.js'], dest: '../build/'},
+          {expand: true, src: ['www/js/app.js'], dest: '../build/'},
           {expand: true, src: ['www/*.html'], dest: '../build/'}
         ]
       }
@@ -31,7 +31,7 @@ module.exports = function(grunt) {
           separator: ';',
         },
         dist: {
-          src: ['www/js/**/*.js'],
+          src: ['www/js/config.js','www/js/controllers/*.js','www/js/directives/*.js','www/js/services/*.js'],
           dest: 'www/js/app.js',
         },
     },

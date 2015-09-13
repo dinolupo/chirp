@@ -1,10 +1,9 @@
 (function() {
     'use strict';
 
-    angular.module('chirp')
-        .controller('InfoCtrl', ['$scope','$log','$stateParams','$cookies','AuthService','DataService',
-            function ($scope,$log,$stateParams,$cookies,AuthService,DataService)
-            {
+    angular.module('appChirp')
+        .controller('InfoController', ['$scope','$log','$stateParams','$cookies','AuthService','DataService',
+            function ($scope,$log,$stateParams,$cookies,AuthService,DataService) {
                 var ctrl = this;
 
                 ctrl.getData = function() {
@@ -43,9 +42,10 @@
                 }
                 else
                 {
-                    if( $cookies.chirp )
-                    {
-                        if($cookies.chirp != $stateParams.username) {
+                  var username = $cookies.get("chirp");
+
+                  if( username !== undefined ) {
+                        if(username != $stateParams.username) {
                             AuthService.reloadUser($cookies.chirp, function(data)
                             {
                                 if(data) {

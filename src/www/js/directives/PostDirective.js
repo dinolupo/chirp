@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('chirp')
+    angular.module('appChirp')
            .directive("postpanel", function () {
             return {
                 restrict: 'E',
