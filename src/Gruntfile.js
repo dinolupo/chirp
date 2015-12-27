@@ -10,19 +10,19 @@ module.exports = function(grunt) {
       build: ['../build/**/*']
     },
     jshint: {
-      files: ['server/*.js','server/routes/**/*.js','www/js/**/*.js']
+      files: ['*.js','routes/**/*.js','public/js/**/*.js']
     },
     copy: {
       main: {
         files: [
           {expand: true, src: ['node_modules/**/*'], dest: '../build/'},
-          {expand: true, src: ['server/**/*.js'], dest: '../build/'},
-          {expand: true, src: ['www/bower_components/**/*'], dest: '../build/'},
-          {expand: true, src: ['www/css/**/*'], dest: '../build/'},
-          {expand: true, src: ['www/images/**/*'], dest: '../build/'},
-          {expand: true, src: ['www/partials/**/*'], dest: '../build/'},
-          {expand: true, src: ['www/js/app.js'], dest: '../build/'},
-          {expand: true, src: ['www/*.html'], dest: '../build/'}
+          {expand: true, src: ['**/*.js'], dest: '../build/'},
+          {expand: true, src: ['public/bower_components/**/*'], dest: '../build/'},
+          {expand: true, src: ['public/css/**/*'], dest: '../build/'},
+          {expand: true, src: ['public/images/**/*'], dest: '../build/'},
+          {expand: true, src: ['public/partials/**/*'], dest: '../build/'},
+          {expand: true, src: ['public/js/app.js'], dest: '../build/'},
+          {expand: true, src: ['public/*.html'], dest: '../build/'}
         ]
       }
     },
@@ -31,8 +31,8 @@ module.exports = function(grunt) {
           separator: ';',
         },
         dist: {
-          src: ['www/js/config.js','www/js/controllers/*.js','www/js/directives/*.js','www/js/services/*.js'],
-          dest: 'www/js/app.js',
+          src: ['public/js/config.js','public/js/controllers/*.js','public/js/directives/*.js','public/js/services/*.js'],
+          dest: 'public/js/app.js',
         },
     },
     watch: {
