@@ -10,7 +10,7 @@ module.exports = function(grunt) {
       build: ['../build/**/*']
     },
     jshint: {
-      files: ['package.js','server/util/**/*.js','server/routes/**/*.js','www/js/**/*.js']
+      files: ['server/*.js','server/routes/**/*.js','www/js/**/*.js']
     },
     copy: {
       main: {
