@@ -19,15 +19,20 @@
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
 
-    //var multer = require('multer');
-    //app.use(multer); // for parsing multipart/form-data
+    // var multer = require('multer');
+    // app.use(multer);
+    // for parsing multipart/form-data
 
     var mongoClient = require('mongodb').MongoClient;
 
     app.use(config.server.api,require('cors')());
 
-    mongoClient.connect(config.mongodb.connectionString, function (err, db) {
-        if (err) throw err;
+    mongoClient.connect(config.mongodb.connectionString, { db: { bufferMaxEntries: 0 } },
+      function (err, db) {
+        if(err) {
+          logger.error(err.message);
+          process.exit(1);
+        }
 
         context.db = db;    // set the current db connection
 
@@ -44,26 +49,9 @@
             require('./routes/'+name)(context);
         });
 
-        // custom response for error 404
-        /*app.use(function(req, res) {
-            logger.error('Error 404 at [%s]', req.url);
-            res.status(404).jsonp({
-              message: '404 - Not found'
-            });
-        });*/
-
         app.use( context.util.action.notfoundResult );
 
-        // custom response for error 500
-        /*app.use(function(err,req,res) {
-            logger.error('Error 500 at [%s] details [%s]', req.url, err );
-            res.status(500).jsonp({
-              message: '500 - Server error'
-            });
-        });*/
-
         app.use( context.util.action.errorResult );
-
 
         var port = process.env.PORT || 3000;
         app.listen(port, function() {

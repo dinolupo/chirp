@@ -1,16 +1,16 @@
 module.exports = function(ctx)
 {
-    var baseurl = ctx.config.server.api;
+    var baseurl = ctx.config.server.api + '/user';
 
     //var userFields = {'_id':1,'username':1,'displayname':1,'image':1,'email':1,'following':1};
 
     // get the user using login and password
-    ctx.app.get( baseurl + '/user/authenticate/:username/:password', function(req,res) {
+    ctx.app.get( baseurl + '/authenticate/:username/:password', function(req,res) {
         var username = req.params.username;
         var password = req.params.password;
 
         ctx.db.collection('users').findOne({'username':username,'password':password},function(err,data) {
-            if(err) throw err;
+            if(err) return ctx.util.action.errorResult(err.message,req,res);
 
             if (data) {
                 ctx.util.action.jsonResult(req,res,{
@@ -30,12 +30,12 @@ module.exports = function(ctx)
     });
 
     // get the user using a token
-    ctx.app.get( baseurl + '/user/access/:token', function(req,res) {
+    ctx.app.get( baseurl + '/access/:token', function(req,res) {
         var token = req.params.token;
 
         ctx.db.collection('users').findOne({'username':token},function(err, data)
         {
-            if (err) throw err;
+            if(err) return ctx.util.action.errorResult(err.message,req,res);
 
             if (data) {
                 ctx.util.action.jsonResult(req,res,{
@@ -55,16 +55,16 @@ module.exports = function(ctx)
     });
 
     // get the following of a user
-    ctx.app.get( baseurl + '/user/following/:token', function(req,res) {
+    ctx.app.get( baseurl + '/following/:token', function(req,res) {
         var token = req.params.token;
 
         ctx.db.collection('users').findOne({'username':token},function(err, data)
         {
-            if (err) throw err;
+            if(err) return ctx.util.action.errorResult(err.message,req,res);
 
             if (data) {
                 ctx.db.collection('users').find({'followers':data._id}).toArray(function (err, items) {
-                    if (err) throw err;
+                    if(err) return ctx.util.action.errorResult(err.message,req,res);
 
                     ctx.util.action.jsonResult(req, res, items);
                 });
@@ -76,15 +76,15 @@ module.exports = function(ctx)
     });
 
     // get the followers of a user
-    ctx.app.get( baseurl + '/user/followers/:token', function(req,res) {
+    ctx.app.get( baseurl + '/followers/:token', function(req,res) {
         var token = req.params.token;
 
         ctx.db.collection('users').findOne({'username':token},function(err, data) {
-            if (err) throw err;
+            if(err) return ctx.util.action.errorResult(err.message,req,res);
 
             if (data) {
                 ctx.db.collection('users').find({'following':data._id}).toArray(function (err, items) {
-                    if (err) throw err;
+                    if(err) return ctx.util.action.errorResult(err.message,req,res);
 
                     ctx.util.action.jsonResult(req, res, items);
                 });
@@ -96,7 +96,7 @@ module.exports = function(ctx)
     });
 
     // post a new message
-    ctx.app.post( baseurl + '/user', function(req,res) {
+    ctx.app.post( baseurl, function(req,res) {
         var username = req.body.username;
         var password = req.body.password;
         var displayname = req.body.displayname;
@@ -113,17 +113,18 @@ module.exports = function(ctx)
         };
 
         ctx.db.collection('users').save(user,function(err) {
-            if(err) throw err;
+            if(err) return ctx.util.action.errorResult(err.message,req,res);
+
             ctx.util.action.okResult(req,res);
         });
     });
 
     // get the user info
-    ctx.app.get( baseurl + '/user/info/:username', function(req,res) {
+    ctx.app.get( baseurl + '/info/:username', function(req,res) {
         var username = req.params.username;
 
         ctx.db.collection('users').findOne({'username':username},function(err,data) {
-            if(err) throw err;
+            if(err) return ctx.util.action.errorResult(err.message,req,res);
 
             if (data) {
                 ctx.util.action.jsonResult(req,res,{
