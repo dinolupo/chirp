@@ -12,7 +12,7 @@ module.exports = function(ctx)
             .toArray(function(err,data) {
                 if(err) throw err;
 
-                ctx.helper.sendJson(req,res,data);
+                ctx.util.action.jsonResult(req,res,data);
             });
     });
 
@@ -26,11 +26,11 @@ module.exports = function(ctx)
                     .toArray(function (err, items) {
                         if (err) throw err;
 
-                        ctx.helper.sendJson(req,res,items);
+                        ctx.util.action.jsonResult(req,res,items);
                     });
             }
             else {
-                ctx.helper.sendJson(req, res);
+                ctx.util.action.okResult(req, res);
             }
         });
     });
@@ -43,7 +43,7 @@ module.exports = function(ctx)
             .toArray(function (err, items) {
                 if (err) throw err;
 
-                ctx.helper.sendJson(req, res, items);
+                ctx.util.action.jsonResult(req, res, items);
             });
     });
 
@@ -52,7 +52,10 @@ module.exports = function(ctx)
         var username = req.body.username;
         var text = req.body.text;
 
-        ctx.db.collection('users').findOne({'username':username},{'fields':userSearchFields},function(err,data) {
+        ctx.db.collection('users').findOne(
+          {'username':username},
+          {'fields':userSearchFields},
+          function(err,data) {
                 if (data) {
                     var newPost = {
                         "username": username,
@@ -65,15 +68,12 @@ module.exports = function(ctx)
 
                     newPost.targetusers.push(data._id);
 
-                    ctx.db.collection('posts').save(newPost,function(err)
+                    ctx.db.collection('posts').save(newPost, function(err)
                     {
                         if(err) throw err;
 
-                        ctx.helper.sendJson(req,res,{'result':1});
+                        ctx.util.action.okResult(req,res);
                     });
-                }
-                else {
-                    ctx.helper.sendJson(req,res,{'result':0});
                 }
             });
     });

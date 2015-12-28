@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
 
-  // Project configuration.
+  // project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     clean: {
@@ -55,5 +55,5 @@ module.exports = function(grunt) {
 
   // Tasks
   grunt.registerTask('build',['jshint','clean','concat','copy']);
-  grunt.registerTask('default',['concat','watch']);
+  grunt.registerTask('default',['jshint','concat','watch']);
 };

@@ -1,7 +1,7 @@
 //(function() {
     var config = require('./config');
-    var logger = require("./logger")();
-    var helper = require("./helper")(logger);
+    var logger = require('./logger')();
+    var util = require('./util')(logger);
 
     var fs = require('fs');
     var express = require('express');
@@ -11,7 +11,7 @@
     var context =
     {
         config: config,
-        helper: helper,
+        util: util,
         app: app
     };
 
@@ -31,30 +31,39 @@
 
         context.db = db;    // set the current db connection
 
+        // configure static pages
+        app.use('/', express.static( __dirname + '/public', { 'dotfiles':'ignore' }));
+
+        app.use(function(req,res,next) {
+            logger.debug("[%s] request at [%s].", req.method, req.url);
+            next();
+        });
+
         // configure the routes
         fs.readdirSync('./routes/').forEach(function(name) {
             require('./routes/'+name)(context);
         });
 
-        // configure static pages
-        app.use('/', express.static(__dirname + '/public', {"dotfiles":"ignore"}));
+        // custom response for error 404
+        /*app.use(function(req, res) {
+            logger.error('Error 404 at [%s]', req.url);
+            res.status(404).jsonp({
+              message: '404 - Not found'
+            });
+        });*/
 
-        app.use(function(req,res,next) {
-            logger.debug("[%s] request at [%s].",req.method,req.url);
-            next();
-        });
+        app.use( context.util.action.notfoundResult );
 
-        // custom 404 page
-        app.use(function(req, res) {
-            logger.console.error('Error 404 at [%s]', req.url);
-            res.status(404).jsonp({error: '404 - Not found'});
-        });
+        // custom response for error 500
+        /*app.use(function(err,req,res) {
+            logger.error('Error 500 at [%s] details [%s]', req.url, err );
+            res.status(500).jsonp({
+              message: '500 - Server error'
+            });
+        });*/
 
-        // custom 500 page
-        app.use(function(err,req,res) {
-            logger.console.error('Error 500 at [%s]', req.url);
-            res.status(500).jsonp({error: '500 - Server error'});
-        });
+        app.use( context.util.action.errorResult );
+
 
         var port = process.env.PORT || 3000;
         app.listen(port, function() {

@@ -14,9 +14,9 @@
 
             ctrl.send = function (message)
             {
-                DataService.sendMessage(ctrl.user.username, message, function (data)
+                DataService.sendMessage(ctrl.user.username, message, function (result)
                 {
-                    if (data.result)
+                    if( result )
                     {
                         alert('Message sent!');
                         ctrl.message = '';

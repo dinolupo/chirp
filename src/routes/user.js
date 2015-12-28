@@ -13,7 +13,7 @@ module.exports = function(ctx)
             if(err) throw err;
 
             if (data) {
-                ctx.helper.sendJson(req,res,{
+                ctx.util.action.jsonResult(req,res,{
                     "username": data.username,
                     "displayname": data.displayname,
                     "password": data.password,
@@ -24,7 +24,7 @@ module.exports = function(ctx)
                 });
             }
             else {
-                ctx.helper.sendForbidden(req,res);
+                ctx.util.action.forbiddenResult(req,res);
             }
         });
     });
@@ -38,7 +38,7 @@ module.exports = function(ctx)
             if (err) throw err;
 
             if (data) {
-                ctx.helper.sendJson(req,res,{
+                ctx.util.action.jsonResult(req,res,{
                     "username": data.username,
                     "displayname": data.displayname,
                     "password": data.password,
@@ -49,7 +49,7 @@ module.exports = function(ctx)
                 });
             }
             else {
-                ctx.helper.sendForbidden(req,res);
+                ctx.util.action.forbiddenResult(req,res);
             }
         });
     });
@@ -66,11 +66,11 @@ module.exports = function(ctx)
                 ctx.db.collection('users').find({'followers':data._id}).toArray(function (err, items) {
                     if (err) throw err;
 
-                    ctx.helper.sendJson(req, res, items);
+                    ctx.util.action.jsonResult(req, res, items);
                 });
             }
             else {
-                ctx.helper.sendForbidden(req,res);
+                ctx.util.action.forbiddenResult(req,res);
             }
         });
     });
@@ -86,11 +86,11 @@ module.exports = function(ctx)
                 ctx.db.collection('users').find({'following':data._id}).toArray(function (err, items) {
                     if (err) throw err;
 
-                    ctx.helper.sendJson(req, res, items);
+                    ctx.util.action.jsonResult(req, res, items);
                 });
             }
             else {
-                ctx.helper.sendForbidden(req,res);
+                ctx.util.action.forbiddenResult(req,res);
             }
         });
     });
@@ -107,14 +107,14 @@ module.exports = function(ctx)
             "displayname": displayname,
             "password": password,
             "email": email,
-            "image": helper.config.image,
+            "image": ctx.config.image,
             "following": [],
             "followers": []
         };
 
         ctx.db.collection('users').save(user,function(err) {
             if(err) throw err;
-            ctx.helper.sendOK(req,res);
+            ctx.util.action.okResult(req,res);
         });
     });
 
@@ -126,7 +126,7 @@ module.exports = function(ctx)
             if(err) throw err;
 
             if (data) {
-                ctx.helper.sendJson(req,res,{
+                ctx.util.action.jsonResult(req,res,{
                     "username": data.username,
                     "displayname": data.displayname,
                     "password": data.password,
@@ -137,7 +137,7 @@ module.exports = function(ctx)
                 });
             }
             else {
-                ctx.helper.sendForbidden(req,res);
+                ctx.util.action.forbiddenResult(req,res);
             }
         });
     });

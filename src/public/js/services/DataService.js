@@ -46,10 +46,10 @@
                 sendMessage: function(username,text,callBack){
                     $http.post(config.api + "/post",{"username":username,"text":text})
                         .success(function (data, status, headers, config)  {
-                            callBack(data);
+                            callBack(true);
                         })
                         .error(function(){
-                            callBack();
+                            callBack(false);
                         });
                 },
                 getFollowingList: function (username,callBack) {

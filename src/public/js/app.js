@@ -196,9 +196,9 @@ angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
 
             ctrl.send = function (message)
             {
-                DataService.sendMessage(ctrl.user.username, message, function (data)
+                DataService.sendMessage(ctrl.user.username, message, function (result)
                 {
-                    if (data.result)
+                    if( result )
                     {
                         alert('Message sent!');
                         ctrl.message = '';
@@ -551,10 +551,10 @@ angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
                 sendMessage: function(username,text,callBack){
                     $http.post(config.api + "/post",{"username":username,"text":text})
                         .success(function (data, status, headers, config)  {
-                            callBack(data);
+                            callBack(true);
                         })
                         .error(function(){
-                            callBack();
+                            callBack(false);
                         });
                 },
                 getFollowingList: function (username,callBack) {
