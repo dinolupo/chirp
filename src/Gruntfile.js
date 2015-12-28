@@ -10,7 +10,10 @@ module.exports = function(grunt) {
       build: ['../build/**/*']
     },
     jshint: {
-      files: ['*.js','routes/**/*.js','public/js/**/*.js']
+      files: ['*.js','routes/**/*.js',
+              'public/js/**/*.js',
+              '!public/js/socket.io.js',
+              '!gruntfile.js']
     },
     copy: {
       main: {
@@ -31,8 +34,12 @@ module.exports = function(grunt) {
           separator: ';',
         },
         dist: {
-          src: ['public/js/config.js','public/js/controllers/*.js','public/js/directives/*.js','public/js/services/*.js'],
-          dest: 'public/js/app.js',
+          src: ['public/js/config.js',
+                'public/js/controllers/*.js',
+                'public/js/directives/*.js',
+                'public/js/services/*.js',
+                'public/js/socket.io.js'],
+          dest: 'public/app.js',
         },
     },
     watch: {
