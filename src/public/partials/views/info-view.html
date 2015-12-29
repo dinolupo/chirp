@@ -6,20 +6,18 @@
 
         <p class="text-center">
           <img ng-src="images/{{vm.user.image}}" style="max-height:200px; max-width:200px">
-          <hr>
         </p>
 
         <p class="text-center">
           FOLLOWING &nbsp;&nbsp;<span class="badge">{{vm.user.followingcount}}</span>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          FOLLOWERS &nbsp;&nbsp;
-          <span class="badge">{{vm.user.followercount}}</span>
+          FOLLOWERS &nbsp;&nbsp;<span class="badge">{{vm.user.followercount}}</span>
+          <hr>
         </p>
 
         <p class="text-center" ng-show="vm.showButton">
-            <hr>
-            <button class="btn btn-success" ng-show="vm.canFollow">Follow</button>
-            <button class="btn btn-success" ng-show="!vm.canFollow">Unfollow</button>
+            <a class="btn btn-success" ng-show="vm.canFollow">follow</a>
+            <a class="btn btn-success" ng-show="!vm.canFollow">unfollow</a>
         </p>
 
     </div>

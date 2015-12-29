@@ -95,7 +95,7 @@ module.exports = function(ctx)
         });
     });
 
-    // post a new message
+    // sign up a new user
     ctx.app.post( baseurl, function(req,res) {
         var username = req.body.username;
         var password = req.body.password;

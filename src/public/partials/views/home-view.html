@@ -4,13 +4,15 @@
         <form method="post" name="messageForm" ng-submit="vm.send(vm.message)">
             <div class="form-group">
                 <h4>{{vm.user.displayname}}</h4>
+                <img ng-src="images/{{vm.user.image}}" style="max-height:180px; max-width:180px">
+                <hr>
                 <ul class="list-group">
                     <li class="list-group-item">
-                        <a href="#/following">FOLLOWING</a>
+                        <a href="#/following">Following</a>
                         <span class="badge">{{vm.user.followingcount}}</span>
                     </li>
                     <li class="list-group-item">
-                        <a href="#/followers">FOLLOWERS</a>
+                        <a href="#/followers">Followers</a>
                         <span class="badge">{{vm.user.followercount}}</span>
                     </li>
                 </ul>
@@ -18,7 +20,7 @@
                 <textarea type="text" id="message" class="form-control" ng-model="vm.message" ng-required="true" rows="4"/>
             </div>
             <p class="text-right">
-                <button type="submit" class="btn btn-success btn-xs">&nbsp;&nbsp;post&nbsp;&nbsp;</button>
+                <button type="submit" class="btn btn-success btn-xs">&nbsp;Post&nbsp;</button>
             </p>
         </form>
 
