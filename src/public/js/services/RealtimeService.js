@@ -20,15 +20,6 @@
                     callBack(data);
                   });
                 }
-                /*getPublicPostList: function (callBack) {
-                    $http.get(config.api + "/post/public")
-                        .success(function (data, status, headers, config) {
-                            callBack(data);
-                        })
-                        .error(function(){
-                            callBack();
-                        });
-                }*/
             };
         }]);
 
