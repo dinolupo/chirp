@@ -15,13 +15,23 @@
 
             ctrl.send = function (message)
             {
+                if(message.length===0) {
+                  alert('Please specify the message!');
+                  return;
+                }
+
+                if(message.lenght>=140){
+                  alert('The must be less then 140 chars!');
+                  return;
+                }
+
                 DataService.sendMessage(ctrl.user.username, message, function (result)
                 {
                     if( result )
                     {
                         RealtimeService.postMessage(ctrl.user.username); // emit event
 
-                        alert('Message sent!');
+                        //alert('Message sent!');
                         ctrl.message = '';
                     }
                     else {

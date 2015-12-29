@@ -197,13 +197,23 @@ angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
 
             ctrl.send = function (message)
             {
+                if(message.length===0) {
+                  alert('Please specify the message!');
+                  return;
+                }
+
+                if(message.lenght>=140){
+                  alert('The must be less then 140 chars!');
+                  return;
+                }
+
                 DataService.sendMessage(ctrl.user.username, message, function (result)
                 {
                     if( result )
                     {
                         RealtimeService.postMessage(ctrl.user.username); // emit event
 
-                        alert('Message sent!');
+                        //alert('Message sent!');
                         ctrl.message = '';
                     }
                     else {
@@ -263,6 +273,17 @@ angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
                           ctrl.getData();
                           ctrl.showButton = true;
                           ctrl.canFollow = false;
+                        }
+                      });
+                };
+
+                ctrl.unfollow = function() {
+                  DataService.unfollow(ctrl.username,$stateParams.username,
+                      function (data) {
+                        if(data){
+                          ctrl.getData();
+                          ctrl.showButton = true;
+                          ctrl.canFollow = true;
                         }
                       });
                 };
@@ -603,6 +624,19 @@ angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
                     username2: username2
                   };
                   $http.post(config.api + "/user/follow",data)
+                      .success(function (data, status, headers, config)  {
+                          callBack(true);
+                      })
+                      .error(function(){
+                          callBack(false);
+                      });
+                },
+                unfollow: function (username1,username2,callBack) {
+                  var data = {
+                    username1: username1,
+                    username2: username2
+                  };
+                  $http.post(config.api + "/user/unfollow",data)
                       .success(function (data, status, headers, config)  {
                           callBack(true);
                       })

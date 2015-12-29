@@ -17,6 +17,17 @@
                       });
                 };
 
+                ctrl.unfollow = function() {
+                  DataService.unfollow(ctrl.username,$stateParams.username,
+                      function (data) {
+                        if(data){
+                          ctrl.getData();
+                          ctrl.showButton = true;
+                          ctrl.canFollow = true;
+                        }
+                      });
+                };
+
                 ctrl.getData = function() {
                   DataService.getUserInfo($stateParams.username,
                       function (data) {

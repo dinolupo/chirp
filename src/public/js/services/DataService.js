@@ -106,6 +106,19 @@
                       .error(function(){
                           callBack(false);
                       });
+                },
+                unfollow: function (username1,username2,callBack) {
+                  var data = {
+                    username1: username1,
+                    username2: username2
+                  };
+                  $http.post(config.api + "/user/unfollow",data)
+                      .success(function (data, status, headers, config)  {
+                          callBack(true);
+                      })
+                      .error(function(){
+                          callBack(false);
+                      });
                 }
             };
         }]);
