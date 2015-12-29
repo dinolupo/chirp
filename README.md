@@ -1,9 +1,9 @@
 # Chirp
 
-A simple Mean application that implements some features of Twitter:
+A simple Mean application that implements some features of Twitter.
 
 - public timeline
 - home timeline
-- post a Chirp
+- post a chirp
 - list of followers
 - list of following
