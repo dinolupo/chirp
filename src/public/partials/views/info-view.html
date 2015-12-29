@@ -16,8 +16,8 @@
         </p>
 
         <p class="text-center" ng-show="vm.showButton">
-            <a class="btn btn-success" ng-show="vm.canFollow">follow</a>
-            <a class="btn btn-success" ng-show="!vm.canFollow">unfollow</a>
+            <a class="btn btn-success" ng-show="vm.canFollow" ng-click="vm.follow()">Follow</a>
+            <a class="btn btn-success" ng-show="!vm.canFollow" ng-click="vm.unfollow()">Unfollow</a>
         </p>
 
     </div>

@@ -22,7 +22,8 @@ var helper = require('./util/helper')(logger);
 var context = {
     config: config,
     util: helper,
-    app: app
+    app: app,
+    logger: logger
 };
 
 // open a mongodb connection

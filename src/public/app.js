@@ -256,11 +256,22 @@ angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
             function ($scope,$log,$stateParams,$cookies,AuthService,DataService) {
                 var ctrl = this;
 
+                ctrl.follow = function() {
+                  DataService.follow(ctrl.username,$stateParams.username,
+                      function (data) {
+                        if(data){
+                          ctrl.getData();
+                          ctrl.showButton = true;
+                          ctrl.canFollow = false;
+                        }
+                      });
+                };
+
                 ctrl.getData = function() {
-                    DataService.getUserInfo($stateParams.username,
-                        function (data) {
-                            ctrl.user = data;
-                        });
+                  DataService.getUserInfo($stateParams.username,
+                      function (data) {
+                          ctrl.user = data;
+                      });
                 };
 
                 ctrl.checkCanFollow = function() {
@@ -563,28 +574,41 @@ angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
                         });
                 },
                 register: function(username,displayname,email,password,callBack) {
-                    var user = {
-                        "username": username,
-                        "password": password,
-                        "displayname": displayname,
-                        "email": email
-                    };
-                    $http.post(config.api + "/user",user)
-                        .success(function (data, status, headers, config)  {
-                            callBack(data);
-                        })
-                        .error(function(){
-                            callBack();
-                        });
+                  var user = {
+                      "username": username,
+                      "password": password,
+                      "displayname": displayname,
+                      "email": email
+                  };
+                  $http.post(config.api + "/user",user)
+                      .success(function (data, status, headers, config)  {
+                          callBack(data);
+                      })
+                      .error(function(){
+                          callBack();
+                      });
                 },
                 getUserInfo: function(username,callBack) {
-                    $http.get(config.api + "/user/info/" + username)
-                        .success(function (data, status, headers, config) {
-                            callBack(data);
-                        })
-                        .error(function(){
-                            callBack();
-                        });
+                  $http.get(config.api + "/user/info/" + username)
+                      .success(function (data, status, headers, config) {
+                          callBack(data);
+                      })
+                      .error(function(){
+                          callBack();
+                      });
+                },
+                follow: function (username1,username2,callBack) {
+                  var data = {
+                    username1: username1,
+                    username2: username2
+                  };
+                  $http.post(config.api + "/user/follow",data)
+                      .success(function (data, status, headers, config)  {
+                          callBack(true);
+                      })
+                      .error(function(){
+                          callBack(false);
+                      });
                 }
             };
         }]);

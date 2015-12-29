@@ -71,28 +71,41 @@
                         });
                 },
                 register: function(username,displayname,email,password,callBack) {
-                    var user = {
-                        "username": username,
-                        "password": password,
-                        "displayname": displayname,
-                        "email": email
-                    };
-                    $http.post(config.api + "/user",user)
-                        .success(function (data, status, headers, config)  {
-                            callBack(data);
-                        })
-                        .error(function(){
-                            callBack();
-                        });
+                  var user = {
+                      "username": username,
+                      "password": password,
+                      "displayname": displayname,
+                      "email": email
+                  };
+                  $http.post(config.api + "/user",user)
+                      .success(function (data, status, headers, config)  {
+                          callBack(data);
+                      })
+                      .error(function(){
+                          callBack();
+                      });
                 },
                 getUserInfo: function(username,callBack) {
-                    $http.get(config.api + "/user/info/" + username)
-                        .success(function (data, status, headers, config) {
-                            callBack(data);
-                        })
-                        .error(function(){
-                            callBack();
-                        });
+                  $http.get(config.api + "/user/info/" + username)
+                      .success(function (data, status, headers, config) {
+                          callBack(data);
+                      })
+                      .error(function(){
+                          callBack();
+                      });
+                },
+                follow: function (username1,username2,callBack) {
+                  var data = {
+                    username1: username1,
+                    username2: username2
+                  };
+                  $http.post(config.api + "/user/follow",data)
+                      .success(function (data, status, headers, config)  {
+                          callBack(true);
+                      })
+                      .error(function(){
+                          callBack(false);
+                      });
                 }
             };
         }]);

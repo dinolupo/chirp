@@ -1,28 +1,29 @@
 
 <div class="row">
-    <div class="col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-sm-offset-4 col-lg-4 col-md-4 col-sm-5 col-xs-5">
+    <div class="col-lg-offset-3 col-md-offset-3 col-lg-6 col-md-6 col-sm-12 col-xs-12">
 
-            <form class="form-horizontal" method="get" name="signForm" ng-submit="vm.signin(profile)">
-                <div class="form-group">
-                    <input type="text" id="username" class="form-control" placeholder="username" ng-model="profile.username" ng-required="true">
-                </div>
-                <div class="form-group">
-                    <input type="text" id="displayname" class="form-control" placeholder="display name" ng-model="profile.displayname" ng-required="true">
-                </div>
-                <div class="form-group">
-                    <input type="email" id="email" class="form-control" placeholder="email" ng-model="profile.email" ng-required="true">
-                </div>
-                <div class="form-group">
-                    <input type="password" id="password" class="form-control" placeholder="password" ng-model="profile.password" ng-required="true">
-                </div>
-                <div class="form-group">
-                    <input type="password" id="confirmpassword" class="form-control" placeholder="confirm" ng-model="profile.confirmpassword" ng-required="true">
-                </div>
-                <div class="form-group text-center">
-                    <button type="submit" class="btn btn-success">sign in</button>
-                    <a href="#/public" class="btn btn-default">cancel</a>
-                </div>
-            </form>
+        <h4 class="text-center">Please fill the form with your info for the registration</h4>
+        <form class="form-horizontal" method="get" name="signForm" ng-submit="vm.signin(profile)">
+            <div class="form-group">
+                <input type="text" id="username" class="form-control" placeholder="Username" ng-model="profile.username" ng-required="true">
+            </div>
+            <div class="form-group">
+                <input type="text" id="displayname" class="form-control" placeholder="Display name" ng-model="profile.displayname" ng-required="true">
+            </div>
+            <div class="form-group">
+                <input type="email" id="email" class="form-control" placeholder="Email" ng-model="profile.email" ng-required="true">
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" class="form-control" placeholder="Password" ng-model="profile.password" ng-required="true">
+            </div>
+            <div class="form-group">
+                <input type="password" id="confirmpassword" class="form-control" placeholder="Confirm password" ng-model="profile.confirmpassword" ng-required="true">
+            </div>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-success">Sign in</button>
+                <a href="#/public" class="btn btn-default">Cancel</a>
+            </div>
+        </form>
 
     </div>
 </div>

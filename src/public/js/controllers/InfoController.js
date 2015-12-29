@@ -6,11 +6,22 @@
             function ($scope,$log,$stateParams,$cookies,AuthService,DataService) {
                 var ctrl = this;
 
+                ctrl.follow = function() {
+                  DataService.follow(ctrl.username,$stateParams.username,
+                      function (data) {
+                        if(data){
+                          ctrl.getData();
+                          ctrl.showButton = true;
+                          ctrl.canFollow = false;
+                        }
+                      });
+                };
+
                 ctrl.getData = function() {
-                    DataService.getUserInfo($stateParams.username,
-                        function (data) {
-                            ctrl.user = data;
-                        });
+                  DataService.getUserInfo($stateParams.username,
+                      function (data) {
+                          ctrl.user = data;
+                      });
                 };
 
                 ctrl.checkCanFollow = function() {
