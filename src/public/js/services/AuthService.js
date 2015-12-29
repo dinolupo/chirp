@@ -63,7 +63,7 @@
 
                     DataService.register(username,displayname,email,password,
                         function() {
-                            $log.debug("[%s] DataService.signin > %s",new Date().toISOString(),data.username);
+                            $log.debug("[%s] DataService.signin > %s",new Date().toISOString(),username);
                             callBack();
                         }
                     );

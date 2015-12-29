@@ -4,7 +4,7 @@ module.exports =
         api: '/api/v1',
         limit: '10'
     },
-    image: 'defaultUser.png',
+    image: 'default.png',
     mongodb: {
         //connectionString: process.env.MDB
         connectionString: 'mongodb://localhost/chirp?autoReconnect=true'

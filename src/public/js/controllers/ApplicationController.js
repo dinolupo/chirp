@@ -18,7 +18,7 @@
                   $cookies.remove("chirp");
                   ctrl.islogged = false;
 
-                  $location.path('/pubic');
+                  $location.path('/public');
                   $location.replace();
 
                   $scope.$emit('logout');

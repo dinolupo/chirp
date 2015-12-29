@@ -7,6 +7,8 @@
                 var ctrl = this;
 
                 ctrl.signin = function (profile) {
+                    $log.debug(profile);
+                    
                     if(profile.password != profile.confirmpassword)
                     {
                         alert('Password are different!');

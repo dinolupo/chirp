@@ -81,7 +81,7 @@ angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
                   $cookies.remove("chirp");
                   ctrl.islogged = false;
 
-                  $location.path('/pubic');
+                  $location.path('/public');
                   $location.replace();
 
                   $scope.$emit('logout');
@@ -412,6 +412,8 @@ angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
                 var ctrl = this;
 
                 ctrl.signin = function (profile) {
+                    $log.debug(profile);
+                    
                     if(profile.password != profile.confirmpassword)
                     {
                         alert('Password are different!');
@@ -512,7 +514,7 @@ angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
 
                     DataService.register(username,displayname,email,password,
                         function() {
-                            $log.debug("[%s] DataService.signin > %s",new Date().toISOString(),data.username);
+                            $log.debug("[%s] DataService.signin > %s",new Date().toISOString(),username);
                             callBack();
                         }
                     );
@@ -643,15 +645,6 @@ angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
                     callBack(data);
                   });
                 }
-                /*getPublicPostList: function (callBack) {
-                    $http.get(config.api + "/post/public")
-                        .success(function (data, status, headers, config) {
-                            callBack(data);
-                        })
-                        .error(function(){
-                            callBack();
-                        });
-                }*/
             };
         }]);
 
