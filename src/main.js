@@ -49,7 +49,14 @@ mongoClient.connect(config.mongodb.connectionString, { db: { bufferMaxEntries: 0
 
     // set io connection
     io.on('connection', function(socket){
-      logger.info('a user connected');
+      logger.debug('Client connected');
+      socket.on('disconnect', function(){
+        console.log('Client disconnected');
+      });
+      socket.on('postmessage', function(msg){
+        logger.debug('Broadcast <postmessage> event from [%s]', msg);
+        io.emit('postmessage', msg);
+      });
     });
 
     app.use( context.util.action.notfoundResult );

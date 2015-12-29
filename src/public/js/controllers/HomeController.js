@@ -2,8 +2,9 @@
     'use strict';
 
     angular.module('appChirp')
-        .controller('HomeController', ['$scope','$log','$location','$timeout','$cookies','DataService','AuthService','config',
-        function ($scope,$log,$location,$timeout,$cookies,DataService,AuthService,config) {
+        .controller('HomeController', ['$scope','$log','$location','$timeout','$cookies',
+        'DataService','AuthService','RealtimeService','config',
+        function ($scope,$log,$location,$timeout,$cookies,DataService,AuthService,RealtimeService,config) {
             var ctrl = this;
 
             ctrl.initView = function ()
@@ -18,6 +19,8 @@
                 {
                     if( result )
                     {
+                        RealtimeService.postMessage(ctrl.user.username); // emit event
+
                         alert('Message sent!');
                         ctrl.message = '';
                     }
@@ -55,7 +58,15 @@
                 }
             }
 
-            ctrl.intervalFunction = function()
+            // catch event
+            RealtimeService.onMessage(function (data) {
+              ctrl.loadPosts();
+            });
+
+            ctrl.loadPosts();
+
+
+            /*ctrl.intervalFunction = function()
             {
                 ctrl.loadPosts();
 
@@ -69,6 +80,6 @@
                 });
             };
 
-            ctrl.intervalFunction();
+            ctrl.intervalFunction();*/
         }]);
 })();

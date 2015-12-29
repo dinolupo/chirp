@@ -4,59 +4,59 @@
 angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
     .constant("config",
     {
-        "api": "http://localhost:3000/api/v1",
-        //"api": "http://chirp.dimotta.net/api/v1",
-        "elapsedtime": 6000
+      "api": "http://localhost:3000/api/v1",
+      //"api": "http://chirp.dimotta.net/api/v1",
+      "elapsedtime": 6000
     })
     .config(['$logProvider','$stateProvider','$urlRouterProvider', function($logProvider,$stateProvider,$urlRouterProvider)
     {
-        $logProvider.debugEnabled(true);
+      $logProvider.debugEnabled(true);
 
-        $urlRouterProvider.otherwise("/public");
+      $urlRouterProvider.otherwise("/public");
 
-        $stateProvider
-            .state('public', {
-                url: "/public",
-                templateUrl: 'partials/views/public-view.html',
-                controller: 'PublicController',
-                controllerAs: 'vm'
-            })
-            .state('home', {
-                url: "/home",
-                templateUrl: 'partials/views/home-view.html',
-                controller: 'HomeController',
-                controllerAs: 'vm'
-            })
-            .state('login', {
-                url: "/login",
-                templateUrl: 'partials/views/login-form-view.html',
-                controller: 'LoginController',
-                controllerAs: 'vm'
-            })
-            .state('following', {
-                url: "/following",
-                templateUrl: 'partials/views/following-list-view.html',
-                controller: 'FollowingController',
-                controllerAs: 'vm'
-            })
-            .state('followers', {
-                url: "/followers",
-                templateUrl: 'partials/views/followers-list-view.html',
-                controller: 'FollowersController',
-                controllerAs: 'vm'
-            })
-            .state('signup', {
-                url: "/signup",
-                templateUrl: 'partials/views/register-form-view.html',
-                controller: 'RegisterController',
-                controllerAs: 'vm'
-            })
-            .state('info', {
-                url: "/info/:username",
-                templateUrl: 'partials/views/info-view.html',
-                controller: 'InfoController',
-                controllerAs: 'vm'
-            });
+      $stateProvider
+        .state('public', {
+            url: "/public",
+            templateUrl: 'partials/views/public-view.html',
+            controller: 'PublicController',
+            controllerAs: 'vm'
+        })
+        .state('home', {
+            url: "/home",
+            templateUrl: 'partials/views/home-view.html',
+            controller: 'HomeController',
+            controllerAs: 'vm'
+        })
+        .state('login', {
+            url: "/login",
+            templateUrl: 'partials/views/login-form-view.html',
+            controller: 'LoginController',
+            controllerAs: 'vm'
+        })
+        .state('following', {
+            url: "/following",
+            templateUrl: 'partials/views/following-list-view.html',
+            controller: 'FollowingController',
+            controllerAs: 'vm'
+        })
+        .state('followers', {
+            url: "/followers",
+            templateUrl: 'partials/views/followers-list-view.html',
+            controller: 'FollowersController',
+            controllerAs: 'vm'
+        })
+        .state('signup', {
+            url: "/signup",
+            templateUrl: 'partials/views/register-form-view.html',
+            controller: 'RegisterController',
+            controllerAs: 'vm'
+        })
+        .state('info', {
+            url: "/info/:username",
+            templateUrl: 'partials/views/info-view.html',
+            controller: 'InfoController',
+            controllerAs: 'vm'
+        });
     }
 ]);
 
@@ -184,8 +184,9 @@ angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
     'use strict';
 
     angular.module('appChirp')
-        .controller('HomeController', ['$scope','$log','$location','$timeout','$cookies','DataService','AuthService','config',
-        function ($scope,$log,$location,$timeout,$cookies,DataService,AuthService,config) {
+        .controller('HomeController', ['$scope','$log','$location','$timeout','$cookies',
+        'DataService','AuthService','RealtimeService','config',
+        function ($scope,$log,$location,$timeout,$cookies,DataService,AuthService,RealtimeService,config) {
             var ctrl = this;
 
             ctrl.initView = function ()
@@ -200,6 +201,8 @@ angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
                 {
                     if( result )
                     {
+                        RealtimeService.postMessage(ctrl.user.username); // emit event
+
                         alert('Message sent!');
                         ctrl.message = '';
                     }
@@ -237,7 +240,15 @@ angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
                 }
             }
 
-            ctrl.intervalFunction = function()
+            // catch event
+            RealtimeService.onMessage(function (data) {
+              ctrl.loadPosts();
+            });
+
+            ctrl.loadPosts();
+
+
+            /*ctrl.intervalFunction = function()
             {
                 ctrl.loadPosts();
 
@@ -251,7 +262,7 @@ angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
                 });
             };
 
-            ctrl.intervalFunction();
+            ctrl.intervalFunction();*/
         }]);
 })();
 ;(function() {
@@ -355,8 +366,8 @@ angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
     'use strict';
 
     angular.module('appChirp')
-        .controller('PublicController', ['$scope','$log','$timeout','DataService','config',
-        function ($scope, $log, $timeout, DataService, config) {
+        .controller('PublicController', ['$scope','$log','$timeout','DataService','RealtimeService','config',
+        function ($scope,$log,$timeout,DataService,RealtimeService,config) {
             var ctrl = this;
 
             ctrl.getData = function(){
@@ -366,7 +377,14 @@ angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
                     });
             };
 
-            ctrl.intervalFunction = function()
+            // catch event
+            RealtimeService.onMessage(function (data) {
+              ctrl.getData();
+            });
+
+            ctrl.getData();
+
+            /*ctrl.intervalFunction = function()
             {
                 ctrl.getData();
 
@@ -380,7 +398,7 @@ angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
                 });
             };
 
-            ctrl.intervalFunction();
+            ctrl.intervalFunction();*/
         }
     ]);
 
@@ -599,6 +617,41 @@ angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
                             callBack();
                         });
                 }
+            };
+        }]);
+
+})();
+;(function() {
+    'use strict';
+
+    angular.module('appChirp')
+        .factory("RealtimeService", ['$http', '$log', 'config',
+        function ($http, $log, config)
+        {
+            var socket = io();
+
+            return {
+                postMessage: function (username)
+                {
+                  $log.debug('Emit <postmessage> event');
+
+                  socket.emit('postmessage', username);
+                },
+                onMessage: function (callBack) {
+                  socket.on('postmessage', function(data){
+                    $log.debug('Catch <postmessage> event');
+                    callBack(data);
+                  });
+                }
+                /*getPublicPostList: function (callBack) {
+                    $http.get(config.api + "/post/public")
+                        .success(function (data, status, headers, config) {
+                            callBack(data);
+                        })
+                        .error(function(){
+                            callBack();
+                        });
+                }*/
             };
         }]);
 

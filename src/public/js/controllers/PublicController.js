@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('appChirp')
-        .controller('PublicController', ['$scope','$log','$timeout','DataService','config',
-        function ($scope, $log, $timeout, DataService, config) {
+        .controller('PublicController', ['$scope','$log','$timeout','DataService','RealtimeService','config',
+        function ($scope,$log,$timeout,DataService,RealtimeService,config) {
             var ctrl = this;
 
             ctrl.getData = function(){
@@ -13,7 +13,14 @@
                     });
             };
 
-            ctrl.intervalFunction = function()
+            // catch event
+            RealtimeService.onMessage(function (data) {
+              ctrl.getData();
+            });
+
+            ctrl.getData();
+
+            /*ctrl.intervalFunction = function()
             {
                 ctrl.getData();
 
@@ -27,7 +34,7 @@
                 });
             };
 
-            ctrl.intervalFunction();
+            ctrl.intervalFunction();*/
         }
     ]);
 
