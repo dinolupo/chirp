@@ -4,14 +4,14 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var fs = require('fs');
 
-var config = require('./config');
-var logger = require('./logger')();
-var util = require('./util')(logger);
+var config = require('./util/config');
+var logger = require('./util/logger')();
+var helper = require('./util/helper')(logger);
 
 // create the context
 var context = {
     config: config,
-    util: util,
+    util: helper,
     app: app
 };
 

@@ -8,15 +8,13 @@
             var socket = io();
 
             return {
-                postMessage: function (username)
-                {
-                  $log.debug('Emit <postmessage> event');
-
-                  socket.emit('postmessage', username);
+                postMessage: function (data) {
+                  $log.debug('Emit <postmessage> event from [%s]',data);
+                  socket.emit('postmessage',data);
                 },
                 onMessage: function (callBack) {
                   socket.on('postmessage', function(data){
-                    $log.debug('Catch <postmessage> event');
+                    $log.debug('Catch <postmessage> event from [%s]',data);
                     callBack(data);
                   });
                 }

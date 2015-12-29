@@ -13,28 +13,12 @@
                     });
             };
 
-            // catch event
+            // catch event for reloading
             RealtimeService.onMessage(function (data) {
               ctrl.getData();
             });
 
             ctrl.getData();
-
-            /*ctrl.intervalFunction = function()
-            {
-                ctrl.getData();
-
-                var promise = $timeout(function(){
-                    ctrl.getData();
-                    ctrl.intervalFunction();
-                }, config.elapsedtime);
-
-                $scope.$on('$destroy', function(){
-                    $timeout.cancel(promise);
-                });
-            };
-
-            ctrl.intervalFunction();*/
         }
     ]);
 

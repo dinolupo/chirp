@@ -10,22 +10,26 @@ module.exports = function(grunt) {
       build: ['../build/**/*']
     },
     jshint: {
-      files: ['*.js','routes/**/*.js',
-              'public/js/**/*.js',
-              '!public/js/socket.io.js',
+      files: ['**/*.js',
+              '!public/app.js',
+              '!node_modules/**/*.js',
+              '!public/bower_components/**/*.js',
               '!gruntfile.js']
     },
     copy: {
       main: {
         files: [
-          {expand: true, src: ['node_modules/**/*'], dest: '../build/'},
-          {expand: true, src: ['**/*.js'], dest: '../build/'},
+          {expand: true, src: ['routes/**/*.js'], dest: '../build/'},
+          {expand: true, src: ['util/**/*.js'], dest: '../build/'},
+          {expand: true, src: ['main.js'], dest: '../build/'},
+          {expand: true, src: ['package.json'], dest: '../build/'},
           {expand: true, src: ['public/bower_components/**/*'], dest: '../build/'},
           {expand: true, src: ['public/css/**/*'], dest: '../build/'},
           {expand: true, src: ['public/images/**/*'], dest: '../build/'},
           {expand: true, src: ['public/partials/**/*'], dest: '../build/'},
-          {expand: true, src: ['public/js/app.js'], dest: '../build/'},
-          {expand: true, src: ['public/*.html'], dest: '../build/'}
+          {expand: true, src: ['public/app.js'], dest: '../build/'},
+          {expand: true, src: ['public/index.html'], dest: '../build/'},
+          {expand: true, src: ['public/bower.json'], dest: '../build/'}
         ]
       }
     },
@@ -34,11 +38,7 @@ module.exports = function(grunt) {
           separator: ';',
         },
         dist: {
-          src: ['public/js/config.js',
-                'public/js/controllers/*.js',
-                'public/js/directives/*.js',
-                'public/js/services/*.js',
-                'public/js/socket.io.js'],
+          src: ['public/js/**/*.js'],
           dest: 'public/app.js',
         },
     },
@@ -62,5 +62,5 @@ module.exports = function(grunt) {
 
   // Tasks
   grunt.registerTask('build',['jshint','clean','concat','copy']);
-  grunt.registerTask('default',['jshint','concat','watch']);
+  grunt.registerTask('default',['concat','watch']);
 };

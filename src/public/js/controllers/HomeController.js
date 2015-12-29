@@ -58,28 +58,11 @@
                 }
             }
 
-            // catch event
+            // catch event for reloading
             RealtimeService.onMessage(function (data) {
               ctrl.loadPosts();
             });
 
             ctrl.loadPosts();
-
-
-            /*ctrl.intervalFunction = function()
-            {
-                ctrl.loadPosts();
-
-                var promise = $timeout(function(){
-                    ctrl.loadPosts();
-                    ctrl.intervalFunction();
-                }, config.elapsedtime);
-
-                $scope.$on('$destroy', function(){
-                    $timeout.cancel(promise);
-                });
-            };
-
-            ctrl.intervalFunction();*/
         }]);
 })();
