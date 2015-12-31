@@ -24,7 +24,7 @@ for the last updates.
 - searching (users and messages)
 - security management (client/server comunication)
 - hashtag
-- rast api documentation
+- rest api documentation
 
 ### How to install:
 1. Clone the project
