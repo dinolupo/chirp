@@ -40,5 +40,6 @@ for the last updates.
 11. Execute **node main.js**
 
 ### Known issues:
-- lack of checks on posts
+- no check when post a new message
 - bad visualization of long messages
+- no check of the username (duplication) when signup
