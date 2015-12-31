@@ -412,7 +412,7 @@ angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
 
                 ctrl.signin = function (profile) {
                     $log.debug(profile);
-                    
+
                     if(profile.password != profile.confirmpassword)
                     {
                         alert('Password are different!');
