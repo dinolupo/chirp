@@ -25,6 +25,8 @@ for the last updates.
 - security management (client/server comunication)
 - hashtag
 - rest api documentation
+- edit user information
+- add custom user image
 
 ### How to install:
 1. Clone the project
