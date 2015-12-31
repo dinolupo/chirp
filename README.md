@@ -1,6 +1,6 @@
 # Chirp
 
-This is a simple [Mean](https://en.wikipedia.org/wiki/MEAN_(software_bundle)) application, which implements some features of twitter.
+It's a simple clone of twitter, which has been developed using the [mean](https://en.wikipedia.org/wiki/MEAN_(software_bundle)) fullstack javascript.
 
 An [online demo](http://chirp.dimotta.net) is hosted on Heroku.
 Read the [release notes](https://github.com/antdimot/chirp/blob/master/Releasenotes.md)
