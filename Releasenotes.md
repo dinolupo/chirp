@@ -1,11 +1,16 @@
+## 31/12/2015
+* Deep refactoring of solution
+* Added support for realtime update of the timelines (by [socket.io](http://socket.io/))
+* Added support for follow and unfollow
+
 ## 08/09/2015
 * Updated solution
-* Added **bower** supports
+* Added **bower** support
 
 ## 05/07/2015
-* Added **grunt** supports
+* Added **grunt** support
 * Updated solution
-* Added MIT license
+* Update MIT license
 
 ## 07/04/2015
 * Added **appContext** logic for encapsulation of utilities

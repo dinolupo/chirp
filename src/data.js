@@ -20,8 +20,8 @@ db.users.insert(
     },
     {
         "_id": user2Id,
-        "username": "demo1",
-        "displayname": "My name is demo1",
+        "username": "userdemo1",
+        "displayname": "I'm not a bot :)",
         "password": "pass",
         "email": "demo1@dd.dd",
         "image":"default.png",
@@ -49,9 +49,9 @@ db.posts.insert(
     },
     {
         "_id": post2Id,
-        "username": "demo1",
+        "username": "userdemo1",
         "targetusers": [user1Id,user2Id],
-        "displayname": "My name is demo1",
+        "displayname": "I'm not a bot :)",
         "image":"default.png",
         "timestamp": date2,
         "text": "Are you ready for production?"

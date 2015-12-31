@@ -1,20 +1,31 @@
 # Chirp
 
-This is a simple Mean application that implements some features of Twitter.
+This is a simple [Mean](https://en.wikipedia.org/wiki/MEAN_(software_bundle)) application, which implements some features of twitter.
 
-The demo of Chirp is [online](http://chirp.dimotta.net) on Heroku.
+An [online demo](http://chirp.dimotta.net) is hosted on Heroku.
+Read the [release notes](https://github.com/antdimot/chirp/blob/master/Releasenotes.md)
+for the last updates.
 
-### Features implemented:
-
-- public timeline
-- home timeline
-- post a message
-- list of followers
-- list of following
+### Features:
+- public timeline *(http://mywebsite/#/public)*
+- user timeline   *(http://mywebsite/#/home)*
+- user info       *(http://mywebsite/#/info/myusername)*
+- post of a message
+- list of the followers
+- list of the following
 - follow an user
 - unfollow an user
+- sign up
+- log on
 
-### Getting started:
+### Todo (missing features):
+- retweet
+- response
+- searching (users and messages)
+- security management (client/server comunication)
+- hashtag
+
+### How to install:
 1. Clone the project
 2. Install **nodejs** and **mongodb**
 3. Change diretory to **src**
@@ -27,7 +38,6 @@ The demo of Chirp is [online](http://chirp.dimotta.net) on Heroku.
 10. Change directory to **build**
 11. Execute **node main.js**
 
-### Todo:
-The application is lacking of some important features like retweet
-
-*ADIMO*
+### Known issues:
+- lack of checks on posts
+- bad visualization of long messages
