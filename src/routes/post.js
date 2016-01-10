@@ -1,6 +1,6 @@
 module.exports = function(ctx)
 {
-    var limit = ctx.config.limit;
+    var limit = ctx.config.server.limit;
     var baseurl = ctx.config.server.api + '/post';
 
     var postListFields = {'username':1,'displayname':1,'timestamp':1,'text':1,'image':1};
