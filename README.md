@@ -33,8 +33,6 @@ for the last updates.
 - [**expressjs**](http://expressjs.com)
 - [**socket.io**](http://socket.io)
 - [**cors**](https://github.com/expressjs/cors)
-- 
- 
 
 ### How to install:
 1. Clone the project
@@ -61,3 +59,4 @@ for the last updates.
 - bad visualization of long messages
 - no check of the username (duplication) when signup
 - doesn't recognize local time
+- doesn't encode html on post message
