@@ -2,9 +2,8 @@
 db.users.drop();
 db.posts.drop();
 
-user1Id = ObjectId();
-user2Id = ObjectId();
-user3Id = ObjectId();
+user1Id = ObjectId().valueOf();
+user2Id = ObjectId().valueOf();
 
 db.users.insert(
 [
@@ -30,8 +29,8 @@ db.users.insert(
     }
 ]);
 
-post1Id = ObjectId();
-post2Id = ObjectId();
+post1Id = ObjectId().valueOf();
+post2Id = ObjectId().valueOf();
 
 date1 = ISODate("2015-09-13T16:30:00Z").toISOString();
 date2 = ISODate("2015-09-13T16:35:00Z").toISOString();
@@ -41,7 +40,7 @@ db.posts.insert(
     {
         "_id": post1Id,
         "username": "antdimot",
-        "targetusers": [user1Id,user2Id],
+        "ownerid": user1Id,
         "displayname": "Antonio Di Motta",
         "image":"dimotta.jpg",
         "timestamp": date1,
@@ -50,7 +49,7 @@ db.posts.insert(
     {
         "_id": post2Id,
         "username": "userdemo1",
-        "targetusers": [user1Id,user2Id],
+        "ownerid": user2Id,
         "displayname": "I'm not a bot :)",
         "image":"default.png",
         "timestamp": date2,

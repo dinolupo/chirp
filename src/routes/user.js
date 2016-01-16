@@ -1,7 +1,7 @@
 module.exports = function(ctx)
 {
     var baseurl = ctx.config.server.api + '/user';
-    var ObjectId = require('mongodb').ObjectId;
+    //var ObjectId = require('mongodb').ObjectId;
 
     //var userFields = {'_id':1,'username':1,'displayname':1,'image':1,'email':1,'following':1};
 
@@ -138,7 +138,7 @@ module.exports = function(ctx)
             if(user2) {
               var found = false;
               for (i = 0; i < user1.following.length; i++) {
-                if(user1.following[i].toString()==user2._id.toString())
+                if(user1.following[i]==user2._id)
                 {
                   found = true;
                   break;
@@ -189,7 +189,7 @@ module.exports = function(ctx)
             if(user2) {
               var found = false;
               for (i = 0; i < user1.following.length; i++) {
-                if(user1.following[i].toString()==user2._id.toString())
+                if(user1.following[i]==user2._id)
                 {
                   found = true;
                   break;

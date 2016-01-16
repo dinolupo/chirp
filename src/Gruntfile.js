@@ -45,9 +45,9 @@ module.exports = function(grunt) {
     watch: {
       scripts: {
         files: ['<%= jshint.files %>'],
-        tasks: ['jshint','concat'],
+        tasks: ['jshint'],
         options: {
-          spawn: false,
+          spawn: false
         }
       }
     }
@@ -60,9 +60,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  // Tasks
-  // obsolete task
+  // todo: need to update because the tasks are obsolete
   //grunt.registerTask('build',['jshint','clean','concat','copy']);
-
-  grunt.registerTask('default',['watch']);
+  //grunt.registerTask('default',['watch']);
 };

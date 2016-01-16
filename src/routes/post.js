@@ -20,9 +20,10 @@ module.exports = function(ctx)
     ctx.app.get( baseurl + '/home/:token', function(req,res) {
         var token = req.params.token;
 
-        ctx.db.collection('users').findOne({'username':token},{'limit':limit,'fields':{'_id': 1}}, function(err, data) {
+        ctx.db.collection('users').findOne({'username':token},{'limit':limit,'fields':userSearchFields}, function(err, data) {
             if (data) {
-                ctx.db.collection('posts').find({'targetusers': data._id},{'fields': postListFields,'sort':{'timestamp':-1}})
+                data.following.push(data._id); // add my id for showing also my posts
+                ctx.db.collection('posts').find({'ownerid':{ $in:data.following}},{'fields': postListFields,'sort':{'timestamp':-1}})
                     .toArray(function (err, items) {
                         if(err) return ctx.util.action.errorResult(err.message,req,res);
 
@@ -57,18 +58,16 @@ module.exports = function(ctx)
           {'fields':userSearchFields},
           function(err,data) {
                 if(err) return ctx.util.action.errorResult(err.message,req,res);
-                
+
                 if (data) {
                     var newPost = {
                         "username": username,
-                        "targetusers": data.following,
+                        "ownerid": data._id,
                         "displayname": data.displayname,
                         "timestamp": new Date().toISOString(),
                         "image": data.image,
                         "text": text
                     };
-
-                    newPost.targetusers.push(data._id);
 
                     ctx.db.collection('posts').save(newPost, function(err)
                     {
