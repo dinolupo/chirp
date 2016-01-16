@@ -28,22 +28,10 @@ for the last updates.
 - edit user information
 - add custom user image
 
-### Install **nodejs** with the following dependencies:
-
-- [**expressjs**](http://expressjs.com)
-- [**socket.io**](http://socket.io)
-- [**cors**](https://github.com/expressjs/cors)
-
 ### How to install:
 1. Clone the project
-2. Install [**nodejs**](https://nodejs.org/en/) alongwith the following libraries:
-	- [expressjs](http://expressjs.com)
-	- [socket.io](http://socket.io)
-	- [cors](https://github.com/expressjs/cors)
-	- [body-parser](https://github.com/expressjs/body-parser)
-	- [winston](https://github.com/winstonjs/winston)
-	- [mongodb](https://docs.mongodb.org/ecosystem/drivers/node-js/)
-3. Install [grunt](http://gruntjs.com) and [mongodb](https://www.mongodb.org)
+2. Install [**nodejs**]
+3. Install [mongodb](https://www.mongodb.org)
 4. Change diretory to **src**
 5. Restore **node_modules** using ```npm install```
 6. Change directory to src/public
@@ -52,7 +40,7 @@ for the last updates.
 9. Customize the url **api** location in src/public/js/config.js
 10. Execute ```grunt build``` from the project root folder
 11. Change directory to **build**
-12. Execute **node main.js**
+12. Execute **node main**
 
 ### Known issues:
 - no check when post a new message

@@ -1,3 +1,9 @@
+## 17/01/2016
+* Changing the property *usertargets* with *ownerid*
+* Now the collection using the ObjectId.valueOf
+* Update rest api for searching home posts
+* Update rest api for posting a new message
+
 ## 31/12/2015
 * Deep refactoring of solution
 * Added support for realtime update of the timelines (by [socket.io](http://socket.io/))
