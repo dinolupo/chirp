@@ -4,10 +4,10 @@ db = db.getSiblingDB("chirp");
 db.users.drop();
 db.posts.drop();
 
-TOT_USERS = 100;
+TOT_USERS = 1000;
 MAX_POSTS_PER_USER = 100;
-MAX_FOLLOWERS = 10;
-MAX_FOLLOWING = 20;
+MAX_FOLLOWERS = 100;
+MAX_FOLLOWING = 200;
 
 function randomString(min, max) { 
 	if (typeof min === 'undefined') { min = 10; }
@@ -42,21 +42,6 @@ function randomDate(start, end) {
 }
 
 
-/*
-
-   date2 = ISODate("2015-09-13T16:35:00Z").toISOString();
-
-   {
-   "_id": post2Id,
-   "username": "userdemo1",
-   "targetusers": [user1Id,user2Id],
-   "displayname": "I'm not a bot :)",
-   "image":"default.png",
-   "timestamp": date2,
-   "text": "Are you ready for production?"
-   }
-*/
-
 // insert random users
 for (var i = 0; i < TOT_USERS; i++) {
 	name = randomString(3,10);
@@ -68,20 +53,23 @@ for (var i = 0; i < TOT_USERS; i++) {
 	image = "default.png";
 	following = [];
 	followers = [];
-	record = {'_id':i, 'username':username, 'displayname':displayname, 'password':password, 'email':email, 'image':image, 'following':following, 'followers':followers};
+	// for testing purpouse use i for identity
+	// otherwise remove _id to create automatically ObjectId
+	//userid = ObjectId();
+	userid = i;
+	record = {'_id':userid, 'username':username, 'displayname':displayname, 'password':password, 'email':email, 'image':image, 'following':following, 'followers':followers};
 	db.users.insert(record);
 
     // insert posts for this user	
 	post_per_user = 1 + Math.floor(Math.random() * MAX_POSTS_PER_USER);
 	for(p = 0; p < post_per_user; p++){
-		post = {'username':username, 'targetusers':[], 'displayname':displayname, 'timestamp':randomDate(new Date(2005,0,1), new Date()).toISOString(), 'text':randomPost()};
+		post = {'username':username, 'ownerid':userid, 'displayname':displayname, 'timestamp':randomDate(new Date(2005,0,1), new Date()).toISOString(), 'text':randomPost()};
 		db.posts.insert(post);
 	} 
 	
 }
 
 // insert random following and followers for the users 
-
 ids = db.users.find({},{_id:1});
 
 for (var i = 0; i < TOT_USERS; i++) {
@@ -104,5 +92,8 @@ for (var i = 0; i < TOT_USERS; i++) {
 	db.users.update(ids[i], {$set:{'followers':followers}});
 
 }
+
+// for testing set user and password of the first user to 'test'
+db.users.update({_id:1},{$set:{username:'test',password:'test'}});
 
 
