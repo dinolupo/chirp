@@ -1,10 +1,22 @@
 
-<div class="list-group">
-  <div class="row" style="padding-top:5px;" ng-repeat="item in vm.posts">
-    <div class="col-lg-offset-3 col-md-offset-3 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+<div class="row" >
+  <div class="col-lg-offset-3 col-md-offset-3 col-lg-5 col-md-5 col-sm-12 col-xs-12">
 
-      <postpanel data="item"></postpanel>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <tbody>
+        <tr ng-repeat="item in vm.posts">
+          <td>
+            <img class="img-rounded" ng-src="images/{{item.image}}" width="60px" height="60px">
+          </td>
+          <td>
+            <a href="#/info/{{item.username}}">{{item.displayname}}</a>&nbsp;&nbsp;&nbsp;<i>{{item.timestamp | date:'MM/dd/yyyy @ h:mma' }}</i>
+            <p class="text-justify" ng-bind="item.text"></p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-    </div>
   </div>
 </div>

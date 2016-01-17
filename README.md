@@ -39,7 +39,5 @@ for the last updates.
 8. Execute **node main**
 
 ### Known issues:
-- no check when post a new message
-- bad visualization of long messages
 - no check of the username (duplication) when signup
 - doesn't encode html on post message
