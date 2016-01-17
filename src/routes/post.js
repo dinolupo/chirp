@@ -20,10 +20,10 @@ module.exports = function(ctx)
     ctx.app.get( baseurl + '/home/:token', function(req,res) {
         var token = req.params.token;
 
-        ctx.db.collection('users').findOne({'username':token},{'limit':limit,'fields':userSearchFields}, function(err, data) {
+        ctx.db.collection('users').findOne({'username':token},{'fields':userSearchFields}, function(err, data) {
             if (data) {
                 data.following.push(data._id); // add my id for showing also my posts
-                ctx.db.collection('posts').find({'ownerid':{ $in:data.following}},{'fields': postListFields,'sort':{'timestamp':-1}})
+                ctx.db.collection('posts').find({'ownerid':{ $in:data.following}},{'limit':limit,'fields': postListFields,'sort':{'timestamp':-1}})
                     .toArray(function (err, items) {
                         if(err) return ctx.util.action.errorResult(err.message,req,res);
 
