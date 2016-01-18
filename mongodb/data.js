@@ -4,28 +4,39 @@ db.posts.drop();
 
 user1Id = ObjectId().valueOf();
 user2Id = ObjectId().valueOf();
+user3Id = ObjectId().valueOf();
 
 db.users.insert(
 [
     {
         "_id": user1Id,
-        "username": "antdimot",
+        "username": "dimotta",
         "displayname": "Antonio Di Motta",
         "password": "greatpass",
         "email": "antonio.dimotta@gmail.com",
         "image":"dimotta.jpg",
-        "following": [user2Id],
+        "following": [user2Id,user3Id],
         "followers": [user2Id]
     },
     {
         "_id": user2Id,
+        "username": "dinolupo",
+        "displayname": "Dino Lupo",
+        "password": "pass",
+        "email": "dino.lupo@gmail.com",
+        "image":"lupo.jpg",
+        "following": [user1Id],
+        "followers": [user1Id]
+    },
+    {
+        "_id": user3Id,
         "username": "userdemo1",
         "displayname": "I'm not a bot :)",
         "password": "pass",
         "email": "demo1@dd.dd",
         "image":"default.png",
         "following": [user1Id],
-        "followers": [user1Id]
+        "followers": [user1Id,user3Id]
     }
 ]);
 
@@ -39,7 +50,7 @@ db.posts.insert(
 [
     {
         "_id": post1Id,
-        "username": "antdimot",
+        "username": "dimotta",
         "ownerid": user1Id,
         "displayname": "Antonio Di Motta",
         "image":"dimotta.jpg",
@@ -49,7 +60,7 @@ db.posts.insert(
     {
         "_id": post2Id,
         "username": "userdemo1",
-        "ownerid": user2Id,
+        "ownerid": user3Id,
         "displayname": "I'm not a bot :)",
         "image":"default.png",
         "timestamp": date2,
