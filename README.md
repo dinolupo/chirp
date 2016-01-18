@@ -32,11 +32,9 @@ for the last updates.
 1. Clone the project
 2. Install *nodejs*
 3. Install *mongodb*
-4. Change directory to *src/public*
-5. Restore *bower_components* using ```bower install```
-6. Change directory to *src*
-7. Restore *node_modules* using ```npm install```
-8. Execute **node main**
+4. Restore *node_modules* using ```npm install```
+5. Restore *bower_components* in *wwwroot* using ```bower install```
+6. Execute **node main**
 
 ### Known issues:
 - no check of the username (duplication) when signup

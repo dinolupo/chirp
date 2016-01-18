@@ -1,9 +1,12 @@
 ## 18/01/2016
 * Public timeline visualization enhancement
 * Home timeline visualization enhancement
-* Added a new user to data.js
+* Added a new user to *data.js*
 * Added an image on logo
-* Added the environment variable MDB for specifying the connectionString (e.g. production)
+* Added the environment variable **MDB** for specifying the connectionString (e.g. production)
+* Updated project structure
+* Rename the folder *public* to *wwwroot**
+* Disabled grunt tasks
 
 ## 17/01/2016
 * Changing the property *usertargets* with *ownerid*

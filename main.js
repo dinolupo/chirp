@@ -41,7 +41,7 @@ mongoClient.connect(config.mongodb.connectionString, { db: { bufferMaxEntries: 0
     app.use(config.server.api,cors);
 
     // static content
-    app.use('/', express.static( __dirname + '/public', { 'dotfiles':'ignore' }));
+    app.use('/', express.static( __dirname + '/wwwroot', { 'dotfiles':'ignore' }));
 
     app.use(function(req,res,next) {
       logger.debug("[%s] request at [%s].", req.method, req.url);
