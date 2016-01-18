@@ -1,3 +1,7 @@
+## 18/01/2016
+* Public timeline visualization enhancement
+* Home timeline visualization enhancement
+
 ## 17/01/2016
 * Changing the property *usertargets* with *ownerid*
 * Now the collection using the ObjectId.valueOf
