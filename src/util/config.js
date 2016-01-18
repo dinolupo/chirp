@@ -6,7 +6,6 @@ module.exports =
     },
     image: 'default.png',
     mongodb: {
-        //connectionString: process.env.MDB
-        connectionString: 'mongodb://localhost/chirp?autoReconnect=true'
+        connectionString: process.env.MDB || 'mongodb://localhost/chirp?autoReconnect=true'
     }
 };

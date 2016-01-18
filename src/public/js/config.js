@@ -4,8 +4,7 @@
 angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
     .constant("config",
     {
-      "api": "http://localhost:3000/api/v1",
-      //"api": "http://chirp.dimotta.net/api/v1"
+      "api": "/api/v1"
     })
     .config(['$logProvider','$stateProvider','$urlRouterProvider', function($logProvider,$stateProvider,$urlRouterProvider)
     {

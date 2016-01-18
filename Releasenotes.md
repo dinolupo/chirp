@@ -3,6 +3,7 @@
 * Home timeline visualization enhancement
 * Added a new user to data.js
 * Added an image on logo
+* Added the environment variable MDB for specifying the connectionString (e.g. production)
 
 ## 17/01/2016
 * Changing the property *usertargets* with *ownerid*
