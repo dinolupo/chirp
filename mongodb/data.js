@@ -1,12 +1,23 @@
+var config = require('../util/config');
+var fs = require('fs');
+var mongodb = require('mongodb');
+var mongoClient = mongodb.MongoClient;
+var ObjectId = mongodb.ObjectID;
 
-db.users.drop();
-db.posts.drop();
+mongoClient.connect(config.mongodb.connectionString, { db: { bufferMaxEntries: 0 } }, (err, db) => {
 
-user1Id = ObjectId().valueOf();
-user2Id = ObjectId().valueOf();
-user3Id = ObjectId().valueOf();
+db.dropCollection('users');
+db.dropCollection('posts');
+db.dropCollection('images');
 
-db.users.insert(
+var user1Id = ObjectId().toString();
+var user2Id = ObjectId().toString();
+var user3Id = ObjectId().toString();
+var post1Id = ObjectId().toString();
+var post2Id = ObjectId().toString();
+var image1Id = ObjectId().toString();
+
+db.collection('users').insert(
 [
     {
         "_id": user1Id,
@@ -40,13 +51,7 @@ db.users.insert(
     }
 ]);
 
-post1Id = ObjectId().valueOf();
-post2Id = ObjectId().valueOf();
-
-date1 = ISODate("2015-09-13T16:30:00Z").toISOString();
-date2 = ISODate("2015-09-13T16:35:00Z").toISOString();
-
-db.posts.insert(
+db.collection('posts').insert(
 [
     {
         "_id": post1Id,
@@ -54,7 +59,7 @@ db.posts.insert(
         "ownerid": user1Id,
         "displayname": "Antonio Di Motta",
         "image":"dimotta.jpg",
-        "timestamp": date1,
+        "timestamp": new Date("2015-09-13T16:30:00Z").toISOString(),
         "text": "My first post using Chirp."
     },
     {
@@ -63,7 +68,22 @@ db.posts.insert(
         "ownerid": user3Id,
         "displayname": "I'm not a bot :)",
         "image":"default.png",
-        "timestamp": date2,
+        "timestamp": new Date("2015-09-13T16:35:00Z").toISOString(),
         "text": "Are you ready for production?"
     }
 ]);
+
+// load images
+/*fs.readFile('../wwwroot/images/dimotta.jpg', (err, data) => {
+  if (err) throw err;
+  db.collection('images').insert(
+  [
+      {
+          "_id": image1Id,
+          "name": "dimotta.jpg",
+          "content": data
+      }
+  ]);
+});*/
+
+});

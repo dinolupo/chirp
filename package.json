@@ -1,8 +1,8 @@
 {
   "name": "chirp",
-  "homepage": "https://chirp.dimotta.net",
-  "version": "0.2.1",
-  "description": "A Twitter clone.",
+  "homepage": "https://github.com/antdimot/chirp",
+  "version": "0.2.2",
+  "description": "The Twitter clone.",
   "license": "MIT",
   "main": "main.js",
   "scripts": {
