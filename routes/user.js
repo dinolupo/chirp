@@ -1,4 +1,6 @@
-module.exports = function(ctx)
+/* jshint esnext: true */
+
+module.exports = (ctx)=>
 {
     var baseurl = ctx.config.server.api + '/user';
     //var ObjectId = require('mongodb').ObjectId;

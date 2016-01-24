@@ -1,4 +1,6 @@
-module.exports = function(ctx)
+/* jshint esnext: true */
+
+module.exports = (ctx)=>
 {
     var limit = ctx.config.server.limit;
     var baseurl = ctx.config.server.api + '/image';
@@ -13,4 +15,4 @@ module.exports = function(ctx)
           }
       });
     });*/
-}
+};
