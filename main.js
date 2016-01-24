@@ -1,3 +1,5 @@
+/* jshint esnext: true */
+
 // load external libraries
 var express = require('express');
 var app = express();
@@ -29,7 +31,7 @@ var context = {
 // open a mongodb connection
 var mongoClient = require('mongodb').MongoClient;
 mongoClient.connect(config.mongodb.connectionString, { db: { bufferMaxEntries: 0 } },
-  function (err, db) {
+   (err, db) => {
     if(err) {
       logger.error(err.message);
       process.exit(1);

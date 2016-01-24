@@ -1,3 +1,5 @@
+/* jshint esnext: true */
+
 var config = require('../util/config');
 var fs = require('fs');
 var mongodb = require('mongodb');
@@ -85,5 +87,7 @@ db.collection('posts').insert(
       }
   ]);
 });*/
+
+//process.exit(0);
 
 });
