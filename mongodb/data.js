@@ -2,13 +2,12 @@
 
 var config = require('../util/config');
 var fs = require('fs');
+var co = require('co');
 var mongodb = require('mongodb');
 var mongoClient = mongodb.MongoClient;
 var ObjectId = mongodb.ObjectID;
 
-mongoClient.connect(config.mongodb.connectionString, { db: { bufferMaxEntries: 0 } }, (err, db) => {
-
-//db.dropCollection('images');
+mongoClient.connect(config.mongodb.connectionString, { db: { bufferMaxEntries: 0 } },(err,db)=> {
 
 var user1Id = ObjectId().toString();
 var user2Id = ObjectId().toString();
@@ -17,15 +16,13 @@ var post1Id = ObjectId().toString();
 var post2Id = ObjectId().toString();
 var image1Id = ObjectId().toString();
 
-var clearData = () => { return new Promise((resolve,reject)=>{
+var clearData = ()=> {
     db.dropCollection('users');
     db.dropCollection('posts');
-    resolve();
-  });
+    db.dropCollection('images');
 };
 
-var addUsers = () => {
-  return new Promise( (resolve,reject) => {
+var addUsers = ()=> {
     db.collection('users').insert(
     [
         {
@@ -59,54 +56,53 @@ var addUsers = () => {
             "followers": [user1Id,user3Id]
         }
     ]);
-    resolve();
+};
+
+var addPosts = ()=> {
+    db.collection('posts').insert(
+    [
+        {
+            "_id": post1Id,
+            "username": "dimotta",
+            "ownerid": user1Id,
+            "displayname": "Antonio Di Motta",
+            "image":"dimotta.jpg",
+            "timestamp": new Date("2015-09-13T16:30:00Z").toISOString(),
+            "text": "My first post using Chirp."
+        },
+        {
+            "_id": post2Id,
+            "username": "userdemo1",
+            "ownerid": user3Id,
+            "displayname": "I'm not a bot :)",
+            "image":"default.png",
+            "timestamp": new Date("2015-09-13T16:35:00Z").toISOString(),
+            "text": "Are you ready for production?"
+          }
+      ]);
+};
+
+var addImages = ()=> {
+    fs.readFile('../wwwroot/images/dimotta.jpg',(err,data)=> {
+      if(err) throw err;
+      db.collection('images').insert(
+      [
+          {
+              "_id": image1Id,
+              "name": "dimotta.jpg",
+              "content": data
+          }
+      ]);
   });
 };
 
-var addPosts = () => {
-  return new Promise( (resolve,reject) => {
-    db.collection('posts').insert(
-      [
-          {
-              "_id": post1Id,
-              "username": "dimotta",
-              "ownerid": user1Id,
-              "displayname": "Antonio Di Motta",
-              "image":"dimotta.jpg",
-              "timestamp": new Date("2015-09-13T16:30:00Z").toISOString(),
-              "text": "My first post using Chirp."
-          },
-          {
-              "_id": post2Id,
-              "username": "userdemo1",
-              "ownerid": user3Id,
-              "displayname": "I'm not a bot :)",
-              "image":"default.png",
-              "timestamp": new Date("2015-09-13T16:35:00Z").toISOString(),
-              "text": "Are you ready for production?"
-            }
-        ]);
-        resolve();
-    });
-};
-
-clearData()
-  .then(addUsers())
-  .then(addPosts());
-
-// load images
-/*fs.readFile('../wwwroot/images/dimotta.jpg', (err, data) => {
-  if (err) throw err;
-  db.collection('images').insert(
-  [
-      {
-          "_id": image1Id,
-          "name": "dimotta.jpg",
-          "content": data
-      }
-  ]);
-});*/
-
-//process.exit(0);
+co(function* () {
+  yield Promise.resolve(clearData);
+  yield Promise.resolve(addUsers);
+  yield Promise.resolve(addPosts);
+} ).then(
+  (result)=>{console.log("End with success!")},
+  (err)=>{console.err("Error")}
+);
 
 });

@@ -9,9 +9,9 @@ module.exports = (ctx)=>
     var userSearchFields = {'_id':1,'following':1,'displayname':1,'image':1};
 
     // get items posted to public timeline
-    ctx.app.get( baseurl + '/public', function(req,res) {
+    ctx.app.get( baseurl + '/public', (req,res) => {
         ctx.db.collection('posts').find({},{'limit':limit,'fields': postListFields,'sort': {'timestamp':-1}})
-            .toArray(function(err,data) {
+            .toArray((err,data)=> {
                 if(err) return ctx.util.action.errorResult(err.message,req,res);
 
                 ctx.util.action.jsonResult(req,res,data);
@@ -19,14 +19,14 @@ module.exports = (ctx)=>
     });
 
     // get items posted to user timeline
-    ctx.app.get( baseurl + '/home/:token', function(req,res) {
+    ctx.app.get( baseurl + '/home/:token', (req,res) => {
         var token = req.params.token;
 
-        ctx.db.collection('users').findOne({'username':token},{'fields':userSearchFields}, function(err, data) {
+        ctx.db.collection('users').findOne({'username':token},{'fields':userSearchFields},(err,data)=>{
             if (data) {
                 data.following.push(data._id); // add my id for showing also my posts
                 ctx.db.collection('posts').find({'ownerid':{ $in:data.following}},{'limit':limit,'fields': postListFields,'sort':{'timestamp':-1}})
-                    .toArray(function (err, items) {
+                    .toArray((err,items)=> {
                         if(err) return ctx.util.action.errorResult(err.message,req,res);
 
                         ctx.util.action.jsonResult(req,res,items);
@@ -39,11 +39,11 @@ module.exports = (ctx)=>
     });
 
     // get the items posted from an user
-    ctx.app.get( baseurl + '/:username', function(req,res) {
+    ctx.app.get( baseurl + '/:username',(req,res) => {
         var username = req.params.username;
 
         ctx.db.collection('posts').find({'username': username},{'fields': postListFields,'sort': {'timestamp':-1}})
-            .toArray(function (err, items) {
+            .toArray((err,items)=> {
                 if(err) return ctx.util.action.errorResult(err.message,req,res);
 
                 ctx.util.action.jsonResult(req, res, items);
@@ -51,7 +51,7 @@ module.exports = (ctx)=>
     });
 
     // post a new message
-    ctx.app.post( baseurl, function(req,res) {
+    ctx.app.post( baseurl, (req,res) => {
         var username = req.body.username;
         var text = req.body.text;
 
@@ -71,7 +71,7 @@ module.exports = (ctx)=>
                         "text": text
                     };
 
-                    ctx.db.collection('posts').save(newPost, function(err)
+                    ctx.db.collection('posts').save(newPost,(err)=>
                     {
                         if(err) return ctx.util.action.errorResult(err.message,req,res);
 

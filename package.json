@@ -11,6 +11,7 @@
   "author": "Antonio Di Motta",
   "dependencies": {
     "body-parser": "^1.12.2",
+    "co": "^4.6.0",
     "cors": "^2.5.3",
     "es6-promise": "^3.0.2",
     "express": "^4.12.3",

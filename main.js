@@ -45,23 +45,23 @@ mongoClient.connect(config.mongodb.connectionString, { db: { bufferMaxEntries: 0
     // static content
     app.use('/', express.static( __dirname + '/wwwroot', { 'dotfiles':'ignore' }));
 
-    app.use(function(req,res,next) {
+    app.use((req,res,next)=>{
       logger.debug("[%s] request at [%s].", req.method, req.url);
       next();
     });
 
     // load the routes
-    fs.readdirSync('./routes/').forEach(function(name) {
+    fs.readdirSync('./routes/').forEach((name)=> {
       require('./routes/'+name)(context);
     });
 
     // set io connection
-    io.on('connection', function(socket){
+    io.on('connection',(socket)=>{
       logger.debug('Client connected');
-      socket.on('disconnect', function(){
+      socket.on('disconnect',()=>{
         console.log('Client disconnected');
       });
-      socket.on('postmessage', function(data){
+      socket.on('postmessage',(data)=>{
         logger.debug('Broadcast <postmessage> event from [%s]', data);
         io.emit('postmessage', data);
       });
@@ -73,7 +73,7 @@ mongoClient.connect(config.mongodb.connectionString, { db: { bufferMaxEntries: 0
 
     // start server
     var port = process.env.PORT || 3000;
-    http.listen(port, function() {
+    http.listen(port,()=> {
       logger.info('Server listening on port %s', port);
     });
 });

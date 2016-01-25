@@ -8,11 +8,11 @@ module.exports = (ctx)=>
     //var userFields = {'_id':1,'username':1,'displayname':1,'image':1,'email':1,'following':1};
 
     // get the user using login and password
-    ctx.app.get( baseurl + '/authenticate/:username/:password', function(req,res) {
+    ctx.app.get( baseurl + '/authenticate/:username/:password',(req,res)=> {
         var username = req.params.username;
         var password = req.params.password;
 
-        ctx.db.collection('users').findOne({'username':username,'password':password},function(err,data) {
+        ctx.db.collection('users').findOne({'username':username,'password':password},(err,data)=> {
             if(err) return ctx.util.action.errorResult(err.message,req,res);
 
             if (data) {
@@ -33,10 +33,10 @@ module.exports = (ctx)=>
     });
 
     // get the user using a token
-    ctx.app.get( baseurl + '/access/:token', function(req,res) {
+    ctx.app.get( baseurl + '/access/:token', (req,res)=> {
         var token = req.params.token;
 
-        ctx.db.collection('users').findOne({'username':token},function(err, data){
+        ctx.db.collection('users').findOne({'username':token},(err, data)=>{
             if(err) return ctx.util.action.errorResult(err.message,req,res);
 
             if (data) {
@@ -57,15 +57,15 @@ module.exports = (ctx)=>
     });
 
     // get the following of a user
-    ctx.app.get( baseurl + '/following/:token', function(req,res) {
+    ctx.app.get( baseurl + '/following/:token',(req,res)=> {
         var token = req.params.token;
 
-        ctx.db.collection('users').findOne({'username':token},function(err, data)
+        ctx.db.collection('users').findOne({'username':token},(err, data)=>
         {
             if(err) return ctx.util.action.errorResult(err.message,req,res);
 
             if (data) {
-                ctx.db.collection('users').find({'followers':data._id}).toArray(function (err, items) {
+                ctx.db.collection('users').find({'followers':data._id}).toArray((err,items)=> {
                     if(err) return ctx.util.action.errorResult(err.message,req,res);
 
                     ctx.util.action.jsonResult(req, res, items);
@@ -78,14 +78,14 @@ module.exports = (ctx)=>
     });
 
     // get the followers of a user
-    ctx.app.get( baseurl + '/followers/:token', function(req,res) {
+    ctx.app.get( baseurl + '/followers/:token',(req,res)=> {
         var token = req.params.token;
 
-        ctx.db.collection('users').findOne({'username':token},function(err, data) {
+        ctx.db.collection('users').findOne({'username':token},(err,data)=> {
             if(err) return ctx.util.action.errorResult(err.message,req,res);
 
             if (data) {
-                ctx.db.collection('users').find({'following':data._id}).toArray(function (err, items) {
+                ctx.db.collection('users').find({'following':data._id}).toArray((err,items)=> {
                     if(err) return ctx.util.action.errorResult(err.message,req,res);
 
                     ctx.util.action.jsonResult(req, res, items);
@@ -98,7 +98,7 @@ module.exports = (ctx)=>
     });
 
     // sign up a new user
-    ctx.app.post( baseurl, function(req,res) {
+    ctx.app.post( baseurl,(req,res)=> {
       var username = req.body.username;
       var password = req.body.password;
       var displayname = req.body.displayname;
@@ -114,7 +114,7 @@ module.exports = (ctx)=>
           "followers": []
       };
 
-      ctx.db.collection('users').save(user,function(err) {
+      ctx.db.collection('users').save(user,(err)=> {
           if(err) return ctx.util.action.errorResult(err.message,req,res);
 
           ctx.util.action.okResult(req,res);
@@ -122,18 +122,18 @@ module.exports = (ctx)=>
     });
 
     // follow an user
-    ctx.app.post( baseurl + '/follow', function (req,res) {
+    ctx.app.post( baseurl + '/follow',  (req,res)=> {
       var username = req.body.username1;
       var follow = req.body.username2;
 
       //ctx.logger.debug(username);
       //ctx.logger.debug(follow);
 
-      ctx.db.collection('users').findOne({'username':username},function(err,user1) {
+      ctx.db.collection('users').findOne({'username':username},(err,user1)=> {
         if(err) return ctx.util.action.errorResult(err.message,req,res);
 
         if (user1) {
-          ctx.db.collection('users').findOne({'username':follow},function(err,user2) {
+          ctx.db.collection('users').findOne({'username':follow},(err,user2)=> {
             if(err) return ctx.util.action.errorResult(err.message,req,res);
 
             // check if already follow
@@ -155,7 +155,7 @@ module.exports = (ctx)=>
 
               ctx.db.collection('users')
                     .updateOne({_id:user1._id},{$push: {following:user2._id }})
-                    .then(function(){
+                    .then(()=>{
                       ctx.db.collection('users')
                             .updateOne({_id:user2._id},{$push: {followers:user1._id }});
                     });
@@ -173,18 +173,18 @@ module.exports = (ctx)=>
     } );
 
     // follow an user
-    ctx.app.post( baseurl + '/unfollow', function (req,res) {
+    ctx.app.post( baseurl + '/unfollow',(req,res)=> {
       var username = req.body.username1;
       var follow = req.body.username2;
 
       //ctx.logger.debug(username);
       //ctx.logger.debug(follow);
 
-      ctx.db.collection('users').findOne({'username':username},function(err,user1) {
+      ctx.db.collection('users').findOne({'username':username},(err,user1)=>{
         if(err) return ctx.util.action.errorResult(err.message,req,res);
 
         if (user1) {
-          ctx.db.collection('users').findOne({'username':follow},function(err,user2) {
+          ctx.db.collection('users').findOne({'username':follow},(err,user2)=>{
             if(err) return ctx.util.action.errorResult(err.message,req,res);
 
             // check if already follow
@@ -206,7 +206,7 @@ module.exports = (ctx)=>
 
               ctx.db.collection('users')
                     .updateOne({_id:user1._id},{$pull: {following: user2._id }})
-                    .then(function(){
+                    .then(()=>{
                       ctx.db.collection('users')
                             .updateOne({_id:user2._id},{$pull: {followers: user1._id }});
                     });
@@ -224,10 +224,10 @@ module.exports = (ctx)=>
     } );
 
     // get the user info
-    ctx.app.get( baseurl + '/info/:username', function(req,res) {
+    ctx.app.get( baseurl + '/info/:username',(req,res)=>{
         var username = req.params.username;
 
-        ctx.db.collection('users').findOne({'username':username},function(err,data) {
+        ctx.db.collection('users').findOne({'username':username},(err,data)=>{
             if(err) return ctx.util.action.errorResult(err.message,req,res);
 
             if (data) {
