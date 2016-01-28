@@ -1,3 +1,6 @@
+## 28/01/2016
+* Message visualization enhancement, adding link when there is a user reference (e.g. @dimotta)
+
 ## 18/01/2016
 * Public timeline visualization enhancement
 * Home timeline visualization enhancement
