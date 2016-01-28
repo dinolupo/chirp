@@ -30,7 +30,7 @@ module.exports = function(logger)
       if(matches) {
         var result = text;
         matches.forEach((element, index, array)=>{
-          var textref = '<a href="http://localhost:3000/#/info/'+element.substring(1)+'">'+element+'</a>';
+          var textref = '<a href="/#/info/'+element.substring(1)+'">'+element+'</a>';
           logger.debug( "%s -> %s",element,textref);
           result = result.replace(element,textref);
         });
