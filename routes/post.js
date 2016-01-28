@@ -14,6 +14,12 @@ module.exports = (ctx)=>
             .toArray((err,data)=> {
                 if(err) return ctx.util.action.errorResult(err.message,req,res);
 
+                data.forEach((element, index, array)=>{
+                  element.text = ctx.util.string.bodyProcess(element.text);
+                });
+                //data.text = ctx.util.string.bodyProcess(data.text);
+                //ctx.logger.debug(data[0].text);
+
                 ctx.util.action.jsonResult(req,res,data);
             });
     });

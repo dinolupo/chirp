@@ -11,7 +11,7 @@
           </td>
           <td>
             <a href="#/info/{{item.username}}">{{item.displayname}}</a>&nbsp;&nbsp;&nbsp;<i>{{item.timestamp | date:'MM/dd/yyyy @ h:mma' }}</i>
-            <p class="text-justify" ng-bind="item.text"></p>
+            <p class="text-justify" ng-bind-html="item.text"></p>
           </td>
         </tr>
       </tbody>
