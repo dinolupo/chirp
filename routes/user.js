@@ -32,11 +32,11 @@ module.exports = (ctx)=>
         });
     });
 
-    // get the user using a token
-    ctx.app.get( baseurl + '/access/:token', (req,res)=> {
-        var token = req.params.token;
+    // get the user using a username
+    ctx.app.get( baseurl + '/access/:username', (req,res)=> {
+        var username = req.params.username;
 
-        ctx.db.collection('users').findOne({'username':token},(err, data)=>{
+        ctx.db.collection('users').findOne({'username':username},(err, data)=>{
             if(err) return ctx.util.action.errorResult(err.message,req,res);
 
             if (data) {
@@ -57,10 +57,10 @@ module.exports = (ctx)=>
     });
 
     // get the following of a user
-    ctx.app.get( baseurl + '/following/:token',(req,res)=> {
-        var token = req.params.token;
+    ctx.app.get( baseurl + '/following/:username',(req,res)=> {
+        var username = req.params.username;
 
-        ctx.db.collection('users').findOne({'username':token},(err, data)=>
+        ctx.db.collection('users').findOne({'username':username},(err, data)=>
         {
             if(err) return ctx.util.action.errorResult(err.message,req,res);
 
@@ -78,10 +78,10 @@ module.exports = (ctx)=>
     });
 
     // get the followers of a user
-    ctx.app.get( baseurl + '/followers/:token',(req,res)=> {
-        var token = req.params.token;
+    ctx.app.get( baseurl + '/followers/:username',(req,res)=> {
+        var username = req.params.username;
 
-        ctx.db.collection('users').findOne({'username':token},(err,data)=> {
+        ctx.db.collection('users').findOne({'username':username},(err,data)=> {
             if(err) return ctx.util.action.errorResult(err.message,req,res);
 
             if (data) {

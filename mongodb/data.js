@@ -85,18 +85,18 @@ mongoClient.connect(config.mongodb.connectionString, { db: { bufferMaxEntries: 0
   };
 
   co(function *(){
+    console.log('Database initializing...');
     yield Promise.resolve(clearData());
     yield Promise.resolve(addUsers());
     yield Promise.resolve(addPosts());
-
     return true;
   })
   .then((result)=>{
-    console.log("End with success!");
+    console.log("Database initilized!");
     process.exit(0);
   })
   .catch((error)=>{
-    console.error(error);
+    console.log("Database initialization error! -> "+error);
   });
 
 });
