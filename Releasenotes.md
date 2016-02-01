@@ -1,3 +1,16 @@
+## 28/01/2016
+* Message visualization enhancement, adding link when there is a user reference (e.g. @dimotta)
+
+## 18/01/2016
+* Public timeline visualization enhancement
+* Home timeline visualization enhancement
+* Added a new user to *data.js*
+* Added an image on logo
+* Added the environment variable **MDB** for specifying the connectionString (e.g. production)
+* Updated project structure
+* Rename the folder *public* to *wwwroot**
+* Disabled grunt tasks
+
 ## 17/01/2016
 * Changing the property *usertargets* with *ownerid*
 * Now the collection using the ObjectId.valueOf

@@ -30,21 +30,12 @@ for the last updates.
 
 ### How to install:
 1. Clone the project
-2. Install [**nodejs**]
-3. Install [mongodb](https://www.mongodb.org)
-4. Change diretory to **src**
-5. Restore **node_modules** using ```npm install```
-6. Change directory to src/public
-7. Restore **bower_components** using ```bower install```
-8. Customize the mongodb **connectionstring** in src/util/config.js
-9. Customize the url **api** location in src/public/js/config.js
-10. Execute ```grunt build``` from the project root folder
-11. Change directory to **build**
-12. Execute **node main**
+2. Install *nodejs*
+3. Install *mongodb*
+4. Restore *node_modules* using ```npm install```
+5. Restore *bower_components* in *wwwroot* using ```bower install```
+6. Execute **node main**
 
 ### Known issues:
-- no check when post a new message
-- bad visualization of long messages
 - no check of the username (duplication) when signup
-- doesn't recognize local time
 - doesn't encode html on post message

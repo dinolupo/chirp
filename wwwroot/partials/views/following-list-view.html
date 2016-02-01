@@ -1,0 +1,20 @@
+<div class="row" >
+  <div class="col-lg-offset-4 col-md-offset-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <tbody>
+          <tr ng-repeat="item in vm.users">
+            <td>
+              <img class="img-rounded" ng-src="images/{{item.image}}" width="60px" height="60px">
+            </td>
+            <td>
+              <a href="#/info/{{item.username}}">{{item.displayname}}</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

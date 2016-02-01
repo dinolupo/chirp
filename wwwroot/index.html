@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html ng-app="appChirp">
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <title>Chirp</title>
+
+    <meta name="author" content="Antonio Di Motta">
+    <meta name="description" content="A Twitter clone">
+    <meta name="keywords" content="chirp, twitter, antdimot, Antonio Di Motta">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/chirp.css" />
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+</head>
+<body>
+
+<div class="container-fluid" ng-controller="AppController as appCtrl">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#/public">
+                            <p class="lead">
+                              <img alt="Brand" src="images/bird_yellow.png" width="40px" height="40px">&nbsp;Chirp
+                            </p>
+                        </a>
+                    </div>
+                    <p class="navbar-text navbar-right">
+                        <span ng-show="appCtrl.islogged">
+                            <a href="#/home">{{appCtrl.user.displayname}}</a>
+                        </span>&nbsp;&nbsp;
+                        <a class="btn btn-default" href="#/signup" role="button" ng-show="!appCtrl.islogged">Sign up</a>
+                        <a class="btn btn-default" href="#/login" role="button" ng-show="!appCtrl.islogged">Login</a>
+                        <a class="btn btn-default" ng-click="appCtrl.logout()" role="button" ng-show="appCtrl.islogged">Logout</a>
+                    </p>
+                </div>
+            </nav>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+            <div ui-view style="padding-top: 6em"></div>
+
+        </div>
+    </div>
+</div>
+
+<!-- external dependencies -->
+<script src="bower_components/jquery/dist/jquery.js" lang="javascript"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js" lang="javascript"></script>
+<script src="bower_components/angular/angular.js" lang="javascript"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js" lang="javascript"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js" lang="javascript"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js" lang="javascript"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<!-- internal dependencies -->
+<script src="js/config.js" lang="javascript"></script>
+<script src="js/services/DataService.js" lang="javascript"></script>
+<script src="js/services/AuthService.js" lang="javascript"></script>
+<script src="js/services/RealtimeService.js" lang="javascript"></script>
+<script src="js/controllers/ApplicationController.js" lang="javascript"></script>
+<script src="js/controllers/FollowersController.js" lang="javascript"></script>
+<script src="js/controllers/FollowingController.js" lang="javascript"></script>
+<script src="js/controllers/HomeController.js" lang="javascript"></script>
+<script src="js/controllers/InfoController.js" lang="javascript"></script>
+<script src="js/controllers/LoginController.js" lang="javascript"></script>
+<script src="js/controllers/PublicController.js" lang="javascript"></script>
+<script src="js/controllers/RegisterController.js" lang="javascript"></script>
+
+
+</body>
+</html>
