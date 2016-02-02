@@ -17,8 +17,6 @@ module.exports = (ctx)=>
                 data.forEach((element, index, array)=>{
                   element.text = ctx.util.string.bodyProcess(element.text);
                 });
-                //data.text = ctx.util.string.bodyProcess(data.text);
-                //ctx.logger.debug(data[0].text);
 
                 ctx.util.action.jsonResult(req,res,data);
             });
@@ -34,6 +32,10 @@ module.exports = (ctx)=>
                 ctx.db.collection('posts').find({'ownerid':{ $in:data.following}},{'limit':limit,'fields': postListFields,'sort':{'timestamp':-1}})
                     .toArray((err,items)=> {
                         if(err) return ctx.util.action.errorResult(err.message,req,res);
+
+                        items.forEach((element, index, array)=>{
+                          element.text = ctx.util.string.bodyProcess(element.text);
+                        });
 
                         ctx.util.action.jsonResult(req,res,items);
                     });
