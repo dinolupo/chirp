@@ -16,5 +16,8 @@ sudo apt-get update
 sudo apt-get install -y mongodb-org
 ```
 
+> start node and exit from ssh
 
-
+```sh
+nohup node main.js > node.log 2>&1 &
+```
