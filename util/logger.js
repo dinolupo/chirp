@@ -1,4 +1,7 @@
-module.exports = function()
+/* jshint esnext: true */
+/* jslint node: true */
+
+module.exports = ()=>
 {
     var winston = require('winston');
     winston.emitErrs = true;
@@ -27,7 +30,7 @@ module.exports = function()
 
 
     logger.stream = {
-        write: function(message, encoding){
+        write: (message, encoding)=> {
             logger.info(message);
         }
     };

@@ -1,3 +1,6 @@
+/* jshint esnext: true */
+/* jslint node: true */
+
 module.exports =
 {
     server: {

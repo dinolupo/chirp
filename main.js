@@ -1,4 +1,5 @@
 /* jshint esnext: true */
+/* jslint node: true */
 
 // load external libraries
 var express = require('express');

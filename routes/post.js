@@ -1,4 +1,5 @@
 /* jshint esnext: true */
+/* jslint node: true */
 
 module.exports = (ctx)=>
 {
@@ -14,11 +15,9 @@ module.exports = (ctx)=>
             .toArray((err,data)=> {
                 if(err) return ctx.util.action.errorResult(err.message,req,res);
 
-                data.forEach((element, index, array)=>{
+                data.forEach((element)=>{
                   element.text = ctx.util.string.bodyProcess(element.text);
                 });
-                //data.text = ctx.util.string.bodyProcess(data.text);
-                //ctx.logger.debug(data[0].text);
 
                 ctx.util.action.jsonResult(req,res,data);
             });
@@ -34,6 +33,10 @@ module.exports = (ctx)=>
                 ctx.db.collection('posts').find({'ownerid':{ $in:data.following}},{'limit':limit,'fields': postListFields,'sort':{'timestamp':-1}})
                     .toArray((err,items)=> {
                         if(err) return ctx.util.action.errorResult(err.message,req,res);
+
+                        items.forEach((element)=>{
+                          element.text = ctx.util.string.bodyProcess(element.text);
+                        });
 
                         ctx.util.action.jsonResult(req,res,items);
                     });

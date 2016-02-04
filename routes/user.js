@@ -1,4 +1,5 @@
 /* jshint esnext: true */
+/* jslint node: true */
 
 module.exports = (ctx)=>
 {
@@ -139,8 +140,8 @@ module.exports = (ctx)=>
             // check if already follow
             if(user2) {
               var found = false;
-              for (i = 0; i < user1.following.length; i++) {
-                if(user1.following[i]==user2._id)
+              for (var i = 0; i < user1.following.length; i++) {
+                if(user1.following[i]===user2._id)
                 {
                   found = true;
                   break;
@@ -190,8 +191,8 @@ module.exports = (ctx)=>
             // check if already follow
             if(user2) {
               var found = false;
-              for (i = 0; i < user1.following.length; i++) {
-                if(user1.following[i]==user2._id)
+              for (var i = 0; i < user1.following.length; i++) {
+                if(user1.following[i]===user2._id)
                 {
                   found = true;
                   break;

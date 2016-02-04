@@ -1,4 +1,7 @@
-module.exports = function(logger)
+/* jshint esnext: true */
+/* jslint node: true */
+
+module.exports = (logger)=> 
 {
   var actionResults = {
     jsonResult: (req,res,data)=> {
