@@ -21,3 +21,13 @@ sudo apt-get install -y mongodb-org
 ```sh
 nohup node main.js > node.log 2>&1 &
 ```
+
+> Install Fake S3 for development
+
+```sh
+sudo apt-get install ruby-full
+sudo gem install fakes3
+nohup fakes3 -r /mnt/fakes3_root -p 4567 > fakeS3.log 2>&1 &
+```
+
+
