@@ -2,9 +2,10 @@
 
 It's a simple clone of twitter, which has been developed using the [mean](https://en.wikipedia.org/wiki/MEAN_(software_bundle)) fullstack javascript.
 
-An [online demo](http://chirp.dimotta.net) is hosted on Heroku.
+An [online demo](http://chirp.westeurope.cloudapp.azure.com:3000) is hosted on Azure.
 Read the [release notes](https://github.com/antdimot/chirp/blob/master/Releasenotes.md)
 for the last updates.
+[Activity board](https://trello.com/b/prRPzzir).
 
 ### Features:
 - public timeline *(http://mywebsite/#/public)*
@@ -33,8 +34,7 @@ for the last updates.
 2. Install *nodejs*
 3. Install *mongodb*
 4. Restore *node_modules* using ```npm install```
-5. Restore *bower_components* in *wwwroot* using ```bower install```
-6. Execute **node main**
+5. Execute **node main**
 
 ### Known issues:
 - no check of the username (duplication) when signup

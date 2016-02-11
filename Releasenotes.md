@@ -1,3 +1,6 @@
+## 11/02/2016
+* Added password encryption
+
 ## 28/01/2016
 * Message visualization enhancement, adding link when there is a user reference (e.g. @dimotta)
 

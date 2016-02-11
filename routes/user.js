@@ -19,22 +19,21 @@ module.exports = (ctx)=>
             if(err) return ctx.util.action.errorResult(err.message,req,res);
 
             if (data) {
-				bcrypt.compare(password, data.password, function(err, resbcrypt) {
-					if (resbcrypt == true) {
-						ctx.util.action.jsonResult(req,res,{
-							"username": data.username,
-							"displayname": data.displayname,
-							"password": data.password,
-							"email": data.email,
-							"image": data.image,
-							"followingcount": data.following.length,
-							"followercount": data.followers.length
-						});
-					} else { // check password failed
-						ctx.util.action.forbiddenResult(req,res);
-					}
-				});
-				
+      				bcrypt.compare(password, data.password, (err, resbcrypt)=> {
+      					if (resbcrypt === true) {
+      						ctx.util.action.jsonResult(req,res,{
+      							"username": data.username,
+      							"displayname": data.displayname,
+      							"password": data.password,
+      							"email": data.email,
+      							"image": data.image,
+      							"followingcount": data.following.length,
+      							"followercount": data.followers.length
+      						});
+      					} else { // check password failed
+      						ctx.util.action.forbiddenResult(req,res);
+      					}
+      				});
             }
             else {
                 ctx.util.action.forbiddenResult(req,res);
@@ -114,26 +113,26 @@ module.exports = (ctx)=>
       var displayname = req.body.displayname;
       var email = req.body.email;
 
-	bcrypt.genSalt(10, function(err, salt) {
-		bcrypt.hash(password, salt, function(err, hash) {
-			// Store hash in your password DB.
-			var user = {
-				"username": username,
-				"displayname": displayname,
-				"password": hash,
-				"email": email,
-				"image": ctx.config.image,
-				"following": [],
-				"followers": []
-			};
+    	bcrypt.genSalt(10, (err,salt)=> {
+    		bcrypt.hash(password, salt, (err, hash)=> {
+    			// Store hash in your password DB.
+    			var user = {
+    				"username": username,
+    				"displayname": displayname,
+    				"password": hash,
+    				"email": email,
+    				"image": ctx.config.image,
+    				"following": [],
+    				"followers": []
+    			};
 
-			ctx.db.collection('users').save(user,(err)=> {
-				if(err) return ctx.util.action.errorResult(err.message,req,res);
-				ctx.util.action.okResult(req,res);
-			});
+    			ctx.db.collection('users').save(user,(err)=> {
+    				if(err) return ctx.util.action.errorResult(err.message,req,res);
+    				ctx.util.action.okResult(req,res);
+    			});
 
-		});
-	});
+    		});
+    	});
     });
 
     // follow an user
@@ -245,7 +244,7 @@ module.exports = (ctx)=>
         ctx.db.collection('users').findOne({'username':username},(err,data)=>{
             if(err) return ctx.util.action.errorResult(err.message,req,res);
 
-            if (data) {
+            if(data) {
                 ctx.util.action.jsonResult(req,res,{
                     "username": data.username,
                     "displayname": data.displayname,
