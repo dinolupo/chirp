@@ -2,23 +2,25 @@
 <div class="row">
     <div class="col-lg-offset-4 col-md-offset-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
 
-        <h3 class="text-center">{{vm.user.displayname}}</h3>
+        <div class="text-center">
+          <h3 ng-bind="vm.user.displayname"></h3>
 
-        <p class="text-center">
-          <img ng-src="images/{{vm.user.image}}" style="max-height:200px; max-width:200px">
-        </p>
-
-        <p class="text-center">
-          FOLLOWING &nbsp;&nbsp;<span class="badge">{{vm.user.followingcount}}</span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          FOLLOWERS &nbsp;&nbsp;<span class="badge">{{vm.user.followercount}}</span>
+          <img class="img-rounded img-responsive center-block" ng-src="images/{{vm.user.image}}" style="max-height:200px; max-width:200px">
+          <p ng-bind="vm.user.summary"></p>
           <hr>
-        </p>
+          
+          <p>
+            FOLLOWING &nbsp;&nbsp;<span class="badge">{{vm.user.followingcount}}</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            FOLLOWERS &nbsp;&nbsp;<span class="badge">{{vm.user.followercount}}</span>
+          </p>
 
-        <p class="text-center" ng-show="vm.showButton">
-            <a class="btn btn-success" ng-show="vm.canFollow" ng-click="vm.follow()">Follow</a>
-            <a class="btn btn-success" ng-show="!vm.canFollow" ng-click="vm.unfollow()">Unfollow</a>
-        </p>
+          <p ng-show="vm.showButton">
+              <a class="btn btn-success" ng-show="vm.canFollow" ng-click="vm.follow()">Follow</a>
+              <a class="btn btn-success" ng-show="!vm.canFollow" ng-click="vm.unfollow()">Unfollow</a>
+          </p>
+
+        </div>
 
     </div>
 </div>

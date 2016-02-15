@@ -56,16 +56,16 @@
                     );
                 },
                 signin: function (profile,callBack) {
+                    $log.debug("[%s] Signing a new user: %s",new Date().toISOString(),profile);
+
                     var username = profile.username;
                     var displayname = profile.displayname;
                     var email = profile.email;
                     var password = profile.password;
+                    var summary = profile.summary;
 
-                    DataService.register(username,displayname,email,password,
-                        function() {
-                            $log.debug("[%s] DataService.signin > %s",new Date().toISOString(),username);
-                            callBack();
-                        }
+                    DataService.register(username,displayname,email,password,summary,
+                        callBack()
                     );
                 }
             };

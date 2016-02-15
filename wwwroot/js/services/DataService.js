@@ -70,12 +70,13 @@
                             callBack();
                         });
                 },
-                register: function(username,displayname,email,password,callBack) {
+                register: function(username,displayname,email,password,summary,callBack) {
                   var user = {
                       "username": username,
                       "password": password,
                       "displayname": displayname,
-                      "email": email
+                      "email": email,
+                      "summary": summary
                   };
                   $http.post(config.api + "/user",user)
                       .success(function (data, status, headers, config)  {

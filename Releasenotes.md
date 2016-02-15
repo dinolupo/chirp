@@ -1,3 +1,8 @@
+## 15/02/2016
+* Added favicon
+* Added text sanitize on send message
+* Login and Signup views enhancement
+
 ## 11/02/2016
 * Added password encryption
 

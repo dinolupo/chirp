@@ -1,11 +1,11 @@
 <div class="row">
-    <div class="col-lg-offset-2 col-md-offset-2 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+    <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-1 col-sm-offset-0 col-lg-2 col-md-2 col-sm-3 col-xs-12">
 
-        <form method="post" name="messageForm" ng-submit="vm.send(vm.message)">
-            <div class="form-group">
+        <form method="post" name="messageForm" ng-submit="vm.send()">
+            <div class="form-group text-center">
                 <h4>{{vm.user.displayname}}</h4>
-                <img class="img-rounded" ng-src="images/{{vm.user.image}}" style="max-height:180px; max-width:180px">
-                <hr>
+                <img class="img-rounded img-responsive" ng-src="images/{{vm.user.image}}" style="max-height:200px; max-width:200px">
+                <small><i>{{vm.user.summary}}</i></small>
                 <ul class="list-group">
                     <li class="list-group-item">
                         <a href="#/following">Following</a>
@@ -17,7 +17,8 @@
                     </li>
                 </ul>
                 <hr>
-                <textarea type="text" id="message" class="form-control" ng-model="vm.message" ng-required="true" rows="4"/>
+                <textarea type="text" id="message" class="form-control" rows="4"
+                  ng-model="vm.message" ng-maxlength="140" ng-required="true" />
             </div>
             <p class="text-right">
                 <button type="submit" class="btn btn-success btn-xs">&nbsp;Post&nbsp;</button>
@@ -25,7 +26,7 @@
         </form>
 
     </div>
-    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12" style="overflow-y: auto;">
+    <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12" style="overflow-y: auto;">
 
           <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

@@ -43,8 +43,8 @@
                     {
                         if(data)
                         {
-                            data.forEach(function(item, index, array){
-                                if(item.username == $stateParams.username)
+                            data.forEach(function(item){
+                                if(item.username === $stateParams.username)
                                 {
                                     ctrl.canFollow = false;
                                 }
@@ -57,7 +57,7 @@
                 ctrl.showButton = false;
 
                 if( AuthService.isLogged() ) {
-                    if(AuthService.getUser().username != $stateParams.username) {
+                    if(AuthService.getUser().username !== $stateParams.username) {
                         ctrl.showButton = true;
                         ctrl.checkCanFollow();
                     }
@@ -67,7 +67,7 @@
                   var username = $cookies.get("chirp");
 
                   if( username !== undefined ) {
-                        if(username != $stateParams.username) {
+                        if(username !== $stateParams.username) {
                             AuthService.reloadUser($cookies.chirp, function(data)
                             {
                                 if(data) {

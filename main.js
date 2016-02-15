@@ -56,7 +56,7 @@ mongoClient.connect(config.mongodb.connectionString, { db: { bufferMaxEntries: 0
       require('./routes/'+name)(context);
     });
 
-    // set io connection
+    // set socket io connection
     io.on('connection',(socket)=>{
       logger.debug('Client connected');
       socket.on('disconnect',()=>{

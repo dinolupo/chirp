@@ -6,9 +6,6 @@ var bcrypt = require('bcrypt');
 module.exports = (ctx)=>
 {
     var baseurl = ctx.config.server.api + '/user';
-    //var ObjectId = require('mongodb').ObjectId;
-
-    //var userFields = {'_id':1,'username':1,'displayname':1,'image':1,'email':1,'following':1};
 
     // get the user using login and password
     ctx.app.get( baseurl + '/authenticate/:username/:password',(req,res)=> {
@@ -27,6 +24,7 @@ module.exports = (ctx)=>
       							"password": data.password,
       							"email": data.email,
       							"image": data.image,
+                    "summary": data.summary,
       							"followingcount": data.following.length,
       							"followercount": data.followers.length
       						});
@@ -55,6 +53,7 @@ module.exports = (ctx)=>
                     "password": data.password,
                     "email": data.email,
                     "image": data.image,
+                    "summary": data.summary,
                     "followingcount": data.following.length,
                     "followercount": data.followers.length
                 });
@@ -109,30 +108,42 @@ module.exports = (ctx)=>
     // sign up a new user
     ctx.app.post( baseurl,(req,res)=> {
       var username = req.body.username;
-      var password = req.body.password;
-      var displayname = req.body.displayname;
-      var email = req.body.email;
 
-    	bcrypt.genSalt(10, (err,salt)=> {
-    		bcrypt.hash(password, salt, (err, hash)=> {
-    			// Store hash in your password DB.
-    			var user = {
-    				"username": username,
-    				"displayname": displayname,
-    				"password": hash,
-    				"email": email,
-    				"image": ctx.config.image,
-    				"following": [],
-    				"followers": []
-    			};
+      ctx.db.collection('users').findOne({'username':username},(err,data)=> {
+          if(err) return ctx.util.action.errorResult(err.message,req,res);
 
-    			ctx.db.collection('users').save(user,(err)=> {
-    				if(err) return ctx.util.action.errorResult(err.message,req,res);
-    				ctx.util.action.okResult(req,res);
-    			});
+          if(data) { // username already existing
+            ctx.util.action.forbiddenResult(req,res);
+          }
+          else {
+            var password = req.body.password;
+            var displayname = req.body.displayname;
+            var email = req.body.email;
+            var summary = req.body.summary;
 
-    		});
-    	});
+          	bcrypt.genSalt(10, (err,salt)=> {
+          		bcrypt.hash(password, salt, (err, hash)=> {
+          			// Store hash in your password DB.
+          			var user = {
+          				"username": username,
+          				"displayname": displayname,
+          				"password": hash,
+          				"email": email,
+          				"image": ctx.config.image,
+                  "summary": summary,
+          				"following": [],
+          				"followers": []
+          			};
+
+          			ctx.db.collection('users').save(user,(err)=> {
+          				if(err) return ctx.util.action.errorResult(err.message,req,res);
+          				ctx.util.action.okResult(req,res);
+          			});
+
+              });
+            });
+          }
+      });
     });
 
     // follow an user
@@ -248,9 +259,9 @@ module.exports = (ctx)=>
                 ctx.util.action.jsonResult(req,res,{
                     "username": data.username,
                     "displayname": data.displayname,
-                    //"password": data.password,
                     "email": data.email,
                     "image": data.image,
+                    "summary": data.summary,
                     "followingcount": data.following.length,
                     "followercount": data.followers.length
                 });

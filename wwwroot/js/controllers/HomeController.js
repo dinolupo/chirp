@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('appChirp')
-        .controller('HomeController', ['$scope','$log','$location','$timeout','$cookies',
-        'DataService','AuthService','RealtimeService','config',
-        function ($scope,$log,$location,$timeout,$cookies,DataService,AuthService,RealtimeService,config) {
+        .controller('HomeController',
+        ['$scope','$log','$location','$timeout','$cookies','DataService','AuthService','RealtimeService','$sanitize',
+        function ($scope,$log,$location,$timeout,$cookies,DataService,AuthService,RealtimeService,$sanitize) {
             var ctrl = this;
 
             ctrl.initView = function ()
@@ -13,8 +13,10 @@
                 ctrl.message = '';
             };
 
-            ctrl.send = function (message)
+            ctrl.send = function ()
             {
+              var message = ctrl.message;
+
                 if(message.length===0) {
                   alert('Please specify the message!');
                   return;
@@ -25,13 +27,14 @@
                   return;
                 }
 
-                DataService.sendMessage(ctrl.user.username, message, function (result)
+                // sanitize the message
+                var messageSanitized = $sanitize(message);
+
+                DataService.sendMessage(ctrl.user.username, messageSanitized, function (result)
                 {
                     if( result )
                     {
                         RealtimeService.postMessage(ctrl.user.username); // emit event
-
-                        //alert('Message sent!');
                         ctrl.message = '';
                     }
                     else {
@@ -69,7 +72,7 @@
             }
 
             // catch event for reloading
-            RealtimeService.onMessage(function (data) {
+            RealtimeService.onMessage(function () {
               ctrl.loadPosts();
             });
 
