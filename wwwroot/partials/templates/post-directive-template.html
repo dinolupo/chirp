@@ -1,0 +1,10 @@
+<div class="row center-block" style="border-top-style:solid;border-top-width:1px;border-color:silver;">
+    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3" style="margin-top:1px">
+      <img class="img-responsive img-rounded" ng-src="images/{{data.image}}" width="60px" height="60px">
+    </div>
+    <div class="col-lg-10 col-md-10 col-sm-7 col-xs-7">
+      <h6><a href="#/info/{{data.username}}">{{data.displayname}}</a>&nbsp;
+      <i>{{post.timestamp | date:'MM/dd/yyyy @ h:mma' }}</i></h6>
+      <p class="text-justify" ng-bind-html="data.text"></p>
+    </div>
+</div>

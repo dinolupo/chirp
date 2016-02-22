@@ -8,7 +8,7 @@
             return {
                 getPublicPostList: function (callBack) {
                     $http.get(config.api + "/post/public")
-                        .success(function (data, status, headers, config) {
+                        .success(function (data) {
                             callBack(data);
                         })
                         .error(function(){
@@ -17,7 +17,7 @@
                 },
                 getHomePostList: function (username,callBack) {
                     $http.get(config.api + "/post/home/" + username)
-                        .success(function (data, status, headers, config) {
+                        .success(function (data) {
                             callBack(data);
                         })
                         .error(function(){
@@ -27,7 +27,7 @@
                 getUserByCredentials: function (username,password,callBack)
                 {
                     $http.get(config.api + "/user/authenticate/" + username + "/" + password )
-                        .success(function (data, status, headers, config) {
+                        .success(function (data) {
                             callBack(data);
                         })
                         .error(function(){
@@ -36,7 +36,7 @@
                 },
                 getUserByToken: function (token,callBack) {
                     $http.get(config.api + "/user/access/" + token)
-                        .success(function (data, status, headers, config) {
+                        .success(function (data) {
                             callBack(data);
                         })
                         .error(function(){
@@ -45,7 +45,7 @@
                 },
                 sendMessage: function(username,text,callBack){
                     $http.post(config.api + "/post",{"username":username,"text":text})
-                        .success(function (data, status, headers, config)  {
+                        .success(function (data) {
                             callBack(true);
                         })
                         .error(function(){
@@ -54,7 +54,7 @@
                 },
                 getFollowingList: function (username,callBack) {
                     $http.get(config.api + "/user/following/" + username)
-                        .success(function (data, status, headers, config) {
+                        .success(function (data) {
                             callBack(data);
                         })
                         .error(function(){
@@ -63,7 +63,7 @@
                 },
                 getFollowersList: function (username,callBack) {
                     $http.get(config.api + "/user/followers/" + username)
-                        .success(function (data, status, headers, config) {
+                        .success(function (data) {
                             callBack(data);
                         })
                         .error(function(){
@@ -79,7 +79,7 @@
                       "summary": summary
                   };
                   $http.post(config.api + "/user",user)
-                      .success(function (data, status, headers, config)  {
+                      .success(function (data) {
                           callBack(data);
                       })
                       .error(function(){
@@ -88,7 +88,7 @@
                 },
                 getUserInfo: function(username,callBack) {
                   $http.get(config.api + "/user/info/" + username)
-                      .success(function (data, status, headers, config) {
+                      .success(function (data) {
                           callBack(data);
                       })
                       .error(function(){
@@ -101,7 +101,7 @@
                     username2: username2
                   };
                   $http.post(config.api + "/user/follow",data)
-                      .success(function (data, status, headers, config)  {
+                      .success(function (data) {
                           callBack(true);
                       })
                       .error(function(){
@@ -114,7 +114,7 @@
                     username2: username2
                   };
                   $http.post(config.api + "/user/unfollow",data)
-                      .success(function (data, status, headers, config)  {
+                      .success(function (data) {
                           callBack(true);
                       })
                       .error(function(){
