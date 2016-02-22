@@ -1,3 +1,6 @@
+## 22/02/2016
+* Refactoring post list with post directive
+
 ## 15/02/2016
 * Added favicon
 * Added text sanitize on send message
@@ -16,7 +19,7 @@
 * Added an image on logo
 * Added the environment variable **MDB** for specifying the connectionString (e.g. production)
 * Updated project structure
-* Rename the folder *public* to *wwwroot**
+* Rename the folder *public* to *wwwroot*
 * Disabled grunt tasks
 
 ## 17/01/2016

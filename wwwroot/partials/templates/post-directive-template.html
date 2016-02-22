@@ -4,7 +4,7 @@
     </div>
     <div class="col-lg-10 col-md-10 col-sm-7 col-xs-7">
       <h6><a href="#/info/{{data.username}}">{{data.displayname}}</a>&nbsp;
-      <i>{{post.timestamp | date:'MM/dd/yyyy @ h:mma' }}</i></h6>
+      <i>{{data.timestamp | date:'MM/dd/yyyy @ h:mma' }}</i></h6>
       <p class="text-justify" ng-bind-html="data.text"></p>
     </div>
 </div>

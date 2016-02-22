@@ -1,3 +1,5 @@
+/* jshint esnext: true */
+/* jslint node: true */
 
 var db = db.getSiblingDB("chirp");
 var user1Id = ObjectId().str;
@@ -5,6 +7,7 @@ var user2Id = ObjectId().str;
 var user3Id = ObjectId().str;
 var post1Id = ObjectId().str;
 var post2Id = ObjectId().str;
+var post3Id = ObjectId().str;
 var password = "$2a$10$nn4S7KMtT8GzQhNBLnToJuBs.M3crz77X87b/ixKVmD7Y/Q/U1j1.";
 
 var addUsers = ()=> {
@@ -57,7 +60,7 @@ var addPosts = ()=> {
           "displayname": "Antonio Di Motta",
           "image":"dimotta.jpg",
           "timestamp": new Date("2015-09-13T16:30:00Z").toISOString(),
-          "text": "My first post using Chirp."
+          "text": "My first post using Chirp.",
       },{
           "_id": post2Id,
           "username": "userdemo1",
@@ -65,7 +68,18 @@ var addPosts = ()=> {
           "displayname": "I'm not a bot :)",
           "image":"default.png",
           "timestamp": new Date("2015-09-13T16:35:00Z").toISOString(),
-          "text": "Are you ready for production?"
+          "text": "Are you ready for production?",
+          "reposts": 1
+      },{
+          "_id": post3Id,
+          "parentid": post2Id,
+          "username": "userdemo1",
+          "ownerid": user1Id,
+          "displayname": "I'm not a bot :)",
+          "image":"default.png",
+          "timestamp": new Date("2015-09-13T16:35:00Z").toISOString(),
+          "text": "Are you ready for production?",
+          "reposts": 1
         }
     ]);
   };

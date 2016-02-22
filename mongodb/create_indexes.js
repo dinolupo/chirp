@@ -1,4 +1,5 @@
-
+/* jshint esnext: true */
+/* jslint node: true */
 
 db = db.getSiblingDB("chirp");
 db.posts.dropIndexes();

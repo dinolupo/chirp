@@ -33,11 +33,9 @@ module.exports = (ctx)=>
                 ctx.db.collection('posts').find({'ownerid':{ $in:data.following}},{'limit':limit,'fields': postListFields,'sort':{'timestamp':-1}})
                     .toArray((err,items)=> {
                         if(err) return ctx.util.action.errorResult(err.message,req,res);
-
                         items.forEach((element)=>{
                           element.text = ctx.util.string.bodyProcess(element.text);
                         });
-
                         ctx.util.action.jsonResult(req,res,items);
                     });
             }
@@ -51,10 +49,9 @@ module.exports = (ctx)=>
     ctx.app.get( baseurl + '/:username',(req,res) => {
         var username = req.params.username;
 
-        ctx.db.collection('posts').find({'username': username},{'fields': postListFields,'sort': {'timestamp':-1}})
+        ctx.db.collection('posts').find({'username': username},{'fields':postListFields,'sort':{'timestamp':-1}})
             .toArray((err,items)=> {
                 if(err) return ctx.util.action.errorResult(err.message,req,res);
-
                 ctx.util.action.jsonResult(req, res, items);
             });
     });
@@ -67,9 +64,8 @@ module.exports = (ctx)=>
         ctx.db.collection('users').findOne(
           {'username':username},
           {'fields':userSearchFields},
-          function(err,data) {
+          (err,data)=> {
                 if(err) return ctx.util.action.errorResult(err.message,req,res);
-
                 if (data) {
                     var newPost = {
                         "username": username,
@@ -79,7 +75,6 @@ module.exports = (ctx)=>
                         "image": data.image,
                         "text": text
                     };
-
                     ctx.db.collection('posts').save(newPost,(err)=>
                     {
                         if(err) return ctx.util.action.errorResult(err.message,req,res);
@@ -87,5 +82,39 @@ module.exports = (ctx)=>
                     });
                 }
             });
-    });
+      });
+      // post a new message
+    /*  ctx.app.repost( baseurl, (req,res) => {
+          var username = req.body.username;
+          var id = req.body.id;
+
+          // check the user that wants to repost
+          ctx.db.collection('users').findOne(
+            {'username':username},
+            {'fields':userSearchFields},
+            (err,user)=> {
+                  if(err) return ctx.util.action.errorResult(err.message,req,res);
+                  if (user) {
+                      // check the post to repost
+                      ctx.db.collection('posts').findOne({'_id':id},(err,post)=> {
+                        if(err) return ctx.util.action.errorResult(err.message,req,res);
+                        var newPost = {
+                            "username": post.username,
+                            "ownerid": user._id,
+                            "displayname": post.displayname,
+                            "timestamp": post.timestamp,
+                            "image": post.image,
+                            "text": post.text,
+                            "reposts": [post]
+                        };
+
+                        ctx.db.collection('posts').save(newPost,(err)=>
+                        {
+                            if(err) return ctx.util.action.errorResult(err.message,req,res);
+                            ctx.util.action.okResult(req,res);
+                        });
+                      });
+                  }
+              });
+        });*/
 };
