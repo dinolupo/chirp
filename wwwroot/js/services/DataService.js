@@ -45,7 +45,7 @@
                 },
                 sendMessage: function(username,text,callBack){
                     $http.post(config.api + "/post",{"username":username,"text":text})
-                        .success(function (data) {
+                        .success(function () {
                             callBack(true);
                         })
                         .error(function(){
@@ -101,7 +101,7 @@
                     username2: username2
                   };
                   $http.post(config.api + "/user/follow",data)
-                      .success(function (data) {
+                      .success(function () {
                           callBack(true);
                       })
                       .error(function(){
@@ -114,7 +114,21 @@
                     username2: username2
                   };
                   $http.post(config.api + "/user/unfollow",data)
-                      .success(function (data) {
+                      .success(function () {
+                          callBack(true);
+                      })
+                      .error(function(){
+                          callBack(false);
+                      });
+                },
+                repost: function (username,postid,callBack) {
+                  var data = {
+                    username: username,
+                    id: postid
+                  };
+                  //$log.debug(data);
+                  $http.post(config.api + "/post/repost",data)
+                      .success(function () {
                           callBack(true);
                       })
                       .error(function(){

@@ -1,3 +1,7 @@
+## 23/02/2016
+* Added repost (aka retweet) feature on home view
+* Fix problem about ObjectId while post a message
+
 ## 22/02/2016
 * Refactoring post list with post directive
 

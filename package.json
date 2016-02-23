@@ -1,7 +1,7 @@
 {
   "name": "chirp",
   "homepage": "https://github.com/antdimot/chirp",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "The Twitter clone.",
   "license": "MIT",
   "main": "main.js",

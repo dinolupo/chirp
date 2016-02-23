@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('appChirp')
-        .controller('PublicController', ['$scope','$log','$timeout','DataService','RealtimeService','config',
-        function ($scope,$log,$timeout,DataService,RealtimeService,config) {
+        .controller('PublicController', ['$scope','$log','$timeout','DataService','RealtimeService',
+        function ($scope,$log,$timeout,DataService,RealtimeService) {
             var ctrl = this;
 
             ctrl.getData = function(){
@@ -14,7 +14,7 @@
             };
 
             // catch event for reloading
-            RealtimeService.onMessage(function (data) {
+            RealtimeService.onMessage(function () {
               ctrl.getData();
             });
 

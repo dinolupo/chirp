@@ -16,27 +16,23 @@
 <div class="container-fluid" ng-controller="AppController as appCtrl">
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
             <nav class="navbar navbar-default navbar-fixed-top">
                 <div class="container">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#/public">
-                            <p class="lead">
-                              <img alt="Brand" src="images/bird_yellow.png" width="40px" height="40px">&nbsp;Chirp
-                            </p>
-                        </a>
+                      <a href="#/public">
+                        <img src="images/bird_yellow.png" width="30px" height="30px">&nbsp;chirp
+                      </a>
                     </div>
                     <p class="navbar-text navbar-right">
                         <span ng-show="appCtrl.islogged">
                             <a href="#/home">{{appCtrl.user.displayname}}</a>
                         </span>&nbsp;&nbsp;
-                        <a class="btn btn-default" href="#/signup" role="button" ng-show="!appCtrl.islogged">Sign up</a>
-                        <a class="btn btn-default" href="#/login" role="button" ng-show="!appCtrl.islogged">Login</a>
-                        <a class="btn btn-default" ng-click="appCtrl.logout()" role="button" ng-show="appCtrl.islogged">Logout</a>
+                        <a class="btn btn-info btn-xs" href="#/signup" role="button" ng-show="!appCtrl.islogged">sign up</a>
+                        <a class="btn btn-default btn-xs" href="#/login" role="button" ng-show="!appCtrl.islogged">login</a>
+                        <a class="btn btn-default btn-xs" ng-click="appCtrl.logout()" role="button" ng-show="appCtrl.islogged">logout</a>
                     </p>
                 </div>
             </nav>
-
         </div>
     </div>
     <div class="row" style="margin-top:6em">

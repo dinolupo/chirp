@@ -18,9 +18,9 @@ for the last updates.
 - unfollow an user
 - sign up
 - log on
+- repost (aka retweet)
 
 ### Todo (missing features):
-- retweet
 - response
 - searching (users and messages)
 - security management (client/server comunication)

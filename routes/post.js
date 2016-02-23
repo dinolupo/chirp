@@ -6,17 +6,24 @@ module.exports = (ctx)=>
     var limit = ctx.config.server.limit;
     var baseurl = ctx.config.server.api + '/post';
 
-    var postListFields = {'username':1,'displayname':1,'timestamp':1,'text':1,'image':1};
+    //var postListFields = {'username':1,'displayname':1,'timestamp':1,'text':1,'image':1,'parentid':1};
     var userSearchFields = {'_id':1,'following':1,'displayname':1,'image':1};
 
     // get items posted to public timeline
     ctx.app.get( baseurl + '/public', (req,res) => {
-        ctx.db.collection('posts').find({},{'limit':limit,'fields': postListFields,'sort': {'timestamp':-1}})
+        ctx.db.collection('posts').find({},{'limit':limit,'sort': {'timestamp':-1}})
             .toArray((err,data)=> {
                 if(err) return ctx.util.action.errorResult(err.message,req,res);
 
-                data.forEach((element)=>{
-                  element.text = ctx.util.string.bodyProcess(element.text);
+                data.forEach((element)=> {
+                  element.text = ctx.util.string.bodyProcess(element.text); // process the body
+                  if(element.repostid!==undefined) { // check if is a rechirp
+                    element.isrepost = true;
+                  }
+                  else {
+                    element.isrepost = false;
+                  }
+                  //ctx.logger.debug(element);
                 });
 
                 ctx.util.action.jsonResult(req,res,data);
@@ -30,11 +37,18 @@ module.exports = (ctx)=>
         ctx.db.collection('users').findOne({'username':username},{'fields':userSearchFields},(err,data)=>{
             if (data) {
                 data.following.push(data._id); // add my id for showing also my posts
-                ctx.db.collection('posts').find({'ownerid':{ $in:data.following}},{'limit':limit,'fields': postListFields,'sort':{'timestamp':-1}})
+                ctx.db.collection('posts').find({'ownerid':{ $in:data.following}},{'limit':limit,'sort':{'timestamp':-1}})
                     .toArray((err,items)=> {
                         if(err) return ctx.util.action.errorResult(err.message,req,res);
                         items.forEach((element)=>{
-                          element.text = ctx.util.string.bodyProcess(element.text);
+                          element.text = ctx.util.string.bodyProcess(element.text); // process the body
+                          if(element.repostid!==undefined) { // check if repost
+                            element.isrepost = true;
+                          }
+                          else {
+                            element.isrepost = false;
+                          }
+                          //ctx.logger.debug(element);
                         });
                         ctx.util.action.jsonResult(req,res,items);
                     });
@@ -49,7 +63,7 @@ module.exports = (ctx)=>
     ctx.app.get( baseurl + '/:username',(req,res) => {
         var username = req.params.username;
 
-        ctx.db.collection('posts').find({'username': username},{'fields':postListFields,'sort':{'timestamp':-1}})
+        ctx.db.collection('posts').find({'username': username},{'sort':{'timestamp':-1}})
             .toArray((err,items)=> {
                 if(err) return ctx.util.action.errorResult(err.message,req,res);
                 ctx.util.action.jsonResult(req, res, items);
@@ -67,7 +81,9 @@ module.exports = (ctx)=>
           (err,data)=> {
                 if(err) return ctx.util.action.errorResult(err.message,req,res);
                 if (data) {
+                    var ObjectID = require('mongodb').ObjectID;
                     var newPost = {
+                        "_id": new ObjectID().toString(),
                         "username": username,
                         "ownerid": data._id,
                         "displayname": data.displayname,
@@ -84,9 +100,11 @@ module.exports = (ctx)=>
             });
       });
       // post a new message
-    /*  ctx.app.repost( baseurl, (req,res) => {
+      ctx.app.post( baseurl + '/repost', (req,res) => {
           var username = req.body.username;
           var id = req.body.id;
+
+          ctx.logger.debug('Called repost with params: %s %s',username,id);
 
           // check the user that wants to repost
           ctx.db.collection('users').findOne(
@@ -95,17 +113,21 @@ module.exports = (ctx)=>
             (err,user)=> {
                   if(err) return ctx.util.action.errorResult(err.message,req,res);
                   if (user) {
+                      var ObjectID = require('mongodb').ObjectID;
                       // check the post to repost
                       ctx.db.collection('posts').findOne({'_id':id},(err,post)=> {
                         if(err) return ctx.util.action.errorResult(err.message,req,res);
                         var newPost = {
+                            "_id": new ObjectID().toString(),
                             "username": post.username,
                             "ownerid": user._id,
+                            "repostid": post._id,
+                            "repostdisplayname": user.displayname,
+                            "repostusername": username,
                             "displayname": post.displayname,
-                            "timestamp": post.timestamp,
+                            "timestamp": new Date().toISOString(),
                             "image": post.image,
-                            "text": post.text,
-                            "reposts": [post]
+                            "text": post.text
                         };
 
                         ctx.db.collection('posts').save(newPost,(err)=>
@@ -116,5 +138,5 @@ module.exports = (ctx)=>
                       });
                   }
               });
-        });*/
+        });
 };

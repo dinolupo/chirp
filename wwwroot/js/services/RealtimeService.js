@@ -9,12 +9,12 @@
 
             return {
                 postMessage: function (data) {
-                  $log.debug('Emit <postmessage> event from [%s]',data);
+                  //$log.debug('Emit <postmessage> event from [%s]',data);
                   socket.emit('postmessage',data);
                 },
                 onMessage: function (callBack) {
-                  socket.on('postmessage', function(data){
-                    $log.debug('Catch <postmessage> event from [%s]',data);
+                  socket.on('postmessage',function(data){
+                    //$log.debug('Catch <postmessage> event from [%s]',data);
                     callBack(data);
                   });
                 }

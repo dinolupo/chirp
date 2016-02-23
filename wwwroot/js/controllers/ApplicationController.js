@@ -18,14 +18,16 @@
                   $cookies.remove("chirp");
                   ctrl.islogged = false;
 
-                  $location.path('/public');
-                  $location.replace();
-
                   $scope.$emit('logout');
               };
 
               $scope.$on('logged', function () {
                   ctrl.initViewAsLogged();
+              });
+
+              $scope.$on('logout', function () {
+                  $location.path('/public');
+                  $location.replace();
               });
 
               if(AuthService.isLogged()) {
