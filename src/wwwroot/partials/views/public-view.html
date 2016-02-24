@@ -1,8 +1,28 @@
 
-<div class="row">
-  <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-0 col-xs-offset-0 col-lg-5 col-md-5 col-sm-8 col-xs-12">
+<div class="jumbotron">
+   <div class="container">
+     <h1>Chirp</h1>
+     <p>The <a href="https://github.com/antdimot/chirp">open source</a> social engine.</p>
+   </div>
+</div>
 
-    <post ng-repeat="item in vm.posts" post="item" logged="false"></post>
+<div class="row">
+  <div class="col-lg-3 col-md-5 col-sm-10 col-xs-12" ng-repeat="item in vm.posts">
+
+    <div class="panel panel-{{item.panelcolor}}">
+      <div class="panel-heading">
+        <b><a style="color:{{item.textcolor}}" href="#/info/{{item.username}}">{{item.displayname}}</a></b>
+        <small>{{item.timestamp | date:'MM/dd/yyyy @ h:mma' }}</small>
+      </div>
+      <div class="panel-body">
+        <span style="float:left">
+          <img class="img-rounded" ng-src="{{item.imagepath}}" width="85px" height="85px">&nbsp;
+        </span>
+        <span>
+          <div ng-bind-html="item.text"></div>
+        </span>
+      </div>
+    <div>
 
   </div>
 </div>

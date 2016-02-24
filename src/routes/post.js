@@ -11,19 +11,20 @@ module.exports = (ctx)=>
 
     // get items posted to public timeline
     ctx.app.get( baseurl + '/public', (req,res) => {
-        ctx.db.collection('posts').find({},{'limit':limit,'sort': {'timestamp':-1}})
-            .toArray((err,data)=> {
+        ctx.db.collection('posts').find({'repostid':{$exists: false, $eq: null}}) // only original post
+                                  .limit(limit)
+                                  .sort({'timestamp':-1}) // order by timestamp desc
+                                  .toArray((err,data)=> {
                 if(err) return ctx.util.action.errorResult(err.message,req,res);
 
-                data.forEach((element)=> {
+                var panelcolors = ['primary','default','success','info','warning','danger'];
+                var textcolors = ['white','red','blue','blue','red','blue'];
+
+                data.forEach((element,index)=> {
                   element.text = ctx.util.string.bodyProcess(element.text); // process the body
-                  if(element.repostid!==undefined) { // check if is a rechirp
-                    element.isrepost = true;
-                  }
-                  else {
-                    element.isrepost = false;
-                  }
                   element.imagepath = ctx.config.server.api + '/image/' + element.image; // added image resource api
+                  element.panelcolor = panelcolors[index % 6];
+                  element.textcolor = textcolors[index % 6];
                   //ctx.logger.debug(element);
                 });
 

@@ -1,7 +1,8 @@
 ## 24/02/2016
 * Moved source files to src directory
 * Added image route api handler
-* Update views and template for supporting the new image api
+* Updated views and template for supporting the new image api
+* Updated public view
 
 ## 23/02/2016
 * Added repost (aka retweet) feature on home view

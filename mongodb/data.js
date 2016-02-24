@@ -78,7 +78,7 @@ var addPosts = ()=> {
         "ownerid": user1Id,
         "displayname": "I'm not a bot",
         "image": "ball.gif",
-        "timestamp": new Date("2015-09-13T16:35:00Z").toISOString(),
+        "timestamp": new Date("2015-09-13T16:36:00Z").toISOString(),
         "text": "Are you ready for production?"
       }
   ]);
