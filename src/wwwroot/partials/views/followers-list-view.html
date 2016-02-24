@@ -6,7 +6,7 @@
         <tbody>
           <tr ng-repeat="item in vm.users">
             <td>
-              <img class="img-rounded" ng-src="images/{{item.image}}" width="60px" height="60px">
+              <img class="img-rounded" ng-src="{{item.imagepath}}" width="60px" height="60px">
             </td>
             <td>
               <a href="#/info/{{item.username}}">{{item.displayname}}</a>

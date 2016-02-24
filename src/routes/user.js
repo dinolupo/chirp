@@ -26,7 +26,8 @@ module.exports = (ctx)=>
       							"image": data.image,
                     "summary": data.summary,
       							"followingcount": data.following.length,
-      							"followercount": data.followers.length
+      							"followercount": data.followers.length,
+                    "imagepath": ctx.config.server.api + '/image/' + data.image
       						});
       					} else { // check password failed
       						ctx.util.action.forbiddenResult(req,res);
@@ -55,7 +56,8 @@ module.exports = (ctx)=>
                     "image": data.image,
                     "summary": data.summary,
                     "followingcount": data.following.length,
-                    "followercount": data.followers.length
+                    "followercount": data.followers.length,
+                    "imagepath": ctx.config.server.api + '/image/' + data.image
                 });
             }
             else {
@@ -76,6 +78,11 @@ module.exports = (ctx)=>
                 ctx.db.collection('users').find({'followers':data._id}).toArray((err,items)=> {
                     if(err) return ctx.util.action.errorResult(err.message,req,res);
 
+                    items.forEach((element)=> {
+                      element.imagepath = ctx.config.server.api + '/image/' + element.image; // added image resource api
+                      //ctx.logger.debug(element);
+                    });
+
                     ctx.util.action.jsonResult(req, res, items);
                 });
             }
@@ -95,6 +102,11 @@ module.exports = (ctx)=>
             if (data) {
                 ctx.db.collection('users').find({'following':data._id}).toArray((err,items)=> {
                     if(err) return ctx.util.action.errorResult(err.message,req,res);
+
+                    items.forEach((element)=> {
+                      element.imagepath = ctx.config.server.api + '/image/' + element.image; // added image resource api
+                      //ctx.logger.debug(element);
+                    });
 
                     ctx.util.action.jsonResult(req, res, items);
                 });
@@ -263,7 +275,8 @@ module.exports = (ctx)=>
                     "image": data.image,
                     "summary": data.summary,
                     "followingcount": data.following.length,
-                    "followercount": data.followers.length
+                    "followercount": data.followers.length,
+                    "imagepath": ctx.config.server.api + '/image/' + data.image
                 });
             }
             else {

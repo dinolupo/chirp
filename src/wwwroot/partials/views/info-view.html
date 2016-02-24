@@ -5,10 +5,10 @@
         <div class="text-center">
           <h3 ng-bind="vm.user.displayname"></h3>
 
-          <img class="img-rounded img-responsive center-block" ng-src="images/{{vm.user.image}}" style="max-height:200px; max-width:200px">
+          <img class="img-rounded img-responsive center-block" ng-src="{{vm.user.imagepath}}" style="max-height:200px; max-width:200px">
           <p ng-bind="vm.user.summary"></p>
           <hr>
-          
+
           <p>
             FOLLOWING &nbsp;&nbsp;<span class="badge">{{vm.user.followingcount}}</span>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

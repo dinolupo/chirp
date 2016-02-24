@@ -5,7 +5,8 @@ module.exports =
 {
     server: {
         api: '/api/v1',
-        limit: 10
+        limit: 20,
+        imagepath: 'data/images'
     },
     image: 'default.png',
     mongodb: {

@@ -40,7 +40,7 @@ var addUsers = ()=> {
         "displayname": "I'm not a bot :)",
         "password": password,
         "email": "demo1@dd.dd",
-        "image":"default.png",
+        "image":"ball.gif",
         "summary": "Please write me for testing :)",
         "following": [user1Id],
         "followers": [user1Id,user3Id]
@@ -66,7 +66,7 @@ var addPosts = ()=> {
         "username": "userdemo1",
         "ownerid": user3Id,
         "displayname": "I'm not a bot :)",
-        "image": "default.png",
+        "image": "ball.gif",
         "timestamp": new Date("2015-09-13T16:35:00Z").toISOString(),
         "text": "Are you ready for production?"
     },{
@@ -77,7 +77,7 @@ var addPosts = ()=> {
         "username": "userdemo1",
         "ownerid": user1Id,
         "displayname": "I'm not a bot",
-        "image": "default.png",
+        "image": "ball.gif",
         "timestamp": new Date("2015-09-13T16:35:00Z").toISOString(),
         "text": "Are you ready for production?"
       }

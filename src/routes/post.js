@@ -23,6 +23,7 @@ module.exports = (ctx)=>
                   else {
                     element.isrepost = false;
                   }
+                  element.imagepath = ctx.config.server.api + '/image/' + element.image; // added image resource api
                   //ctx.logger.debug(element);
                 });
 
@@ -48,6 +49,7 @@ module.exports = (ctx)=>
                           else {
                             element.isrepost = false;
                           }
+                          element.imagepath = ctx.config.server.api + '/image/' + element.image; // added image resource api
                           //ctx.logger.debug(element);
                         });
                         ctx.util.action.jsonResult(req,res,items);

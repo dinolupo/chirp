@@ -4,7 +4,7 @@
         <form method="post" name="messageForm" ng-submit="vm.send()">
             <div class="form-group text-center">
                 <h4>{{vm.user.displayname}}</h4>
-                <img class="img-rounded img-responsive" ng-src="images/{{vm.user.image}}" style="max-height:200px; max-width:200px">
+                <img class="img-rounded img-responsive" ng-src="{{vm.user.imagepath}}" style="max-height:200px; max-width:200px">
                 <small><i>{{vm.user.summary}}</i></small>
                 <ul class="list-group">
                     <li class="list-group-item">

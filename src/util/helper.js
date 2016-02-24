@@ -1,7 +1,7 @@
 /* jshint esnext: true */
 /* jslint node: true */
 
-module.exports = (logger)=> 
+module.exports = (logger)=>
 {
   var actionResults = {
     jsonResult: (req,res,data)=> {
@@ -32,9 +32,9 @@ module.exports = (logger)=>
       var matches = text.match(regexp);
       if(matches) {
         var result = text;
-        matches.forEach((element, index, array)=>{
+        matches.forEach((element)=>{
           var textref = '<a href="/#/info/'+element.substring(1)+'">'+element+'</a>';
-          logger.debug( "%s -> %s",element,textref);
+          //logger.debug( "%s -> %s",element,textref);
           result = result.replace(element,textref);
         });
         return result;

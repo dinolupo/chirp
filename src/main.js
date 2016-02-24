@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-w
 // for parsing multipart/form-data
 
 // load application libraries
-var config = require('./util/config');
+var config = require('./config');
 var logger = require('./util/logger')();
 var helper = require('./util/helper')(logger);
 
