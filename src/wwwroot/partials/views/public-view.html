@@ -1,13 +1,18 @@
 
 <div class="jumbotron">
    <div class="container">
-     <h1>Chirp</h1>
-     <p>The <a href="https://github.com/antdimot/chirp">open source</a> social engine.</p>
+      <span style="float:left">
+        <img class="img-responsive" src="images/bird_yellow.png" width="150px" height="150px">
+      </span>
+      <span>
+        <h1>Chirp</h1>
+        <p>The <a href="https://github.com/antdimot/chirp">open source</a> social engine.</p>
+      </span>
    </div>
 </div>
 
 <div class="row">
-  <div class="col-lg-3 col-md-5 col-sm-10 col-xs-12" ng-repeat="item in vm.posts">
+  <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12" ng-repeat="item in vm.posts">
 
     <div class="panel panel-{{item.panelcolor}}">
       <div class="panel-heading">
