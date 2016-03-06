@@ -1,6 +1,6 @@
 # Chirp
 
-It's a simple clone of twitter, which has been developed using the [mean](https://en.wikipedia.org/wiki/MEAN_(software_bundle)) fullstack javascript.
+A social engine, which has been developed using the [mean](https://en.wikipedia.org/wiki/MEAN_(software_bundle)) the fullstack javascript.
 
 An [online demo](http://chirp.westeurope.cloudapp.azure.com:3000) is hosted on Azure.
 Read the [release notes](https://github.com/antdimot/chirp/blob/master/Releasenotes.md)
