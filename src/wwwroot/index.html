@@ -23,6 +23,7 @@
                     </div>
                     <p class="navbar-text navbar-right">
                         <span ng-show="appCtrl.islogged">
+                            <a href="#/settings"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>&nbsp;&nbsp;
                             <a href="#/home">{{appCtrl.user.displayname}}</a>
                         </span>&nbsp;&nbsp;
                         <a class="btn btn-info btn-xs" href="#/signup" role="button" ng-show="!appCtrl.islogged">sign up</a>
@@ -64,6 +65,7 @@
 <script src="js/controllers/LoginController.js" lang="javascript"></script>
 <script src="js/controllers/PublicController.js" lang="javascript"></script>
 <script src="js/controllers/RegisterController.js" lang="javascript"></script>
+<script src="js/controllers/SettingsController.js" lang="javascript"></script>
 <script src="js/directives/PostDirective.js" lang="javascript"></script>
 
 </body>

@@ -7,7 +7,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var fs = require('fs');
-var cors = require('cors')();
+//var cors = require('cors')();
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -41,7 +41,7 @@ mongoClient.connect(config.mongodb.connectionString, { db: { bufferMaxEntries: 0
     context.db = db;    // add the db connection to context
 
     // enable cors
-    app.use(config.server.api,cors);
+    //app.use(config.server.api,cors);
 
     // static content
     app.use('/', express.static( __dirname + '/wwwroot', { 'dotfiles':'ignore' }));

@@ -54,6 +54,11 @@ angular.module('appChirp', ['ui.router','ngSanitize','ngCookies'])
             templateUrl: 'partials/views/info-view.html',
             controller: 'InfoController',
             controllerAs: 'vm'
+        }).state('settings', {
+            url: "/settings/:username",
+            templateUrl: 'partials/views/settings-view.html',
+            controller: 'SettingsController',
+            controllerAs: 'vm'
         });
     }
 ]);
