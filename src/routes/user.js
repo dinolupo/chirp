@@ -1,10 +1,7 @@
-/* jshint esnext: true */
-/* jslint node: true */
-
-var bcrypt = require('bcrypt');
-
 module.exports = (ctx)=>
 {
+    var bcrypt = require('bcrypt');
+    
     var baseurl = ctx.config.server.api + '/user';
 
     // get the user using login and password
