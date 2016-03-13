@@ -1,6 +1,3 @@
-/* jshint esnext: true */
-/* jslint node: true */
-
 module.exports = (ctx)=>
 {
     var fs = require('fs');

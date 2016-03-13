@@ -21,10 +21,10 @@ module.exports = (ctx)=>
       							"password": data.password,
       							"email": data.email,
       							"image": data.image,
-                    "summary": data.summary,
-      							"followingcount": data.following.length,
-      							"followercount": data.followers.length,
-                    "imagepath": ctx.config.server.api + '/image/' + data.image
+                                "summary": data.summary,
+                                    "followingcount": data.following.length,
+                                    "followercount": data.followers.length,
+                                "imagepath": ctx.config.server.api + '/image/' + data.image
       						});
       					} else { // check password failed
       						ctx.util.action.forbiddenResult(req,res);
