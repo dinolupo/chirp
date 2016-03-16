@@ -8,7 +8,7 @@ var user3Id = ObjectId().str;
 var post1Id = ObjectId().str;
 var post2Id = ObjectId().str;
 var post3Id = ObjectId().str;
-var password = "$2a$10$nn4S7KMtT8GzQhNBLnToJuBs.M3crz77X87b/ixKVmD7Y/Q/U1j1.";
+var password = "$2a$10$nn4S7KMtT8GzQhNBLnToJuBs.M3crz77X87b/ixKVmD7Y/Q/U1j1."; // password = 'test'
 
 var addUsers = ()=> {
   db.users.drop();

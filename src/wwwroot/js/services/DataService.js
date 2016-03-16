@@ -34,8 +34,8 @@
                             callBack();
                         });
                 },
-                getUserByToken: function (token,callBack) {
-                    $http.get(config.api + "/user/access/" + token)
+                getUserByUsername: function (username,callBack) {
+                    $http.get(config.api + "/user/access/" + username)
                         .success(function (data) {
                             callBack(data);
                         })

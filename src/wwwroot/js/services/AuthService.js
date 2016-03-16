@@ -36,14 +36,10 @@
                     return _authUser;
                 },
                 isLogged: function () {
-                    if(_authUser!==null)
-                    {
-                        return true;
-                    }
-                    return false;
+                    return (_authUser!==null);
                 },
-                reloadUser: function(token,callBack) {
-                    DataService.getUserByToken(token,
+                reloadUser: function(username,callBack) {
+                    DataService.getUserByUsername(username,
                         function(data) {
                             if(data)
                             {
