@@ -6,7 +6,7 @@
         function ($scope,$log,$timeout,DataService,RealtimeService) {
             var ctrl = this;
 
-            ctrl.getData = function(){
+            ctrl.loadPosts = function() {
                 DataService.getPublicPostList(
                     function (data) {
                         ctrl.posts = data;
@@ -15,10 +15,11 @@
 
             // catch event for reloading
             RealtimeService.onMessage(function () {
-              ctrl.getData();
+                ctrl.getData();
             });
-
-            ctrl.getData();
+            
+            // load the public posts
+            ctrl.loadPosts();
         }
     ]);
 

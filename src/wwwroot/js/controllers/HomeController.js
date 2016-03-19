@@ -7,24 +7,18 @@
         function ($scope,$log,$location,$timeout,$cookies,DataService,AuthService,RealtimeService,$sanitize) {
             var ctrl = this;
 
-            ctrl.initView = function ()
-            {
-                ctrl.user = AuthService.getUser();
-                ctrl.message = '';
-            };
-
             ctrl.send = function ()
             {
-              var message = ctrl.message;
+                var message = ctrl.message;
 
                 if(message.length===0) {
-                  alert('Please specify the message!');
-                  return;
+                    alert('Please specify the message!');
+                    return;
                 }
 
                 if(message.lenght>=140){
-                  alert('The must be less then 140 chars!');
-                  return;
+                    alert('The length must be less then 140 chars!');
+                    return;
                 }
 
                 // sanitize the message
@@ -43,39 +37,23 @@
                 });
             };
 
-            ctrl.loadPosts = function getData() {
+            ctrl.loadPosts = function () {
                 DataService.getHomePostList(ctrl.user.username,
                     function (data) {
                         ctrl.posts = data;
                     });
             };
 
-            $scope.$on('logged', function() {
-                ctrl.initView();
-            });
-
-            if(AuthService.isLogged())
-            {
-                ctrl.initView();
-            }
-            else
-            {
-                if( $cookies.chirp )
-                {
-                    AuthService.reloadUser($cookies.chirp, function(data)
-                    {
-                        if(data) {
-                            ctrl.initView();
-                        }
-                    });
-                }
-            }
-
             // catch event for reloading
             RealtimeService.onMessage(function () {
-              ctrl.loadPosts();
+                ctrl.loadPosts();
             });
-
-            ctrl.loadPosts();
+            
+            if(AuthService.isLogged())
+            {
+                ctrl.user = AuthService.getUser();
+                ctrl.message = '';
+                ctrl.loadPosts();
+            }
         }]);
 })();

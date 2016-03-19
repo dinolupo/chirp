@@ -13,7 +13,6 @@
 
                 ctrl.login = function (credentials) {
                     AuthService.login(credentials, function (username) {
-                        $log.debug(username);
 
                         if(username!==undefined)
                         {

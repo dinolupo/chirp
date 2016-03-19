@@ -6,7 +6,7 @@
             function ($scope,$log,$location,$cookies,AuthService) {
               var ctrl = this;
 
-              ctrl.initViewAsLogged = function () {
+              ctrl.initAsLogged = function () {
                   ctrl.user = AuthService.getUser();
                   ctrl.islogged = true;
               };
@@ -22,7 +22,7 @@
               };
 
               $scope.$on('logged', function () {
-                  ctrl.initViewAsLogged();
+                  ctrl.initAsLogged();
               });
 
               $scope.$on('logout', function () {
@@ -31,7 +31,7 @@
               });
 
               if(AuthService.isLogged()) {
-                  ctrl.initViewAsLogged();
+                  ctrl.initAsLogged();
               }
               else {
                   ctrl.islogged = false;
@@ -41,7 +41,7 @@
                   if( username !== undefined ) {
                       AuthService.reloadUser(username, function (data) {
                           if(data) {
-                              ctrl.initViewAsLogged();
+                              ctrl.initAsLogged();
                           }
                       });
                   }

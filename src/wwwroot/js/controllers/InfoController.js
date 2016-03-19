@@ -9,7 +9,7 @@
                 ctrl.follow = function() {
                   DataService.follow(ctrl.username,$stateParams.username,
                       function (data) {
-                        if(data){
+                        if(data) {
                           ctrl.getData();
                           ctrl.showButton = true;
                           ctrl.canFollow = false;
@@ -60,22 +60,6 @@
                     if(AuthService.getUser().username !== $stateParams.username) {
                         ctrl.showButton = true;
                         ctrl.checkCanFollow();
-                    }
-                }
-                else
-                {
-                  var username = $cookies.get("chirp");
-
-                  if( username !== undefined ) {
-                        if(username !== $stateParams.username) {
-                            AuthService.reloadUser($cookies.chirp, function(data)
-                            {
-                                if(data) {
-                                    ctrl.showButton = true;
-                                    ctrl.checkCanFollow();
-                                }
-                            });
-                        }
                     }
                 }
             }
