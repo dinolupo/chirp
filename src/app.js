@@ -1,28 +1,26 @@
-/* jshint esnext: true */
-/* jslint node: true */
-
 // load external libraries
-var express = require('express');
-var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var fs = require('fs');
-//var cors = require('cors')();
+const express = require('express');
+const app = express();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+const fs = require('fs');
+const bodyParser = require('body-parser');
+const cors = require('cors')();
 
-var bodyParser = require('body-parser');
+// configure external libraries
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
 // var multer = require('multer');
 // app.use(multer);
-// for parsing multipart/form-data
+//app.use(config.server.api,cors);
 
 // load application libraries
-var config = require('./config');
-var logger = require('./util/logger')();
-var helper = require('./util/helper')(logger);
+const config = require('./config');
+const logger = require('./util/logger')();
+const helper = require('./util/helper')(logger);
 
 // create the application context
-var context = {
+const context = {
     config: config,
     util: helper,
     app: app,
@@ -30,7 +28,7 @@ var context = {
 };
 
 // open a mongodb connection
-var mongoClient = require('mongodb').MongoClient;
+const mongoClient = require('mongodb').MongoClient;
 mongoClient.connect(config.mongodb.connectionString, { db: { bufferMaxEntries: 0 } },
    (err, db) => {
     if(err) {
@@ -39,9 +37,6 @@ mongoClient.connect(config.mongodb.connectionString, { db: { bufferMaxEntries: 0
     }
 
     context.db = db;    // add the db connection to context
-
-    // enable cors
-    //app.use(config.server.api,cors);
 
     // static content
     app.use('/', express.static( __dirname + '/wwwroot', { 'dotfiles':'ignore' }));
@@ -58,12 +53,12 @@ mongoClient.connect(config.mongodb.connectionString, { db: { bufferMaxEntries: 0
 
     // set socket io connection
     io.on('connection',(socket)=>{
-      logger.debug('Client connected');
+      logger.debug('[Socket IO] client connected');
       socket.on('disconnect',()=>{
-        console.log('Client disconnected');
+        logger.debug('[Socket IO] client disconnected');
       });
       socket.on('postmessage',(data)=>{
-        logger.debug('Broadcast <postmessage> event from [%s]', data);
+        logger.debug('[Socket IO] broadcast <postmessage> event from [%s]', data);
         io.emit('postmessage', data);
       });
     });

@@ -1,35 +1,31 @@
 module.exports = (ctx)=>
 {
-    var bcrypt = require('bcrypt');
-    
-    var baseurl = ctx.config.server.api + '/user';
+    const bcrypt = require('bcrypt');   
+    const baseurl = ctx.config.server.api + '/user';
 
     // get the user using login and password
-    ctx.app.get( baseurl + '/authenticate/:username/:password',(req,res)=> {
-        var username = req.params.username;
-        var password = req.params.password;
-
-        ctx.db.collection('users').findOne({'username':username},(err,data)=> {
+    ctx.app.get( baseurl + '/authenticate/:username/:password',(req,res)=>
+    {
+        ctx.db.collection('users').findOne({'username':req.params.username},(err,data)=> {
             if(err) return ctx.util.action.errorResult(err.message,req,res);
-
             if (data) {
-      				bcrypt.compare(password, data.password, (err, resbcrypt)=> {
-      					if (resbcrypt === true) {
-      						ctx.util.action.jsonResult(req,res,{
-      							"username": data.username,
-      							"displayname": data.displayname,
-      							"password": data.password,
-      							"email": data.email,
-      							"image": data.image,
-                                "summary": data.summary,
-                                    "followingcount": data.following.length,
-                                    "followercount": data.followers.length,
-                                "imagepath": ctx.config.server.api + '/image/' + data.image
-      						});
-      					} else { // check password failed
-      						ctx.util.action.forbiddenResult(req,res);
-      					}
-      				});
+                bcrypt.compare(req.params.password, data.password, (err, resbcrypt)=> {
+                    if (resbcrypt === true) {
+                        ctx.util.action.jsonResult(req,res,{
+                            "username": data.username,
+                            "displayname": data.displayname,
+                            "password": data.password,
+                            "email": data.email,
+                            "image": data.image,
+                            "summary": data.summary,
+                            "followingcount": data.following.length,
+                            "followercount": data.followers.length,
+                            "imagepath": ctx.config.server.api + '/image/' + data.image
+                        });
+                    } else { // check password failed
+                        ctx.util.action.forbiddenResult(req,res);
+                    }
+                });
             }
             else {
                 ctx.util.action.forbiddenResult(req,res);
@@ -38,12 +34,10 @@ module.exports = (ctx)=>
     });
 
     // get the user using a username
-    ctx.app.get( baseurl + '/access/:username', (req,res)=> {
-        var username = req.params.username;
-
-        ctx.db.collection('users').findOne({'username':username},(err, data)=>{
+    ctx.app.get( baseurl + '/access/:username', (req,res)=>
+    {
+        ctx.db.collection('users').findOne({'username':req.params.username},(err, data)=>{
             if(err) return ctx.util.action.errorResult(err.message,req,res);
-
             if (data) {
                 ctx.util.action.jsonResult(req,res,{
                     "username": data.username,
@@ -64,13 +58,11 @@ module.exports = (ctx)=>
     });
 
     // get the following of a user
-    ctx.app.get( baseurl + '/following/:username',(req,res)=> {
-        var username = req.params.username;
-
-        ctx.db.collection('users').findOne({'username':username},(err, data)=>
+    ctx.app.get( baseurl + '/following/:username',(req,res)=>
+    {
+        ctx.db.collection('users').findOne({'username':req.params.username},(err, data)=>
         {
             if(err) return ctx.util.action.errorResult(err.message,req,res);
-
             if (data) {
                 ctx.db.collection('users').find({'followers':data._id}).toArray((err,items)=> {
                     if(err) return ctx.util.action.errorResult(err.message,req,res);
@@ -90,12 +82,10 @@ module.exports = (ctx)=>
     });
 
     // get the followers of a user
-    ctx.app.get( baseurl + '/followers/:username',(req,res)=> {
-        var username = req.params.username;
-
-        ctx.db.collection('users').findOne({'username':username},(err,data)=> {
+    ctx.app.get( baseurl + '/followers/:username',(req,res)=>
+    {
+        ctx.db.collection('users').findOne({'username':req.params.username},(err,data)=> {
             if(err) return ctx.util.action.errorResult(err.message,req,res);
-
             if (data) {
                 ctx.db.collection('users').find({'following':data._id}).toArray((err,items)=> {
                     if(err) return ctx.util.action.errorResult(err.message,req,res);
@@ -115,31 +105,25 @@ module.exports = (ctx)=>
     });
 
     // sign up a new user
-    ctx.app.post( baseurl,(req,res)=> {
-      var username = req.body.username;
-
-      ctx.db.collection('users').findOne({'username':username},(err,data)=> {
+    ctx.app.post( baseurl,(req,res)=>
+    {
+      ctx.db.collection('users').findOne({'username':req.body.username},(err,data)=> {
           if(err) return ctx.util.action.errorResult(err.message,req,res);
 
           if(data) { // username already existing
             ctx.util.action.forbiddenResult(req,res);
           }
           else {
-            var password = req.body.password;
-            var displayname = req.body.displayname;
-            var email = req.body.email;
-            var summary = req.body.summary;
-
           	bcrypt.genSalt(10, (err,salt)=> {
-          		bcrypt.hash(password, salt, (err, hash)=> {
+          		bcrypt.hash(req.body.password, salt, (err, hash)=> {
           			// Store hash in your password DB.
-          			var user = {
-          				"username": username,
-          				"displayname": displayname,
+          			const user = {
+          				"username": req.body.username,
+          				"displayname": req.body.displayname,
           				"password": hash,
-          				"email": email,
+          				"email": req.body.email,
           				"image": ctx.config.image,
-                  "summary": summary,
+                        "summary": req.body.summary,
           				"following": [],
           				"followers": []
           			};
@@ -156,18 +140,13 @@ module.exports = (ctx)=>
     });
 
     // follow an user
-    ctx.app.post( baseurl + '/follow',  (req,res)=> {
-      var username = req.body.username1;
-      var follow = req.body.username2;
-
-      //ctx.logger.debug(username);
-      //ctx.logger.debug(follow);
-
-      ctx.db.collection('users').findOne({'username':username},(err,user1)=> {
+    ctx.app.post( baseurl + '/follow',(req,res)=>
+    {
+      ctx.db.collection('users').findOne({'username':req.body.username1},(err,user1)=> {
         if(err) return ctx.util.action.errorResult(err.message,req,res);
 
         if (user1) {
-          ctx.db.collection('users').findOne({'username':follow},(err,user2)=> {
+          ctx.db.collection('users').findOne({'username':req.body.username2},(err,user2)=> {
             if(err) return ctx.util.action.errorResult(err.message,req,res);
 
             // check if already follow
@@ -207,18 +186,13 @@ module.exports = (ctx)=>
     } );
 
     // follow an user
-    ctx.app.post( baseurl + '/unfollow',(req,res)=> {
-      var username = req.body.username1;
-      var follow = req.body.username2;
-
-      //ctx.logger.debug(username);
-      //ctx.logger.debug(follow);
-
-      ctx.db.collection('users').findOne({'username':username},(err,user1)=>{
+    ctx.app.post( baseurl + '/unfollow',(req,res)=>
+    {
+      ctx.db.collection('users').findOne({'username':req.body.username1},(err,user1)=>{
         if(err) return ctx.util.action.errorResult(err.message,req,res);
 
         if (user1) {
-          ctx.db.collection('users').findOne({'username':follow},(err,user2)=>{
+          ctx.db.collection('users').findOne({'username':req.body.username2},(err,user2)=>{
             if(err) return ctx.util.action.errorResult(err.message,req,res);
 
             // check if already follow
@@ -258,10 +232,9 @@ module.exports = (ctx)=>
     } );
 
     // get the user info
-    ctx.app.get( baseurl + '/info/:username',(req,res)=>{
-        var username = req.params.username;
-
-        ctx.db.collection('users').findOne({'username':username},(err,data)=>{
+    ctx.app.get( baseurl + '/info/:username',(req,res)=>
+    {
+        ctx.db.collection('users').findOne({'username':req.params.username},(err,data)=>{
             if(err) return ctx.util.action.errorResult(err.message,req,res);
 
             if(data) {

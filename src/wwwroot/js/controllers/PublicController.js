@@ -15,7 +15,7 @@
 
             // catch event for reloading
             RealtimeService.onMessage(function () {
-                ctrl.getData();
+                ctrl.loadPosts();
             });
             
             // load the public posts

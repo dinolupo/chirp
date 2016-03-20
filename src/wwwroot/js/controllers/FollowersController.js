@@ -6,15 +6,11 @@
             function ($scope, $log, $location, DataService, AuthService) {
                 var ctrl = this;
 
-                ctrl.init = function () {
+                if(AuthService.isLogged()) {
                     DataService.getFollowersList(AuthService.getUser().username,
                         function (data) {
                             ctrl.users = data;
                         });
-                };
-
-                if(AuthService.isLogged()) {
-                    ctrl.init();
                 }              
             }
         ]);

@@ -1,7 +1,7 @@
 module.exports = (ctx)=>
 {
-    var limit = ctx.config.server.limit;
-    var baseurl = ctx.config.server.api + '/post';
+    const limit = ctx.config.server.limit;
+    const baseurl = ctx.config.server.api + '/post';
 
     //var postListFields = {'username':1,'displayname':1,'timestamp':1,'text':1,'image':1,'parentid':1};
     var userSearchFields = {'_id':1,'following':1,'displayname':1,'image':1};
@@ -14,8 +14,8 @@ module.exports = (ctx)=>
                                   .toArray((err,data)=> {
                 if(err) return ctx.util.action.errorResult(err.message,req,res);
 
-                var panelcolors = ['primary','default','success','info','warning','danger'];
-                var textcolors = ['white','red','blue','blue','red','blue'];
+                const panelcolors = ['primary','default','success','info','warning','danger'];
+                const textcolors = ['white','red','blue','blue','red','blue'];
 
                 data.forEach((element,index)=> {
                   element.text = ctx.util.string.bodyProcess(element.text); // process the body
@@ -31,7 +31,7 @@ module.exports = (ctx)=>
 
     // get items posted to user timeline
     ctx.app.get( baseurl + '/home/:username', (req,res) => {
-        var username = req.params.username;
+        const username = req.params.username;
 
         ctx.db.collection('users').findOne({'username':username},{'fields':userSearchFields},(err,data)=>{
             if (data) {
@@ -61,7 +61,7 @@ module.exports = (ctx)=>
 
     // get the items posted from an user
     ctx.app.get( baseurl + '/:username',(req,res) => {
-        var username = req.params.username;
+        const username = req.params.username;
 
         ctx.db.collection('posts').find({'username': username},{'sort':{'timestamp':-1}})
             .toArray((err,items)=> {
@@ -72,8 +72,8 @@ module.exports = (ctx)=>
 
     // post a new message
     ctx.app.post( baseurl, (req,res) => {
-        var username = req.body.username;
-        var text = req.body.text;
+        const username = req.body.username;
+        const text = req.body.text;
 
         ctx.db.collection('users').findOne(
           {'username':username},
@@ -101,8 +101,8 @@ module.exports = (ctx)=>
       });
       // post a new message
       ctx.app.post( baseurl + '/repost', (req,res) => {
-          var username = req.body.username;
-          var id = req.body.id;
+          const username = req.body.username;
+          const id = req.body.id;
 
           ctx.logger.debug('Called repost with params: %s %s',username,id);
 
