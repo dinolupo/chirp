@@ -1,3 +1,5 @@
+"use strict"
+
 // load external libraries
 const express = require('express');
 const app = express();
@@ -42,25 +44,26 @@ mongoClient.connect(config.mongodb.connectionString, { db: { bufferMaxEntries: 0
     app.use('/', express.static( __dirname + '/wwwroot', { 'dotfiles':'ignore' }));
 
     app.use((req,res,next)=>{
-      logger.debug("[%s] request at [%s].", req.method, req.url);
-      next();
+        logger.debug("[%s] request at [%s].", req.method, req.url);
+        next();
     });
 
     // load the routes
     fs.readdirSync('./routes/').forEach((name)=> {
-      require('./routes/'+name)(context);
+        require('./routes/'+name)(context);
     });
 
     // set socket io connection
-    io.on('connection',(socket)=>{
-      logger.debug('[Socket IO] client connected');
-      socket.on('disconnect',()=>{
-        logger.debug('[Socket IO] client disconnected');
-      });
-      socket.on('postmessage',(data)=>{
-        logger.debug('[Socket IO] broadcast <postmessage> event from [%s]', data);
-        io.emit('postmessage', data);
-      });
+    io.on('connection',(socket)=>
+    {
+        logger.debug('[Socket IO] client connected');
+        socket.on('disconnect',()=>{
+            logger.debug('[Socket IO] client disconnected');
+        });
+        socket.on('postmessage',(data)=>{
+            logger.debug('[Socket IO] broadcast <postmessage> event from [%s]', data);
+            io.emit('postmessage', data);
+        });
     });
 
     // set not find and error behaviors
@@ -70,6 +73,6 @@ mongoClient.connect(config.mongodb.connectionString, { db: { bufferMaxEntries: 0
     // start server
     var port = process.env.PORT || 3000;
     http.listen(port,()=> {
-      logger.info('Server listening on port %s', port);
+        logger.info('Server listening on port %s', port);
     });
 });

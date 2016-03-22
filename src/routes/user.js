@@ -1,3 +1,5 @@
+"use strict"
+
 module.exports = (ctx)=>
 {
     const bcrypt = require('bcrypt');   
@@ -107,128 +109,131 @@ module.exports = (ctx)=>
     // sign up a new user
     ctx.app.post( baseurl,(req,res)=>
     {
-      ctx.db.collection('users').findOne({'username':req.body.username},(err,data)=> {
-          if(err) return ctx.util.action.errorResult(err.message,req,res);
+        ctx.db.collection('users').findOne({'username':req.body.username},(err,data)=>
+        {
+            if(err) return ctx.util.action.errorResult(err.message,req,res);
 
-          if(data) { // username already existing
-            ctx.util.action.forbiddenResult(req,res);
-          }
-          else {
-          	bcrypt.genSalt(10, (err,salt)=> {
-          		bcrypt.hash(req.body.password, salt, (err, hash)=> {
-          			// Store hash in your password DB.
-          			const user = {
-          				"username": req.body.username,
-          				"displayname": req.body.displayname,
-          				"password": hash,
-          				"email": req.body.email,
-          				"image": ctx.config.image,
-                        "summary": req.body.summary,
-          				"following": [],
-          				"followers": []
-          			};
+            if(data) { // username already existing
+                ctx.util.action.forbiddenResult(req,res);
+            }
+            else {
+                bcrypt.genSalt(10, (err,salt)=>
+                {
+                    bcrypt.hash(req.body.password, salt, (err, hash)=> {
+                        // Store hash in your password DB.
+                        const user = {
+                            "username": req.body.username,
+                            "displayname": req.body.displayname,
+                            "password": hash,
+                            "email": req.body.email,
+                            "image": ctx.config.image,
+                            "summary": req.body.summary,
+                            "following": [],
+                            "followers": []
+                        };
 
-          			ctx.db.collection('users').save(user,(err)=> {
-          				if(err) return ctx.util.action.errorResult(err.message,req,res);
-          				ctx.util.action.okResult(req,res);
-          			});
+                        ctx.db.collection('users').save(user,(err)=> {
+                            if(err) return ctx.util.action.errorResult(err.message,req,res);
+                            ctx.util.action.okResult(req,res);
+                        });
 
-              });
-            });
-          }
-      });
+                    });
+                });
+            }
+        });
     });
 
     // follow an user
     ctx.app.post( baseurl + '/follow',(req,res)=>
     {
-      ctx.db.collection('users').findOne({'username':req.body.username1},(err,user1)=> {
-        if(err) return ctx.util.action.errorResult(err.message,req,res);
-
-        if (user1) {
-          ctx.db.collection('users').findOne({'username':req.body.username2},(err,user2)=> {
+        ctx.db.collection('users').findOne({'username':req.body.username1},(err,user1)=>
+        {
             if(err) return ctx.util.action.errorResult(err.message,req,res);
-
-            // check if already follow
-            if(user2) {
-              var found = false;
-              for (var i = 0; i < user1.following.length; i++) {
-                if(user1.following[i]===user2._id)
+            if (user1) {
+                ctx.db.collection('users').findOne({'username':req.body.username2},(err,user2)=>
                 {
-                  found = true;
-                  break;
-                }
-              }
+                    if(err) return ctx.util.action.errorResult(err.message,req,res);
 
-              if( found ) {
-                ctx.logger.debug('[%s] already follow [%s]',user1.username,user2.username);
-                ctx.util.action.forbiddenResult(req,res);
-                return;
-              }
+                    // check if already follow
+                    if(user2) {
+                        let found = false;
+                        for (var i = 0; i < user1.following.length; i++) {
+                            if(user1.following[i]===user2._id) {
+                              found = true;
+                              break;
+                            }
+                        }
 
-              ctx.db.collection('users')
-                    .updateOne({_id:user1._id},{$push: {following:user2._id }})
-                    .then(()=>{
-                      ctx.db.collection('users')
-                            .updateOne({_id:user2._id},{$push: {followers:user1._id }});
-                    });
-              ctx.util.action.okResult(req,res);
+                        if( found ) {
+                            ctx.logger.debug('[%s] already follow [%s]',user1.username,user2.username);
+                            ctx.util.action.forbiddenResult(req,res);
+                            return;
+                        }
+
+                        ctx.db.collection('users')
+                            .updateOne({_id:user1._id},{$push: {following:user2._id }})
+                            .then(()=>{
+                              ctx.db.collection('users')
+                                    .updateOne({_id:user2._id},{$push: {followers:user1._id }});
+                            });
+                        ctx.util.action.okResult(req,res);
+                    }
+                    else {
+                        ctx.util.action.forbiddenResult(req,res);
+                    }
+                });
             }
             else {
                 ctx.util.action.forbiddenResult(req,res);
             }
-          });
-        }
-        else {
-            ctx.util.action.forbiddenResult(req,res);
-        }
-      });
+        });
     } );
 
     // follow an user
     ctx.app.post( baseurl + '/unfollow',(req,res)=>
     {
-      ctx.db.collection('users').findOne({'username':req.body.username1},(err,user1)=>{
-        if(err) return ctx.util.action.errorResult(err.message,req,res);
-
-        if (user1) {
-          ctx.db.collection('users').findOne({'username':req.body.username2},(err,user2)=>{
+        ctx.db.collection('users').findOne({'username':req.body.username1},(err,user1)=>
+        {
             if(err) return ctx.util.action.errorResult(err.message,req,res);
 
-            // check if already follow
-            if(user2) {
-              var found = false;
-              for (var i = 0; i < user1.following.length; i++) {
-                if(user1.following[i]===user2._id)
-                {
-                  found = true;
-                  break;
+            if (user1) {
+                ctx.db.collection('users').findOne({'username':req.body.username2},(err,user2)=>{
+                if(err) return ctx.util.action.errorResult(err.message,req,res);
+
+                // check if already follow
+                if(user2) {
+                  let found = false;
+                  for (var i = 0; i < user1.following.length; i++) {
+                    if(user1.following[i]===user2._id)
+                    {
+                      found = true;
+                      break;
+                    }
+                  }
+
+                  if( !found ) {
+                    ctx.logger.debug('[%s] does not follow [%s]',user1.username,user2.username);
+                    ctx.util.action.forbiddenResult(req,res);
+                    return;
+                  }
+
+                  ctx.db.collection('users')
+                        .updateOne({_id:user1._id},{$pull: {following: user2._id }})
+                        .then(()=>{
+                          ctx.db.collection('users')
+                                .updateOne({_id:user2._id},{$pull: {followers: user1._id }});
+                        });
+                  ctx.util.action.okResult(req,res);
                 }
-              }
-
-              if( !found ) {
-                ctx.logger.debug('[%s] does not follow [%s]',user1.username,user2.username);
-                ctx.util.action.forbiddenResult(req,res);
-                return;
-              }
-
-              ctx.db.collection('users')
-                    .updateOne({_id:user1._id},{$pull: {following: user2._id }})
-                    .then(()=>{
-                      ctx.db.collection('users')
-                            .updateOne({_id:user2._id},{$pull: {followers: user1._id }});
-                    });
-              ctx.util.action.okResult(req,res);
+                else {
+                    ctx.util.action.forbiddenResult(req,res);
+                }
+              });
             }
             else {
                 ctx.util.action.forbiddenResult(req,res);
             }
-          });
-        }
-        else {
-            ctx.util.action.forbiddenResult(req,res);
-        }
-      });
+        });
     } );
 
     // get the user info
