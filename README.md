@@ -2,7 +2,7 @@
 
 A social engine, which has been developed using the [mean](https://en.wikipedia.org/wiki/MEAN_(software_bundle)) the fullstack javascript.
 
-An [online demo](http://chirp.westeurope.cloudapp.azure.com:3000) is hosted on Azure.
+An [online demo](http://chirp.westeurope.cloudapp.azure.com) is hosted on Azure.
 Read the [release notes](https://github.com/antdimot/chirp/blob/master/Releasenotes.md)
 for the last updates.
 [Activity board](https://trello.com/b/prRPzzir).
