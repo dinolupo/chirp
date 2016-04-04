@@ -20,6 +20,45 @@ for the last updates.
 - log on
 - repost (aka retweet)
 
+### Try it now on your workstation with Docker
+
+Clone the project and run the following:
+
+> Run Official Chirp Container with `docker-compose`
+
+```sh
+docker-compose up
+```
+
+On Linux go to:
+
+[http://localhost:3000](http://localhost:3000)
+
+On OSX/Windows get the IP of the docker machine and browse that server, example:
+
+```sh
+% docker-machine ip
+192.168.99.100
+```
+
+[http://192.168.99.100:3000](http://192.168.99.100:3000)
+
+
+If you don't have docker compose, you can run manually the mongo and chirp containers in the following order:
+
+> 1. Run Official Mongo Container manually
+
+```sh
+docker run --name mongodb -p 27017:27017 -d mongo
+```
+
+> 2. Run Official Chirp Container manually
+
+```sh
+docker run --name chirp -p 3000:3000 --link mongodb:mongodb dinolupo/chirp
+```
+
+
 ### Todo (missing features):
 - response
 - searching (users and messages)
