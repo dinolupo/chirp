@@ -1,0 +1,14 @@
+version: '2'
+services:
+  web:
+    image: dinolupo/chirp
+    container_name: chirp 
+    links: 
+     -  mongo:mongodb
+    ports:
+     - "3000:3000"
+    depends_on:
+     - mongo
+  mongo:
+    container_name: mongodb
+    image: mongo:latest
