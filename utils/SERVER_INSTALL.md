@@ -38,7 +38,7 @@ sudo gem install fakes3
 
 #### Autorun chirp on server startup
 
-- create ```/etc/init/chirp.conf``` file with the following content:
+- create `/etc/init/chirp.conf` file with the following content:
 
 ```sh
 description "node.js chirp server"
@@ -79,9 +79,11 @@ sudo stop chirp
 
 - create directory for S3 buckets and data
 
-```mkdir -p /home/dimolup/fakeS3data```
+```sh
+mkdir -p /home/dimolup/fakeS3data
+```
 
-- create ```/etc/init/fakeS3.conf``` file with the following content:
+- create `/etc/init/fakeS3.conf` file with the following content:
 
 ```sh
 description "fakeS3 server"
@@ -132,3 +134,36 @@ nohup node main.js > node.log 2>&1 &
 ```sh
 nohup fakes3 -r /mnt/fakes3_root -p 4567 > fakeS3.log 2>&1 &
 ```
+
+### Appendix B: Docker
+
+> Run Official Chirp Container with `docker-compose`
+
+```sh
+docker-compose up
+```
+
+> Run Official Mongo Container manually 
+
+```sh
+docker run --name mongodb -p 27017:27017 -d mongo
+```
+
+> Run Official Chirp Container manually
+
+```sh
+docker run --name chirp -p 3000:3000 --link mongodb:mongodb dinolupo/chirp
+```
+
+> stop and remove running containers (this will not delete data volumes) 
+
+```sh
+docker rm -f chirp
+```
+
+> Build Docker Chirp Image
+
+```sh
+docker build -t dinolup/chirp .
+```
+

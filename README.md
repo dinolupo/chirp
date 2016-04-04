@@ -1,6 +1,6 @@
 # Chirp
 
-A social engine, which has been developed using the [mean](https://en.wikipedia.org/wiki/MEAN_(software_bundle)) the fullstack javascript.
+A social engine, which has been developed using the [MEAN](https://en.wikipedia.org/wiki/MEAN_(software_bundle)) javascript full stack.
 
 An [online demo](http://chirp.westeurope.cloudapp.azure.com) is hosted on Azure.
 Read the [release notes](https://github.com/antdimot/chirp/blob/master/Releasenotes.md)
@@ -19,6 +19,45 @@ for the last updates.
 - sign up
 - log on
 - repost (aka retweet)
+
+### Try it now on your workstation with Docker
+
+Clone the project and run the following:
+
+> Run Official Chirp Container with `docker-compose`
+
+```sh
+docker-compose up
+```
+
+On Linux go to:
+
+[http://localhost:3000](http://localhost:3000)
+
+On OSX/Windows get the IP of the docker machine and browse that server, example:
+
+```sh
+% docker-machine ip
+192.168.99.100
+```
+
+[http://192.168.99.100:3000](http://192.168.99.100:3000)
+
+
+If you don't have docker compose, you can run manually the mongo and chirp containers in the following order:
+
+>  a) Run Official Mongo Container manually
+
+```sh
+docker run --name mongodb -d mongo
+```
+
+> b) Run Official Chirp Container manually
+
+```sh
+docker run --name chirp -p 3000:3000 --link mongodb:mongodb dinolupo/chirp
+```
+
 
 ### Todo (missing features):
 - response
