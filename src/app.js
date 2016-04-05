@@ -21,8 +21,6 @@ const config = require('./config');
 const logger = require('./util/logger')();
 const helper = require('./util/helper')(logger);
 
-
-
 // open a mongodb connection
 const mongoClient = require('mongodb').MongoClient;
 mongoClient.connect(config.mongodb.connectionString, { db: { bufferMaxEntries: 0 } },

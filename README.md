@@ -48,7 +48,7 @@ If you don't have docker compose, you can run manually the mongo and chirp conta
 >  a) Run Official Mongo Container manually
 
 ```sh
-docker run --name mongodb -p 27017:27017 -d mongo
+docker run --name mongodb -d mongo
 ```
 
 > b) Run Official Chirp Container manually
@@ -56,6 +56,8 @@ docker run --name mongodb -p 27017:27017 -d mongo
 ```sh
 docker run --name chirp -p 3000:3000 --link mongodb:mongodb dinolupo/chirp
 ```
+
+
 
 ### Todo (missing features):
 - response
