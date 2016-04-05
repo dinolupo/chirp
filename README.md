@@ -1,6 +1,6 @@
 # Chirp
 
-A social engine, which has been developed using the [mean](https://en.wikipedia.org/wiki/MEAN_(software_bundle)) the fullstack javascript.
+The social engine open source, which has been developed using the [mean](https://en.wikipedia.org/wiki/MEAN_(software_bundle)) fullstack javascript.
 
 An [online demo](http://chirp.westeurope.cloudapp.azure.com) is hosted on Azure.
 Read the [release notes](https://github.com/antdimot/chirp/blob/master/Releasenotes.md)
@@ -73,7 +73,7 @@ docker run --name chirp -p 3000:3000 --link mongodb:mongodb dinolupo/chirp
 2. Install *nodejs*
 3. Install *mongodb*
 4. Restore *node_modules* using ```npm install```
-5. Execute **node main**
+5. Execute **node app**
 
 ### Known issues:
 - no check of the username (duplication) when signup

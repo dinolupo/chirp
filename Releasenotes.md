@@ -1,3 +1,7 @@
+## 05/04/2016
+* Added docker file
+* Refactoring of the routes
+
 ## 24/02/2016
 * Moved source files to src directory
 * Added image route api handler

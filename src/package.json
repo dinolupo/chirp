@@ -1,12 +1,12 @@
 {
   "name": "chirp",
   "homepage": "https://github.com/antdimot/chirp",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "The social engine open source",
   "license": "MIT",
-  "main": "main.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node main.js"
+    "start": "node app.js"
   },
   "author": "Antonio Di Motta",
   "dependencies": {

@@ -21,36 +21,40 @@ const config = require('./config');
 const logger = require('./util/logger')();
 const helper = require('./util/helper')(logger);
 
-// create the application context
-const context = {
-    config: config,
-    util: helper,
-    app: app,
-    logger: logger
-};
+
 
 // open a mongodb connection
 const mongoClient = require('mongodb').MongoClient;
 mongoClient.connect(config.mongodb.connectionString, { db: { bufferMaxEntries: 0 } },
    (err, db) => {
     if(err) {
-      logger.error(err.message);
-      process.exit(1);
+        logger.error(err.message);
+        process.exit(1);
     }
 
-    context.db = db;    // add the db connection to context
+   // create the application context
+   const appContext = {
+       config: config,
+       helper: helper,
+       logger: logger,
+       db : db
+   };
 
     // static content
     app.use('/', express.static( __dirname + '/wwwroot', { 'dotfiles':'ignore' }));
 
-    app.use((req,res,next)=>{
+    app.use((req,res,next)=> {
         logger.debug("[%s] request at [%s].", req.method, req.url);
+        if(  req.method === "POST" ) {
+            logger.debug( req.body );
+        }
         next();
     });
 
     // load the routes
-    fs.readdirSync('./routes/').forEach((name)=> {
-        require('./routes/'+name)(context);
+    fs.readdirSync('./routes/').forEach( (name)=>
+    {
+        app.use(require('./routes/'+name)(appContext));
     });
 
     // set socket io connection
@@ -67,8 +71,8 @@ mongoClient.connect(config.mongodb.connectionString, { db: { bufferMaxEntries: 0
     });
 
     // set not find and error behaviors
-    app.use( context.util.action.notfoundResult );
-    app.use( context.util.action.errorResult );
+    app.use( helper.action.notfoundResult );
+    app.use( helper.action.errorResult );
 
     // start server
     var port = process.env.PORT || 3000;
