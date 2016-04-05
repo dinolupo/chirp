@@ -1,16 +1,15 @@
 # Chirp
 
-The social engine open source, which has been developed using the [mean](https://en.wikipedia.org/wiki/MEAN_(software_bundle)) fullstack javascript.
+The social engine open source, which has been developed using the [MEAN](https://en.wikipedia.org/wiki/MEAN_(software_bundle)) javascript full stack.
 
 An [online demo](http://chirp.westeurope.cloudapp.azure.com) is hosted on Azure.
 Read the [release notes](https://github.com/antdimot/chirp/blob/master/Releasenotes.md)
-for the last updates.
-[Activity board](https://trello.com/b/prRPzzir).
+for the last updates. [Activity board](https://trello.com/b/prRPzzir).
 
 ### Features:
-- public timeline *(http://mywebsite/#/public)*
-- user timeline   *(http://mywebsite/#/home)*
-- user info       *(http://mywebsite/#/info/myusername)*
+- public timeline
+- user timeline
+- user info
 - post of a message
 - list of the followers
 - list of the following
@@ -46,18 +45,17 @@ On OSX/Windows get the IP of the docker machine and browse that server, example:
 
 If you don't have docker compose, you can run manually the mongo and chirp containers in the following order:
 
-> 1. Run Official Mongo Container manually
+>  a) Run Official Mongo Container manually
 
 ```sh
 docker run --name mongodb -p 27017:27017 -d mongo
 ```
 
-> 2. Run Official Chirp Container manually
+> b) Run Official Chirp Container manually
 
 ```sh
 docker run --name chirp -p 3000:3000 --link mongodb:mongodb dinolupo/chirp
 ```
-
 
 ### Todo (missing features):
 - response
@@ -77,4 +75,3 @@ docker run --name chirp -p 3000:3000 --link mongodb:mongodb dinolupo/chirp
 
 ### Known issues:
 - no check of the username (duplication) when signup
-- doesn't encode html on post message
